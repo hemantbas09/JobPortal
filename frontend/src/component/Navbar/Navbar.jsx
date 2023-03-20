@@ -8,7 +8,7 @@ const Navbar = () => {
   const handleClick = () => setToggle(!toggle)
   return (
     <>
-      <div className='w-full h-[80px] bg-white border-b'>
+      <div className=' h-[80px] bg-white border-b   mx-40'>
         <div className='md:max-w-[1480px] max-w-[600px] m-auto w-full h-full flex justify-between items-center'>
           <span className='px-3'><img className='w-52 -mt-5' src="image/logo.svg" alt="logo" /> </span>
           <div className='hidden md:flex items-center '>

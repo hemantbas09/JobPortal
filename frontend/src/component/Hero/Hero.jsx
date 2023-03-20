@@ -22,7 +22,7 @@ const Hero = () => {
                             platform offers a wide range of job opportunities across various industries
                             and career levels.</p>
 
-                        <form className='bg-white border max-w-[700px] p-4 input-box-shadow rounded-md flex justify-between'>
+                        <form className='bg-white border w-fit mt-3 p-4 input-box-shadow rounded-md flex justify-between gap-4'>
                             <input
                                 className='bg-zinc-100 p-3 focus:bg-white'
                                 type="text"
