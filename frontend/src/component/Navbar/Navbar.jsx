@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { FiLogIn } from "react-icons/fi";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { Mymodel } from '../Authentication/MyModel';
+import { getToken } from '../../Service/localStorageService';
 const Navbar = () => {
+  const token=getToken('token');
+  console.log(token)
   const [openModal, setOpenModal] = useState(false)
   const [toggle, setToggle] = useState(false)
   const handleClick = () => setToggle(!toggle)
@@ -22,6 +25,7 @@ const Navbar = () => {
 
             </ul>
           </div>
+      
 
           <div className='hidden md:flex'>
             <button onClick={() => { setOpenModal(true) }} className='mx-2.5 flex justify-between items center gap-2 px-5 rounded-lg py-2.5 text-white bg-[rgb(65,88,208)] font-bold '>

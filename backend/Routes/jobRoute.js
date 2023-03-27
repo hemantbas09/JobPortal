@@ -4,8 +4,8 @@ import jobController from '../Controller/jobController.js';
 import checkUserAuth from '../Middleware/authMiddleware.js'
 
 // Route level Middleware - TO Protect Route
-router.use('/changepassword', checkUserAuth)
-router.post('/new', checkUserAuth);
+// router.use('/changepassword', checkUserAuth)
+// router.post('/new', checkUserAuth);
 
 
 

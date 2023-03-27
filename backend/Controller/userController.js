@@ -175,10 +175,14 @@ class userController {
         const { email } = req.body
         if (email) {
             const user = await userModel.findOne({ email: email })
+            console.log("this is user",user)
             if (user) {
                 const secret = user._id + process.env.JWT_SECRET_KEY
+                console.log(process.env.JWT_SECRET_KEY)
+                // const secret= crypto.randomBytes(32).toString('hex');
                 const token = jwt.sign({ userID: user._id }, secret, { expiresIn: '15m' })
-                const link = `http://127.0.0.1:4000/api/user/reset/${user._id}/${token}`
+                const encodedToken = Buffer.from(token).toString('base64');
+                const link = `http://localhost:5174/api/user/reset-password/${user._id}/${encodedToken}`
                 console.log(link)
                 // Send Email:
 
@@ -206,13 +210,17 @@ class userController {
     static userPasswordReset = catchAsyncErrors(async (req, res, next) => {
 
         const { password, passwordConfirmation } = req.body
+        
         const { id, token } = req.params
         const user = await userModel.findById(id)
         const newSecret = user._id + process.env.JWT_SECRET_KEY
         try {
-            jwt.verify(token, newSecret)
+            const decodedToken = Buffer.from(token, 'base64').toString('utf-8');
+            jwt.verify(decodedToken, newSecret)
             if (password && passwordConfirmation) {
                 if (password !== passwordConfirmation) {
+                    console.log(password);
+                    console.log(passwordConfirmation)
                     res.send({
                         "status": "failed",
                         "message": "New Password and Confirm New Password doesn't match"

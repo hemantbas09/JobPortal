@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react'
 import axios from "axios"
 // import useHistory from 'react-router-dom'
 import { FcGoogle } from "react-icons/fc"
-import { useRegisterUserMutation } from '../../redux/services/userAuthApi'
+import { useNavigate } from 'react-router-dom';
+import { storeToken } from '../../Service/localStorageService';
+import { useRegisterUserMutation } from '../../Service/userAuth'
 
 const CandidateSignUp = () => {
+    const navigate = useNavigate();
     const [registerUser, { isLoading }] = useRegisterUserMutation();
     const [isChecked, setIsChecked] = useState(true);
     const handleChecked = event => {
@@ -18,36 +21,44 @@ const CandidateSignUp = () => {
         setIsChecked(current => !current);
     };
 
+
     const [user, setUser] = useState({
         fullName: "", email: "", password: "", passwordConfirmation: "", termCondition: "", role: "user"
     })
+
     let name, value;
     const handleInputs = async (e) => {
         name = e.target.name;
         value = e.target.value
-        setUser({ ...user, [name]: value })
-        console.log(user);
-        const res = await registerUser(user);
-        console.log(res);
+        setUser({ ...user, [name]: value })     
+        console.log('name', user)
+
+
+
     }
+    console.log(user)
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        // code to submit form data to server or handle form validation goes here
+        if (user.fullName && user.email && user.password && user.passwordConfirmation && user.termCondition == 'true') {
+            console.log('first')
+            const res = await registerUser(user);
+            console.log('Second', res)
+            if (res.data.success === true) {
+                console.log("Pitai Khanxas")
+                storeToken(res.data.token)
+                navigate("/home")
+            }
+        } else {
+            console.log("Please add all input")
+        }
+    };
 
-    // const postData = async (e) => {
-    //     e.preventDefault()
-    //     try {
-    //         const res = await axios.post("http://localhost:3000/api/user/register", user)
-    //         console.log(res.data.message);
-
-    //     } catch (error) {
-    //         console.log(error)
-
-    //     }
-
-    // }
-
+   
 
     return (
         <>
-            <form method='POST' className="mt-4 " id='signup-form'>
+            <form method='POST' className="mt-4 " id='signup-form' onSubmit={handleSubmit}>
 
                 {/* name and email of the candidate */}
                 <div className='flex'>
@@ -114,8 +125,12 @@ const CandidateSignUp = () => {
 
                 {/* sign up button for candidate */}
                 <div className="ml-20 py-6">
-                    <input type="submit" value='Sign Up' name='signup' id='signup' className="border-2 border-indigo-700 bg-indigo-700 text-white py-1 w-4/5 rounded-md hover:bg-transparent hover:text-indigo-700 font-semibold leading-10"
-                        onClick={() => { createPost(user) }}
+                    <input
+                        type="submit"
+                        value="Sign Up"
+                        name="signup"
+                        id="signup"
+                        className="border-2 border-indigo-700 bg-indigo-700 text-white py-1 w-4/5 rounded-md hover:bg-transparent hover:text-indigo-700 font-semibold leading-10"
                     />
                 </div>
             </form>

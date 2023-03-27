@@ -15,7 +15,7 @@ router.post('/login', userController.userLogin);
 
 router.post('/sendresetpasswordEmail', userController.sendUserPasswordResetEmail)
 
-router.post('/resetpassword/:id/:token',userController.userPasswordReset)
+router.post('/reset-password/:id/:token',userController.userPasswordReset)
 //Private Routes:
 router.post('/changepassword', userController.changeuserPassword);
 router.get('/loggedUser', userController.loggedUser)

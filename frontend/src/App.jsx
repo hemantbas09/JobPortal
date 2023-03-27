@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Navbar, Footer, AuthenticationForm } from './component/index.js'
+import {ResetPassword,Login, Navbar, Footer, AuthenticationForm,SendPasswordResetEmail } from './component/index.js'
 import { Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob, ApplicantsJob, MyJob, Package, ShortlistCandidates } from './pages/index.js'
 
 // import workImg from './images/work.jpg'
@@ -16,11 +16,14 @@ const App = () => {
        
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/nm" element={<AuthenticationForm />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/register" element={<AuthenticationForm />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/user" element={<CandidateDashboard />} />
-
-
+          <Route path="/forgetpassword" element={<SendPasswordResetEmail/>} />
+          <Route path="api/user/reset-password/:id/:token" element={< ResetPassword/>} />
+          
           {/* Company */}
 
           <Route path="/company" element={< CompanyDashboard />} />

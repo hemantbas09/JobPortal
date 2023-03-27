@@ -82,11 +82,11 @@ const jobSchema = new mongoose.Schema({
         }
     ],
 
-    user: {
-        type: mongoose.Schema.ObjectId,
-        ref: "user",
-        required: true,
-    },
+    // user: {
+    //     type: mongoose.Schema.ObjectId,
+    //     ref: "user",
+    //     required: true,
+    // },
     createDate: {
         type: Date,
         default: Date.now
