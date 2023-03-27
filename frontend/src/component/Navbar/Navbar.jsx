@@ -13,6 +13,7 @@ const Navbar = () => {
           <span className='px-3'><img className='w-52 -mt-5' src="image/logo.svg" alt="logo" /> </span>
           <div className='hidden md:flex items-center '>
             <ul className='flex gap-4'>
+              <img src="image/work.jpg" className='w-80' alt="" />
               <li className='hover:text-blue-600/100'>Home</li>
               <li className='hover:text-blue-600/100'>About</li>
               <li className='hover:text-blue-600/100'>Support</li>

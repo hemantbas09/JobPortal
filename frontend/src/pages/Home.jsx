@@ -4,11 +4,14 @@ import { Category, Job } from '../component/index';
 // import {workImage} from '../images/download.png'
 
 const Home = () => {
+  
+    
     return (
         <>
             <div className=' mx-40  -mt-10'>
                 <Hero />
                 <hr />
+           
                 {/* Job Category:  */}
                 <div >
 
@@ -19,15 +22,15 @@ const Home = () => {
 
                     <div className="grid grid-cols-3  gap-x-28 ml-1.5">
 
-                        <div class="bg-gray-100 w-60 mb-10 "> <Category /></div>
-                        <div class="bg-gray-100 w-60 mb-10 "> <Category /></div>
-                        <div class="bg-gray-100 w-60 mb-10 "> <Category /></div>
-                        <div class="bg-gray-100 w-60 mb-10 "> <Category /></div>
-                        <div class="bg-gray-100 w-60 mb-10 "> <Category /></div>
-                        <div class="bg-gray-100 w-60 mb-10 "> <Category /></div>
-                        <div class="bg-gray-100 w-60 mb-10 "> <Category /></div>
-                        <div class="bg-gray-100 w-60 mb-10 "> <Category /></div>
-                        <div class="bg-gray-100 w-60 mb-10 "> <Category /></div>
+                        <div className="bg-gray-100 w-60 mb-10 "> <Category /></div>
+                        <div className="bg-gray-100 w-60 mb-10 "> <Category /></div>
+                        <div className="bg-gray-100 w-60 mb-10 "> <Category /></div>
+                        <div className="bg-gray-100 w-60 mb-10 "> <Category /></div>
+                        <div className="bg-gray-100 w-60 mb-10 "> <Category /></div>
+                        <div className="bg-gray-100 w-60 mb-10 "> <Category /></div>
+                        <div className="bg-gray-100 w-60 mb-10 "> <Category /></div>
+                        <div className="bg-gray-100 w-60 mb-10 "> <Category /></div>
+                        <div className="bg-gray-100 w-60 mb-10 "> <Category /></div>
 
                     </div>
 
@@ -42,14 +45,14 @@ const Home = () => {
 
                     <div className="grid grid-cols-2 gap-x-28 ml-1.5">
 
-                        <div class="bg-gray-100  mb-10 "> <Job /></div>
-                        <div class="bg-gray-100  mb-10 "> <Job /></div>
-                        <div class="bg-gray-100  mb-10 "> <Job /></div>
-                        <div class="bg-gray-100  mb-10 "> <Job /></div>
-                        <div class="bg-gray-100  mb-10 "> <Job /></div>
-                        <div class="bg-gray-100  mb-10 "> <Job /></div>
-                        <div class="bg-gray-100  mb-10 "> <Job /></div>
-                        <div class="bg-gray-100  mb-10 "> <Job /></div>
+                        <div className="bg-gray-100  mb-10 "> <Job /></div>
+                        <div className="bg-gray-100  mb-10 "> <Job /></div>
+                        <div className="bg-gray-100  mb-10 "> <Job /></div>
+                        <div className="bg-gray-100  mb-10 "> <Job /></div>
+                        <div className="bg-gray-100  mb-10 "> <Job /></div>
+                        <div className="bg-gray-100  mb-10 "> <Job /></div>
+                        <div className="bg-gray-100  mb-10 "> <Job /></div>
+                        <div className="bg-gray-100  mb-10 "> <Job /></div>
 
 
                     </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { BsArrowLeftShort } from 'react-icons/bs'
 import { AiFillEnvironment } from "react-icons/ai";
-
+import { Link } from 'react-router-dom';
 
 const Sidebar = ({ Menus }) => {
     const [open, setOpen] = useState(true);
@@ -36,17 +36,20 @@ const Sidebar = ({ Menus }) => {
                     </div>
                     <ul className="pt-6">
                         {Menus.map((Menu, index) => (
+                            
                             <li
                                 key={index}
                                 className={`flex  rounded-md p-2 cursor-pointer hover:bg-zinc-100 text-gray-600 text-sm items-center gap-x-4 
               ${Menu.gap ? "mt-6" : "mt-2"} ${index === 0 && 'bg-zinc-100'} `}
                             >
-                                <a href="">{Menu.src}</a>
+                                <Link to={Menu.link}>{Menu.src}</Link>
+                                
                                 
                                 <a href="#">
 
                                     <span className={`${!open && "hidden"} origin-left duration-200`}>
-                                        {Menu.title}
+                                    <Link to={Menu.link}>{Menu.title}</Link>
+                                        
                                     </span>
                                 </a>
 

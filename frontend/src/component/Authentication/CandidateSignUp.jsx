@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import axios from "axios"
 // import useHistory from 'react-router-dom'
 import { FcGoogle } from "react-icons/fc"
+import { useRegisterUserMutation } from '../../redux/services/userAuthApi'
 
 const CandidateSignUp = () => {
+    const [registerUser, { isLoading }] = useRegisterUserMutation();
     const [isChecked, setIsChecked] = useState(true);
     const handleChecked = event => {
         if (event.target.checked) {
@@ -20,26 +22,27 @@ const CandidateSignUp = () => {
         fullName: "", email: "", password: "", passwordConfirmation: "", termCondition: "", role: "user"
     })
     let name, value;
-    const handleInputs = (e) => {
+    const handleInputs = async (e) => {
         name = e.target.name;
         value = e.target.value
         setUser({ ...user, [name]: value })
         console.log(user);
-
+        const res = await registerUser(user);
+        console.log(res);
     }
 
-    const postData = async (e) => {
-        e.preventDefault()
-        try {
-            const res = await axios.post("http://localhost:3000/api/user/register", user)
-            console.log(res.data.message);
+    // const postData = async (e) => {
+    //     e.preventDefault()
+    //     try {
+    //         const res = await axios.post("http://localhost:3000/api/user/register", user)
+    //         console.log(res.data.message);
 
-        } catch (error) {
-            console.log(error)
+    //     } catch (error) {
+    //         console.log(error)
 
-        }
+    //     }
 
-    }
+    // }
 
 
     return (
@@ -112,7 +115,7 @@ const CandidateSignUp = () => {
                 {/* sign up button for candidate */}
                 <div className="ml-20 py-6">
                     <input type="submit" value='Sign Up' name='signup' id='signup' className="border-2 border-indigo-700 bg-indigo-700 text-white py-1 w-4/5 rounded-md hover:bg-transparent hover:text-indigo-700 font-semibold leading-10"
-                        onClick={postData}
+                        onClick={() => { createPost(user) }}
                     />
                 </div>
             </form>
