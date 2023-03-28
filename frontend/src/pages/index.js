@@ -8,7 +8,7 @@ import ApplicantsJob from "./Company/ApplicantsJob";
 import MyJob from "./Company/MyJob";
 import Package from "./Company/Package";
 import ShortlistCandidates from "./Company/ShortlistCandidates";
+import JobDetails from "./Candidate/JobDetails";
+import Assestement from "./Candidate/Assestement";
 
-
-
-export { Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob,ApplicantsJob,MyJob,Package,ShortlistCandidates }
+export {Assestement,JobDetails, Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob,ApplicantsJob,MyJob,Package,ShortlistCandidates }

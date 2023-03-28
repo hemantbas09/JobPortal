@@ -1,16 +1,24 @@
 import React from 'react'
 import DataTable from 'react-data-table-component'
 import AdminSidebar from '../../component/Admin/AdminSidebar';
+import { useGetAllJobQuery } from '../../Service/jobApi';
 import { CiSearch } from "react-icons/ci";
+
 const MyJob = () => {
+  const jobInfo = useGetAllJobQuery();
+  const jobs = jobInfo.data?.jobs ?? [];
+  console.log(jobs)
+
+
+
   const columns = [
     {
-      name: "Title",
-      selector: row => row.title,
+      name: "Id",
+      selector: row => row.id,
       sortable: true
     },
     {
-      name: "Created Date",
+      name: "Title",
       selector: row => row.createData,
       sortable: true,
     },
@@ -28,17 +36,15 @@ const MyJob = () => {
       selector: row => row.action
     }
   ];
-  const data = [
-    {
-      id: 1,
-      title: "Hemant",
-      createData: "27 feb",
-      expiredData: "27 December",
-      status: "pending",
-      action: "delete"
-    }
+  const data = jobs.map((job) => ({
+    id: job._id,
+    title: job.title,
+    createData: job.createDate,
+    expiredData: job.expiredDate,
+    status: job.status,
+    action: "delete",
+  }));
 
-  ]
   return (
     <>
       {/* <Sidebar /> */}
@@ -64,12 +70,12 @@ const MyJob = () => {
 
               <div className=" flex justify-end">
                 <select name="cars" id="cars" className='bg-green-800 mr-10 mb-10  p-3  rounded-md focus:bg-white  focus:outline-none focus:ring focus:border-zinc-600'>
-                <option value="volvo">Sort By</option>
+                  <option value="volvo">Sort By</option>
                   <option value="volvo">Newest</option>
                   <option value="saab">Oldest</option>
-                
+
                 </select>
-               
+
               </div>
 
               <DataTable

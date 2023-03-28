@@ -6,12 +6,12 @@ const AddJob = () => {
     const [addJob, { isLoading }] = useAddJobMutation();
 
     const [job, setJob] = useState({
-        featureImage: "", jobTitle: "",
-        jobDescription: "", category: "",
-        type: "", gender: "", salaryType: "",
-        minimumSalary: "", maxSalary: "",
+        featureImages: "", jobTitle: "",
+        jobDescription: "", jobCategory: "",
+        jobType: "", gender: "", salaryType: "",
+        minSalary: "", maxSalary: "",
         qualification: "", experience: "",
-        location: "", photo: "", video: "", enquiry: "",deadlinedate: ""
+        location: "", images: "", videos: "", forEnquiry: "",deadlineDate: ""
     })
 
     let name, value;
@@ -28,9 +28,9 @@ const AddJob = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // code to submit form data to server or handle form validation goes here
-        if (featureImage && jobTitle && jobDescription && category && type && gender && salaryType &&
-            minimumSalary && maxSalary && qualification && experience && location && deadlinedate &&
-            photo && video && enquiry) {
+        if (featureImages && jobTitle && jobDescription && jobCategory && jobType && gender && salaryType &&
+            minSalary && maxSalary && qualification && experience && location && deadlineDate &&
+            images && videos && forEnquiry) {
             console.log('first')
             const res = await addJob(job);
             console.log('Second', res)
@@ -59,8 +59,8 @@ const AddJob = () => {
                         <form action="" method='POST' className='m-10' onSubmit={handleSubmit} >
 
                             <div className='p-3 '>
-                                <label className='p-3' htmlFor="featureImage">Featured Image</label> <br />
-                                <input onChange={handleInputs} id="featureImage" name='featureImage' className=' border p-2 m-3 bg-zinc-100' type="file" required />
+                                <label className='p-3' htmlFor="featureImages">Featured Image</label> <br />
+                                <input onChange={handleInputs} id="featureImages" name='featureImages' className=' border p-2 m-3 bg-zinc-100' type="file" required />
                             </div>
                             <div className='p-3 '>
                                 <label className='p-3' htmlFor="jobTitle">Job Title</label> <br />
@@ -72,12 +72,12 @@ const AddJob = () => {
 
                             </div>
                             <div className='p-3 '>
-                                <label className='p-3' htmlFor="category">Category</label> <br />
-                                <input onChange={handleInputs} id="category" name='category' className='border p-4 m-3 w-11/12 bg-zinc-100 focus:bg-white focus:border-indigo-700' type="text" required />
+                                <label className='p-3' htmlFor="jobCategory">jobCategory</label> <br />
+                                <input onChange={handleInputs} id="jobCategory" name='jobCategory' className='border p-4 m-3 w-11/12 bg-zinc-100 focus:bg-white focus:border-indigo-700' type="text" required />
                             </div>
                             <div className='p-3 '>
-                                <label className='p-3' htmlFor="type">Type</label> <br />
-                                <input onChange={handleInputs} id="type" name='type' className='border p-4 m-3 w-11/12 bg-zinc-100 focus:bg-white focus:border-indigo-700' type="text" required />
+                                <label className='p-3' htmlFor="jobType">jobType</label> <br />
+                                <input onChange={handleInputs} id="jobType" name='jobType' className='border p-4 m-3 w-11/12 bg-zinc-100 focus:bg-white focus:border-indigo-700' type="text" required />
                             </div>
 
                             <div className='p-3 '>
@@ -89,8 +89,8 @@ const AddJob = () => {
                                 <input onChange={handleInputs} id="salaryType" name='salaryType' className='border p-4 m-3 w-11/12 bg-zinc-100 focus:bg-white focus:border-indigo-700' type="text" required />
                             </div>
                             <div className='p-3 '>
-                                <label className='p-3' htmlFor="minimumSalary">Minimum Salary</label> <br />
-                                <input onChange={handleInputs} id="minimumSalary" name='minimumSalary' className='border p-4 m-3 w-11/12 bg-zinc-100 focus:bg-white focus:border-indigo-700' type="text" required />
+                                <label className='p-3' htmlFor="minSalary">Minimum Salary</label> <br />
+                                <input onChange={handleInputs} id="minSalary" name='minSalary' className='border p-4 m-3 w-11/12 bg-zinc-100 focus:bg-white focus:border-indigo-700' type="text" required />
                             </div>
                             <div className='p-3 '>
                                 <label className='p-3' htmlFor="maxSalary">Maximum Salary</label> <br />
@@ -109,20 +109,20 @@ const AddJob = () => {
                                 <input onChange={handleInputs} id="location" name='location' className='border p-4 m-3 w-11/12 bg-zinc-100 focus:bg-white focus:border-indigo-700' type="text" required />
                             </div>
                             <div className='p-3 '>
-                                <label className='p-3' htmlFor="deadlinedate">Applications Deadline Date</label> <br />
-                                <input onChange={handleInputs} id="deadlinedate" name='deadlinedate' className='border p-4 m-3 w-11/12 bg-zinc-100 focus:bg-white focus:border-indigo-700' type="text" required />
+                                <label className='p-3' htmlFor="deadlineDate">Applications Deadline Date</label> <br />
+                                <input onChange={handleInputs} id="deadlineDate" name='deadlineDate' className='border p-4 m-3 w-11/12 bg-zinc-100 focus:bg-white focus:border-indigo-700' type="text" required />
                             </div>
                             <div className='p-3 '>
-                                <label className='p-3' htmlFor="photo">Photo</label> <br />
-                                <input onChange={handleInputs} id="photo" name='photo' className='border p-4 m-3 w-11/12 bg-zinc-100 focus:bg-white focus:border-indigo-700' type="file" required />
+                                <label className='p-3' htmlFor="images">images</label> <br />
+                                <input onChange={handleInputs} id="images" name='images' className='border p-4 m-3 w-11/12 bg-zinc-100 focus:bg-white focus:border-indigo-700' type="file" required />
                             </div>
                             <div className='p-3 '>
-                                <label className='p-3' htmlFor="video">Video</label> <br />
-                                <input onChange={handleInputs} id="video" name='video' className='border p-4 m-3 w-11/12 bg-zinc-100 focus:bg-white focus:border-indigo-700' type="file" required />
+                                <label className='p-3' htmlFor="videos">videos</label> <br />
+                                <input onChange={handleInputs} id="videos" name='videos' className='border p-4 m-3 w-11/12 bg-zinc-100 focus:bg-white focus:border-indigo-700' type="file" required />
                             </div>
                             <div className='p-3 '>
-                                <label className='p-3' htmlFor="enquiry">For Enquiry</label> <br />
-                                <input onChange={handleInputs} id="enquiry" name='enquiry' className='border p-4 m-3 w-11/12 bg-zinc-100 focus:bg-white focus:border-indigo-700' type="text" required />
+                                <label className='p-3' htmlFor="forEnquiry">For forEnquiry</label> <br />
+                                <input onChange={handleInputs} id="forEnquiry" name='forEnquiry' className='border p-4 m-3 w-11/12 bg-zinc-100 focus:bg-white focus:border-indigo-700' type="text" required />
                             </div>
 
                             <div className="ml-20 py-6">

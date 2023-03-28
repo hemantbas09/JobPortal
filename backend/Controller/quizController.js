@@ -1,4 +1,4 @@
-import jobModel from "../Models/jobModel.js";
+import quizModel from "../Models/quizModel.js"
 import * as cron from 'node-cron'
 import catchAsyncErrors from '../Middleware/catchAsyncErrors.js'
 
@@ -9,28 +9,30 @@ class jobController {
 
         // for store the user information:
         req.body.user = req.user;
-        
+        req.body.job = req.params.id;
+        console.log("jpt",req.user)
+        console.log("header",req.body.job)
 
         // creating a object or instace of the JobModal:
-        const job = new jobModel(req.body);
-        console.log("first", job);
+        const quiz = new quizModel(req.body);
+        console.log("first", quiz);
         // save in the database
-        await job.save();
+        await quiz.save();
 
         // for the response:
         res.status(201).json({
             success: true,
-            job,
+            quiz,
         })
 
     });
 
 
     //  get all the job
-    static getAllQuiz = catchAsyncErrors(async (req, res, next) => {
+    static getAllquiz = catchAsyncErrors(async (req, res, next) => {
 
         // select all job:
-        const jobs = await jobModel.find()
+        const jobs = await quizModel.find()
 
         // response the client:
         res.status(201).json({
@@ -42,10 +44,10 @@ class jobController {
 
 
     // get the job by using id:
-    static getjobByID = catchAsyncErrors(async (req, res, next) => {
+    static getquizByID = catchAsyncErrors(async (req, res, next) => {
 
         // select job by Id:
-        const job = await jobModel.findById(req.params.id);
+        const job = await quizModel.findById(req.params.id);
 
         // check job is found or not:
         if (!job) {
@@ -66,7 +68,7 @@ class jobController {
 
 
     //Update Job:
-    static updateJob = catchAsyncErrors(async (req, res, next) => {
+    static updatequiz = catchAsyncErrors(async (req, res, next) => {
 
         // Select the job by if:
         let job = await jobModel.findById(req.params.id);
@@ -100,7 +102,7 @@ class jobController {
 
 
     // Delete Job:
-    static deleteJob = catchAsyncErrors(async (req, res, next) => {
+    static deletequiz = catchAsyncErrors(async (req, res, next) => {
 
         // find job in database
         let job = await jobModel.findById(req.params.id);
@@ -125,32 +127,6 @@ class jobController {
 
 }
 
-// Manage the status of the job:
-/*
-try {
-
-    cron.schedule('* * * * *', async () => {
-        const jobs = await jobModel.find();
-        for (const job of jobs) {
-            const currentDate = new Date()
-            console.log(currentDate)
-            console.log(currentDate > job.deadlineDate);
-            if (currentDate > job.deadlineDate) {
-                job.active = false
-                await job.save();
-                console.log("Nepal");
-            }
-            else{
-                job.active=true
-                await job.save();
-            }
-        }
-    });
-
-} catch (error) {
-    console.log(error);
-}
-*/
 
 
 export default jobController

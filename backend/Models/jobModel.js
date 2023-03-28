@@ -25,11 +25,11 @@ const jobSchema = new mongoose.Schema({
         required: [true, "Please Enter Salary Type"]
     },
     maxSalary: {
-        type: Number,
+        type: String,
         required: [true, "Please Enter Product Price"]
     },
     minSalary: {
-        type: Number,
+        type: String,
         required: [true, "Please Enter Product Price"]
     },
     gender: {
@@ -39,7 +39,7 @@ const jobSchema = new mongoose.Schema({
     },
 
     experience: {
-        type: Number,
+        type: String,
         required: [true, "Please Enter Experience"]
     },
     location: {
@@ -48,37 +48,40 @@ const jobSchema = new mongoose.Schema({
     },
     featureImages:
     {
-        public_id: {
-            type: String,
-            required: true
-        },
-        url: {
-            type: String,
-            required: true
-        }
+        type:String
+        // public_id: {
+        //     type: String,
+        //     required: true
+        // },
+        // url: {
+        //     type: String,
+        //     required: true
+        // }
     },
     images: [
         {
-            public_id: {
-                type: String,
-                required: true
-            },
-            url: {
-                type: String,
-                required: true
-            }
+            type:String
+            // public_id: {
+            //     type: String,
+            //     required: true
+            // },
+            // url: {
+            //     type: String,
+            //     required: true
+            // }
         }
     ],
     videos: [
         {
-            public_id: {
-                type: String,
-                required: true
-            },
-            url: {
-                type: String,
-                required: true
-            }
+            type:String
+            // public_id: {
+            //     type: String,
+            //     required: true
+            // },
+            // url: {
+            //     type: String,
+            //     required: true
+            // }
         }
     ],
 
@@ -98,7 +101,7 @@ const jobSchema = new mongoose.Schema({
 
     },
     forEnquiry: {
-        type: Number,
+        type: String,
         required: [true, "Please Enter Enquiry Contact Number"]
     },
     active: {
