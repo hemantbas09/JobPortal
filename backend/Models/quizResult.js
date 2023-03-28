@@ -19,6 +19,10 @@ const quizResultSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: "quiz",
         required: true,
+    },
+    answer:{
+        type:String,
+        
     }
 })
 

@@ -1,132 +1,65 @@
-import quizModel from "../Models/quizModel.js"
-import * as cron from 'node-cron'
-import catchAsyncErrors from '../Middleware/catchAsyncErrors.js'
+import quizModel from '../Models/appliedjobModel'
 
-class jobController {
+exports.createQuiz = (req, res) => {
+  const quiz = new quizModel(req.body);
 
-    // post a new Job
-    static quizCreate = catchAsyncErrors(async (req, res, next) => {
+  quiz.save((err, newQuiz) => {
+    if (err) {
+      return res.status(400).json({
+        error: 'Could not create quiz',
+      });
+    }
+    res.json({ quiz: newQuiz });
+  });
+};
 
-        // for store the user information:
-        req.body.user = req.user;
-        req.body.job = req.params.id;
-        console.log("jpt",req.user)
-        console.log("header",req.body.job)
+exports.getQuiz = (req, res) => {
+  const quizId = req.params.id;
 
-        // creating a object or instace of the JobModal:
-        const quiz = new quizModel(req.body);
-        console.log("first", quiz);
-        // save in the database
-        await quiz.save();
+  Quiz.findById(quizId, (err, quiz) => {
+    if (err || !quiz) {
+      return res.status(400).json({
+        error: 'Quiz not found',
+      });
+    }
+    res.json({ quiz });
+  });
+};
 
-        // for the response:
-        res.status(201).json({
-            success: true,
-            quiz,
-        })
+exports.getAllQuizzes = (req, res) => {
+  Quiz.find((err, quizzes) => {
+    if (err) {
+      return res.status(400).json({
+        error: 'Could not fetch quizzes',
+      });
+    }
+    res.json({ quizzes });
+  });
+};
 
-    });
+exports.updateQuiz = (req, res) => {
+  const quizId = req.params.id;
+  const updates = req.body;
 
+  Quiz.findByIdAndUpdate(quizId, updates, { new: true }, (err, updatedQuiz) => {
+    if (err) {
+      return res.status(400).json({
+        error: 'Could not update quiz',
+      });
+    }
+    res.json({ quiz: updatedQuiz });
+  });
+};
 
-    //  get all the job
-    static getAllquiz = catchAsyncErrors(async (req, res, next) => {
+exports.deleteQuiz = (req, res) => {
+  const quizId = req.params.id;
 
-        // select all job:
-        const jobs = await quizModel.find()
-
-        // response the client:
-        res.status(201).json({
-            success: true,
-            jobs,
-        })
-
-    })
-
-
-    // get the job by using id:
-    static getquizByID = catchAsyncErrors(async (req, res, next) => {
-
-        // select job by Id:
-        const job = await quizModel.findById(req.params.id);
-
-        // check job is found or not:
-        if (!job) {
-            res.status(404).json({
-                success: failed,
-                message: "Jobs is not found"
-            });
-
-        }
-
-        // response the client:
-        res.status(200).json({
-            success: true,
-            job
-        });
-
-    });
-
-
-    //Update Job:
-    static updatequiz = catchAsyncErrors(async (req, res, next) => {
-
-        // Select the job by if:
-        let job = await jobModel.findById(req.params.id);
-
-        // check the job is find or not
-        if (!job) {
-            res.status(200).json({
-                success: true,
-                message: "Job not found"
-            })
-        }
-
-
-
-        // update the job:
-        job = await jobModel.findByIdAndUpdate(req.params.id, req.body,
-            {
-                new: true,
-                runValidators: true,
-                useFindAndModify: false
-            });
-
-        // response to the client
-        res.status(200).json({
-            success: true,
-            job
-        })
-    });
-
-    // Manage the Job status status: 
-
-
-    // Delete Job:
-    static deletequiz = catchAsyncErrors(async (req, res, next) => {
-
-        // find job in database
-        let job = await jobModel.findById(req.params.id);
-
-        // check job is found or not
-        if (!job) {
-            res.status(401).json({
-                success: true,
-                message: "Job  not found"
-            })
-
-        } else {
-            // Delete the Job
-            job = await jobModel.findByIdAndDelete(req.params.id);
-        }
-        // response
-        res.status(200).json({
-            success: true,
-            message: "Successfually Deleted"
-        })
-    });
-
-}
-
-
-
-export default jobController
+  Quiz.findByIdAndRemove(quizId, (err, deletedQuiz) => {
+    if (err) {
+      return res.status(400).json({
+        error: 'Could not delete quiz',
+      });
+    }
+    res.json({ quiz: deletedQuiz });
+  });
+};

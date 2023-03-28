@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import {ResetPassword,Login, Navbar, Footer, AuthenticationForm,SendPasswordResetEmail } from './component/index.js'
-import {Assestement,JobDetails, Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob, ApplicantsJob, MyJob, Package, ShortlistCandidates } from './pages/index.js'
+import {AddQuiz,Assestement,JobDetails, Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob, ApplicantsJob, MyJob, Package, ShortlistCandidates } from './pages/index.js'
 
 // import workImg from './images/work.jpg'
 
@@ -35,6 +35,7 @@ const App = () => {
       
           <Route path="/jobdetails" element={<  JobDetails />} />
           <Route path="/quiz" element={<      Assestement />} />
+          <Route path="/addquiz/:id" element={<      AddQuiz />} />
 
 
         </Routes >
