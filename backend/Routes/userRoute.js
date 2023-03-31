@@ -2,14 +2,14 @@ import express from 'express'
 const router = express.Router();
 import userController from '../Controller/userController.js';
 import checkUserAuth from '../Middleware/authMiddleware.js'
-
+import pdfUpload from '../utils/pdfUpload.js';
 // Route level Middleware - TO Protect Route
 router.use('/changepassword', checkUserAuth)
 router.use('/loggedUser', checkUserAuth)
 
 
 //public Routes:
-router.post('/register', userController.userRegistration);
+router.post('/register',pdfUpload.single('document'), userController.userRegistration);
 
 router.post('/login', userController.userLogin);
 

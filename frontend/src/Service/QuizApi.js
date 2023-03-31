@@ -8,11 +8,11 @@ export const quizApi = createApi({
 
         // Register the User:
         addquizQuestion: builder.mutation({
-            query: ({quiz,id}) => {
+            query: ({ quiz, id }) => {
                 console.log("quiz", quiz)
-                
+
                 return {
-                    url:`new/${id}`, 
+                    url: `new/${id}`,
                     method: 'POST',
                     body: quiz,
                     headers: {
@@ -24,14 +24,13 @@ export const quizApi = createApi({
         }),
 
         // Access all the job:
-        getAllJob: builder.query({
-            query: () => ({
+        getquizbyjobId: builder.query({
 
-                url: 'id',
+            query: (id) => ({
+
+                url: `${id}`,
                 method: 'Get',
-
             }),
-
         }),
 
 
@@ -40,4 +39,4 @@ export const quizApi = createApi({
     }),
 });
 
-export const { useAddquizQuestionMutation } = quizApi;
+export const { useAddquizQuestionMutation, useGetquizbyjobIdQuery } = quizApi;

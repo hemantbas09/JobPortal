@@ -3,28 +3,9 @@ import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
 const CompnaySignUp = () => {
 
-    const [isChecked, setIsChecked] = useState(true);
-    const handleChecked = event => {
-        if (event.target.checked) {
-            console.log('Checkbox is checked');
-            console.log("checked",isChecked)
-        } else {
-            console.log(' Checkbox is NOT checked');
-            console.log("not checked", isChecked)
-        }
-        setIsChecked(current => !current);
-    };
 
-    const [user, setUser] = useState({
-        fullName: "", email: "", password: "", passwordConfirmation: "", document: "", termCondition: "", role: "company"
-    })
-    let name, value;
-    const handleInputs = (e) => {
-        name = e.target.name;
-        value = e.target.value
-        setUser({ ...user, [name]: value })
-        console.log("This is user",user);
-    }
+
+   
 
     const postData = async (e) => {
         e.preventDefault()

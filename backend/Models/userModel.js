@@ -46,10 +46,7 @@ const userSchema = new mongoose.Schema({
         required: true
     },
 
-    termCondition: {
-        type: Boolean,
-        required: true
-    },
+  
 
     createdAt: {
         type: Date,

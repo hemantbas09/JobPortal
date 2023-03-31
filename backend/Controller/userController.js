@@ -3,57 +3,85 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import catchAsyncErrors from '../Middleware/catchAsyncErrors.js'
 import transporter from '../config/emailConfig.js'
-
+import pdfUpload from '../utils/pdfUpload.js'
 class userController {
 
     // Regestration of the user:
     static userRegistration = catchAsyncErrors(async (req, res, next) => {
 
         // Take the input from the frontend
-        const { fullName, email, password, passwordConfirmation, document, profileImages, role, termCondition } = req.body
-        console.log("The term and condition is",termCondition);
+        const { fullName, email, password, passwordConfirmation, document, profileImages, role } = req.body
+        const existingUser = await userModel.find({ email: email })
+        console.log(existingUser.length)
+        console.log(existingUser.length)
+
         // check the password and conformation password are same or not:
-        if (fullName && email && password && passwordConfirmation && role && termCondition) {
-            if (password === passwordConfirmation) {
-                if (termCondition == "true") {
-                    // hash the password: 
-                    const salt = await bcrypt.genSalt(10)
-                    const hashPassword = await bcrypt.hash(password, salt)
-                    const user = new userModel({
-                        fullName: fullName,
-                        email: email,
-                        password: hashPassword,
-                        document: document,
-                        profileImages: profileImages,
-                        role: role,
-                        termCondition: termCondition,
-                    })
-                    await user.save()
-                    console.log("Name",fullName);
+        if (fullName && email && password && passwordConfirmation && role) {
+            if (existingUser.length != 0) {
+                console.log("oya jhuma oe jhuma email pahilai xa")
+                res.send({ "status": "failed", "message": "Email already exist" })
+                console.log("pp not match");
 
-                    // use JWT Token:
-                    const saved_user = await userModel.findOne({ email: email })
-                    // Generate JWT Token:
-                    const token = jwt.sign({ userID: saved_user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
 
-                    res.status(201).json({
-                        success: true,
-                        user,
-                        token,
-                    });
-                } else {
-                    res.send({ "status": "failed", "message": "Please accept term and condition" })
-                    console.log("term condition 88");
+            } else {
+
+                console.log("yo nani ko sirai ma indra komal full hlyo")
+
+                if (password === passwordConfirmation) {
+
+                    if (password.length >= 8) {
+
+
+                        // hash the password: 
+                        const salt = await bcrypt.genSalt(10)
+                        const hashPassword = await bcrypt.hash(password, salt)
+                        const user = new userModel({
+                            fullName: fullName,
+                            email: email,
+                            password: hashPassword,
+                            document: document,
+                            profileImages: profileImages,
+                            role: role,
+
+                        })
+                        console.log(document)
+                        await user.save()
+                        console.log("Name", fullName);
+
+                        // use JWT Token:
+                        const saved_user = await userModel.findOne({ email: email })
+                        // Generate JWT Token:
+                        const token = jwt.sign({ userID: saved_user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
+
+                        res.status(201).json({
+                            success: true,
+                            user,
+                            token,
+                        });
+
+
+                    } else {
+
+
+
+                        res.send({ "status": "failed", "message": "Password should be greater then 8 digits" })
+                        console.log("pp not match");
+
+                    }
+
+
+
+                }
+                else {
+
+
+                    res.send({ "status": "failed", "message": "Password and Confirm Password doesn't match" })
+                    console.log("pp not match");
                 }
 
 
             }
-            else {
 
-
-                res.send({ "status": "failed", "message": "Password and Confirm Password doesn't match" })
-                console.log("pp not match");
-            }
         }
         else {
             res.send({ "status": "failed", "message": "Please Enter all Details" })
@@ -94,7 +122,7 @@ class userController {
                 if ((user.email === email) && isMatch) {
                     // use JWT Token:
                     const saved_user = await userModel.findOne({ email: email })
-                    
+
                     // Generate JWT Token:
                     if (user.role === 'admin' || user.role === 'user') {
                         const token = jwt.sign({ userID: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
@@ -175,7 +203,7 @@ class userController {
         const { email } = req.body
         if (email) {
             const user = await userModel.findOne({ email: email })
-            console.log("this is user",user)
+            console.log("this is user", user)
             if (user) {
                 const secret = user._id + process.env.JWT_SECRET_KEY
                 console.log(process.env.JWT_SECRET_KEY)
@@ -210,7 +238,7 @@ class userController {
     static userPasswordReset = catchAsyncErrors(async (req, res, next) => {
 
         const { password, passwordConfirmation } = req.body
-        
+
         const { id, token } = req.params
         const user = await userModel.findById(id)
         const newSecret = user._id + process.env.JWT_SECRET_KEY

@@ -1,13 +1,14 @@
 import React from 'react'
+import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import {ResetPassword,Login, Navbar, Footer, AuthenticationForm,SendPasswordResetEmail } from './component/index.js'
-import {AddQuiz,Assestement,JobDetails, Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob, ApplicantsJob, MyJob, Package, ShortlistCandidates } from './pages/index.js'
-
-// import workImg from './images/work.jpg'
+import { ResetPassword, Login, Navbar, Footer, AuthenticationForm, SendPasswordResetEmail } from './component/index.js'
+import { AddQuiz, Assestement, JobDetails, Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob, ApplicantsJob, MyJob, Package, ShortlistCandidates } from './pages/index.js'
+import MyForm from './component/Authentication/MyForm.jsx'
+// import work from './images/work.jpg'
 
 
 const App = () => {
-  const Menu=[]
+  const Menu = []
   return (
     <>
 
@@ -15,15 +16,16 @@ const App = () => {
         <Navbar />
        
         <Routes>
+        
           <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/home" element={< MyForm />} />
           <Route path="/register" element={<AuthenticationForm />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/user" element={<CandidateDashboard />} />
-          <Route path="/forgetpassword" element={<SendPasswordResetEmail/>} />
-          <Route path="api/user/reset-password/:id/:token" element={< ResetPassword/>} />
-          
+          <Route path="/forgetpassword" element={<SendPasswordResetEmail />} />
+          <Route path="api/user/reset-password/:id/:token" element={< ResetPassword />} />
+
           {/* Company */}
 
           <Route path="/company" element={< CompanyDashboard />} />
@@ -32,9 +34,9 @@ const App = () => {
           <Route path="/company/job" element={< MyJob />} />
           <Route path="/company/package" element={< Package />} />
           <Route path="/company/shortlist" element={< ShortlistCandidates />} />
-      
+
           <Route path="/jobdetails" element={<  JobDetails />} />
-          <Route path="/quiz" element={<      Assestement />} />
+          <Route path="/quiz/:id" element={<      Assestement />} />
           <Route path="/addquiz/:id" element={<      AddQuiz />} />
 
 

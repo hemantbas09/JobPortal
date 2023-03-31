@@ -30,7 +30,7 @@ const CandidateSignUp = () => {
     const handleInputs = async (e) => {
         name = e.target.name;
         value = e.target.value
-        setUser({ ...user, [name]: value })     
+        setUser({ ...user, [name]: value })
         console.log('name', user)
 
 
@@ -54,7 +54,7 @@ const CandidateSignUp = () => {
         }
     };
 
-   
+
 
     return (
         <>

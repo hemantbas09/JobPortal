@@ -6,20 +6,29 @@ const appliedJobSchema = mongoose.Schema(
         job: {
             type: mongoose.Schema.ObjectId,
             ref: 'job',
-            required: false
+            required: true
         },
         candidate: {
             type: mongoose.Schema.ObjectId,
             ref: 'user',
-            required: false
+            required: true
         },
         user: {
             type: mongoose.Schema.ObjectId,
             ref: 'user',
-            required: false
+            required: true
         },
+        resume: {
+            type: String,
+            required: true
+        },
+        applyDate: {
+            type: Date,
+            default: Date.now
+        }
     },
-    
+
+
     {
         timestamps: true
     })
