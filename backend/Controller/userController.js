@@ -4,19 +4,26 @@ import jwt from 'jsonwebtoken'
 import catchAsyncErrors from '../Middleware/catchAsyncErrors.js'
 import transporter from '../config/emailConfig.js'
 import pdfUpload from '../utils/pdfUpload.js'
+import { v2 as cloudinary } from 'cloudinary';
+import path from 'path'
+
 class userController {
 
     // Regestration of the user:
     static userRegistration = catchAsyncErrors(async (req, res, next) => {
-
+        // console.log("Is that good", Object.fromEntries(req.body.entries()));
         // Take the input from the frontend
-        const { fullName, email, password, passwordConfirmation, document, profileImages, role } = req.body
+
+        // console.log("Is that good", Object.fromEntries(req.body.entries()));
+        const { fullName, email, password, passwordConfirmation, role, document } = req.body
+        // console.log("THis is the Document", document);
         const existingUser = await userModel.find({ email: email })
         console.log(existingUser.length)
-        console.log(existingUser.length)
+
 
         // check the password and conformation password are same or not:
-        if (fullName && email && password && passwordConfirmation && role) {
+        if (fullName && email && password && passwordConfirmation && role && document) {
+
             if (existingUser.length != 0) {
                 console.log("oya jhuma oe jhuma email pahilai xa")
                 res.send({ "status": "failed", "message": "Email already exist" })
@@ -28,9 +35,21 @@ class userController {
                 console.log("yo nani ko sirai ma indra komal full hlyo")
 
                 if (password === passwordConfirmation) {
-
+                    let myCloud = null;
+                    console.log("J payo tai")
                     if (password.length >= 8) {
 
+                        try {
+                            myCloud = await cloudinary.uploader.upload(document, {
+                                allowed_formats: ['pdf'],
+                                folder: "document",
+                                width: 150,
+                                crop: "scale",
+                            });
+                            console.log("Document upload successful:", myCloud);
+                        } catch (error) {
+                            console.log("Document upload failed:", error);
+                        }
 
                         // hash the password: 
                         const salt = await bcrypt.genSalt(10)
@@ -39,12 +58,14 @@ class userController {
                             fullName: fullName,
                             email: email,
                             password: hashPassword,
-                            document: document,
-                            profileImages: profileImages,
+                            document: {
+                                public_id: myCloud.public_id,
+                                url: myCloud.secure_url,
+                            },
                             role: role,
 
                         })
-                        console.log(document)
+
                         await user.save()
                         console.log("Name", fullName);
 
@@ -81,13 +102,48 @@ class userController {
 
 
             }
-
         }
         else {
             res.send({ "status": "failed", "message": "Please Enter all Details" })
             console.log("Enter all Details");
         }
 
+
+
+
+    })
+
+    static uploadDocument = catchAsyncErrors(async (req, res, next) => {
+
+
+
+        const user = await userModel.findById(req.params.id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const document = req.files?.document;
+        if (!document) {
+            return res.status(400).json({ message: "Document file is required" });
+        }
+
+        // Check if the uploaded file is a valid document file
+        const allowedExtensions = [".pdf", ".doc", ".docx", ".png"];
+        const fileExtension = path.extname(document.name).toLowerCase();
+        if (!allowedExtensions.includes(fileExtension)) {
+            return res.status(400).json({ message: "Invalid document file type" });
+        }
+
+        document.mv(`uploads/document/${document.name}`, async (err) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ message: "Failed to upload document" });
+            }
+
+            await userModel.findByIdAndUpdate(req.params.id, { document: document.name });
+            return res.status(200).json({ message: "Document file uploaded successfully" });
+
+        })
     })
 
     static companyRegister = catchAsyncErrors(async (req, res, next) => {

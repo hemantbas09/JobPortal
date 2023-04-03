@@ -1,23 +1,23 @@
 import multer from 'multer';
+import sharp from 'sharp';
 import path from 'path';
-import catchAsyncErrors from '../Middleware/catchAsyncErrors.js';
 
 // Create a storage engine that only allows PDF files
-const pdfStorage = multer.memoryStorage({
+const multerStorage = multer.memoryStorage({
     destination: function (req, file, cb) {
         cb(null, "../uploads");
         console.log("pdf kinavayana");
     },
     filename: function (req, file, cb) {
-        const documentName=`pdf ${Date.now()} - ${file.originalname}`;
+        const documentName=`image ${Date.now()} - ${file.originalname}`;
         cb(null, documentName);
         console.log(`Document name is ${documentName}`);
     },
 });
 
-const pdfFilter = function (req, file, cb) {
+const multerFilter = function (req, file, cb) {
     // Accept pdf files only
-    if (file.mimetype.startsWith("pdf")) {
+    if (file.mimetype.startsWith("image")) {
         cb(null, true);
         console.log("pdf kinavayana");
     } else {
@@ -26,9 +26,10 @@ const pdfFilter = function (req, file, cb) {
     }
 };
 
-const pdfUpload = multer({
-    storage: pdfStorage,
-    fileFilter: pdfFilter,
+const uploaPhoto = multer({
+    storage: multerStorage,
+    fileFilter: multerFilter,
+    // limits:{fieldSize:5000000}
 }).single("document")
 
-export default pdfUpload;
+export default uploaPhoto;

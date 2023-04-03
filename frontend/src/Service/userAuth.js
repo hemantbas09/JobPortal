@@ -3,20 +3,22 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const userAuthApi = createApi({ 
     reducerPath: 'userAuthApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:4000/api/user/' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/api/user/' }),
     endpoints: (builder) => ({
 
         // Register the User:
         registerUser: builder.mutation({
-            query: (newUser) => {
-                console.log("ROw", newUser)
+            query: (formData) => {
+           
+                console.log("Is that good", Object.fromEntries(formData.entries()));
                 return{
-                    url: 'register',
+                    url: 'register',          
                     method: 'POST',
-                    body: newUser,
-                    headers: {
-                        'Content-type': 'application/json; charset=UTF-8'
-                    },
+                    body: formData,
+                    // headers: {
+                    //     'Content-Type': 'multipart/form-data'
+                    // },
+            
                 }
             },
 

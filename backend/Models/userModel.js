@@ -29,24 +29,23 @@ const userSchema = new mongoose.Schema({
     },
 
     document: {
-
-        type: String,
-        required: false,
-
+        public_id: {
+            type: String,
+            required: true,
+        },
+        url: {
+            type: String,
+            required: true,
+        },
     },
-    profileImages: {
 
-        type: String,
-        required: false,
-
-    },
 
     role: {
         type: String,
         required: true
     },
 
-  
+
 
     createdAt: {
         type: Date,

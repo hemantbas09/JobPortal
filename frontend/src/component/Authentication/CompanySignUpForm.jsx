@@ -3,19 +3,31 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { IoIosArrowDropright } from "react-icons/io";
 import { useRegisterUserMutation } from '../../Service/userAuth'
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
 import { storeToken } from '../../Service/localStorageService';
-
+import { createUser, uploadDocument } from '../../Redux/Action/userApiAction';
 
 const CompanySignUpForm = () => {
     const [showPassword, setshowPassword] = useState(true);
-    const navigate = useNavigate();
+
     const [registerUser, { isLoading }] = useRegisterUserMutation();
 
 
 
+
+    /*navigate is function created using useNavigate 
+    hook for navigate to different route:*/
+    const navigate = useNavigate();
+    /* dispatch is function creeated using use dispatch 
+    hook used to dispatch actions to the react store and 
+    triger the update*/
+    const dispatch = useDispatch();
+
     const [user, setUser] = useState({
-        fullName: "", email: "", password: "", passwordConfirmation: "", document: "", role: "company"
+        fullName: "", email: "", password: "", passwordConfirmation: "", role: "company"
     })
+    const [document, setDocument] = useState("");
+    const [image, setimage] = useState("");
     let name, value;
     const handleInputs = (e) => {
         name = e.target.name;
@@ -23,31 +35,55 @@ const CompanySignUpForm = () => {
         setUser({ ...user, [name]: value })
         console.log("This is user", user);
     }
+    function previewFiles(document) {
+        const reader = new FileReader();
+        reader.readAsDataURL(document)
+
+        reader.onloadend = () => {
+
+            setimage(reader.result)
+            console.log("This is Image",image)
+        }
+    }
+    const handleFileInput = (e) => {
+        const document = e.target.files[0];
+        setDocument(document);
+        previewFiles(document)
+        console.log("this is file", document)
+    }
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // code to submit form data to server or handle form validation goes here
-        if (user.fullName && user.email && user.password && user.passwordConfirmation && user.document) {
-            console.log('first')
-            const res = await registerUser(user);
-            console.log('Second', res)
+        if (user.fullName && user.email && user.password && user.passwordConfirmation) {
+           
+            const formData = new FormData();
+            formData.append('fullName', user.fullName);
+            formData.append('email', user.email);
+            formData.append('password', user.password);
+            formData.append('passwordConfirmation', user.passwordConfirmation);
+            formData.append('role', user.role);
+            formData.append('document', image);
+            const res = await registerUser(formData);
             if (res.data.success === true) {
-                console.log("Pitai Khanxas")
-                storeToken(res.data.token)
-                navigate("/home")
+                storeToken(res.data.token);
+                navigate('/home');
             }
         } else {
-            console.log("Please add all input")
+            console.log('Please add all input');
         }
     };
+
     return (
         <>
-            <form className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2" method='POST' onSubmit={handleSubmit} enctype='multipart/form-data' action="/uploadmultiple" >
+            <form className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2" method='POST' onSubmit={handleSubmit} encType='multipart/form-data' action="/uploadmultiple" >
+
+                <img src={image} alt="" />
 
                 <div>
                     <label htmlFor="fullName" className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Company Name:</label>
                     <input id="fullName" name="fullName" type="text" placeholder="Apple" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+
 
                         onChange={handleInputs}
                         required
@@ -57,6 +93,7 @@ const CompanySignUpForm = () => {
                 <div>
                     <label htmlFor="email" className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Email address</label>
                     <input email="email" name="email" type="email" placeholder="company@gmail.com" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+
                         onChange={handleInputs}
                         required
                     />
@@ -67,6 +104,7 @@ const CompanySignUpForm = () => {
                     <label htmlFor="password" className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Password</label>
                     <div className="relative">
                         <input id="password" name="password" type={showPassword ? "text" : "password"} placeholder="Enter your password" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+
 
                             onChange={handleInputs}
                             required
@@ -86,6 +124,7 @@ const CompanySignUpForm = () => {
                     <label htmlFor="passwordConfirmation" className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Confirm password</label>
                     <div className="relative">
                         <input id="passwordConfirmation" name="passwordConfirmation" type={showPassword ? "text" : "password"} placeholder="Enter your password" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+
                             onChange={handleInputs}
                             required
                         />
@@ -111,12 +150,12 @@ const CompanySignUpForm = () => {
 
                         <h2 class="mt-1 font-medium tracking-wide text-gray-700 dark:text-gray-200">Upload Document</h2>
 
-                        <p class="mt-2 text-xs tracking-wide text-gray-500 dark:text-gray-400"> { user.document ?  user.document  : "Upload your compeny Register Document in pdf"} </p>
+                        <p class="mt-2 text-xs tracking-wide text-gray-500 dark:text-gray-400"> {document ? document.name : "Upload your compeny Register Document in pdf"} </p>
 
                         <input id="document" type="file" class="hidden" name="document"
-                            onChange={handleInputs}
+                            onChange={handleFileInput}
                             required />
-                       
+
                         <span class="sr-only">Choose file</span>
                     </label>
 
