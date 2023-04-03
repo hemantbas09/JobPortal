@@ -38,7 +38,7 @@ const CandidateSignUpForm = () => {
       if (res.data.success === true) {
         console.log("Pitai Khanxas")
         storeToken(res.data.token)
-        navigate("/home")
+        navigate("/")
       }
     } else {
       console.log("Please add all input")

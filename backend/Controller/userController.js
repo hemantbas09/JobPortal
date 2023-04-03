@@ -22,7 +22,7 @@ class userController {
 
 
         // check the password and conformation password are same or not:
-        if (fullName && email && password && passwordConfirmation && role && document) {
+        if (fullName && email && password && passwordConfirmation && role) {
 
             if (existingUser.length != 0) {
                 console.log("oya jhuma oe jhuma email pahilai xa")
@@ -35,36 +35,50 @@ class userController {
                 console.log("yo nani ko sirai ma indra komal full hlyo")
 
                 if (password === passwordConfirmation) {
-                    let myCloud = null;
+
                     console.log("J payo tai")
                     if (password.length >= 8) {
+                        if (document) {
 
-                        try {
-                            myCloud = await cloudinary.uploader.upload(document, {
-                                allowed_formats: ['pdf'],
-                                folder: "document",
-                                width: 150,
-                                crop: "scale",
-                            });
-                            console.log("Document upload successful:", myCloud);
-                        } catch (error) {
-                            console.log("Document upload failed:", error);
+                            try {
+                                var myCloud = await cloudinary.uploader.upload(document, {
+                                    allowed_formats: ['pdf'],
+                                    folder: "document",
+                                    width: 150,
+                                    crop: "scale",
+                                });
+                                console.log("Document upload successful:", myCloud);
+                            } catch (error) {
+                                console.log("Document upload failed:", error);
+                            }
+                        } else {
+                            console.log("Document is not found")
                         }
+
 
                         // hash the password: 
                         const salt = await bcrypt.genSalt(10)
                         const hashPassword = await bcrypt.hash(password, salt)
-                        const user = new userModel({
-                            fullName: fullName,
-                            email: email,
-                            password: hashPassword,
-                            document: {
-                                public_id: myCloud.public_id,
-                                url: myCloud.secure_url,
-                            },
-                            role: role,
-
-                        })
+                        let user
+                        if (document) {
+                            user = new userModel({
+                                fullName: fullName,
+                                email: email,
+                                password: hashPassword,
+                                document: {
+                                    public_id: myCloud.public_id,
+                                    url: myCloud.secure_url,
+                                },
+                                role: role,
+                            });
+                        } else {
+                            user = new userModel({
+                                fullName: fullName,
+                                email: email,
+                                password: hashPassword,
+                                role: role,
+                            });
+                        }
 
                         await user.save()
                         console.log("Name", fullName);

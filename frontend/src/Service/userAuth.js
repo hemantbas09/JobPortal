@@ -10,7 +10,7 @@ export const userAuthApi = createApi({
         registerUser: builder.mutation({
             query: (formData) => {
            
-                console.log("Is that good", Object.fromEntries(formData.entries()));
+                
                 return{
                     url: 'register',          
                     method: 'POST',

@@ -67,7 +67,7 @@ const CompanySignUpForm = () => {
             const res = await registerUser(formData);
             if (res.data.success === true) {
                 storeToken(res.data.token);
-                navigate('/home');
+                navigate('/');
             }
         } else {
             console.log('Please add all input');
