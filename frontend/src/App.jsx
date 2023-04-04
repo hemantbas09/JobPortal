@@ -2,10 +2,10 @@ import React from 'react'
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ResetPassword, Login, Navbar, Footer, AuthenticationForm, SendPasswordResetEmail } from './component/index.js'
-import { AddQuiz, Assestement, JobDetails, Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob, ApplicantsJob, MyJob, Package, ShortlistCandidates } from './pages/index.js'
+import {AllJobs, AddQuiz, Assestement, JobDetails, Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob, ApplicantsJob, MyJob, Package, ShortlistCandidates } from './pages/index.js'
 import MyForm from './component/Authentication/MyForm.jsx'
 // import work from './images/work.jpg'
-
+import { Link } from 'react-router-dom'
 
 const App = () => {
   const Menu = []
@@ -34,8 +34,8 @@ const App = () => {
           <Route path="/company/job" element={< MyJob />} />
           <Route path="/company/package" element={< Package />} />
           <Route path="/company/shortlist" element={< ShortlistCandidates />} />
-
-          <Route path="/jobdetails" element={<  JobDetails />} />
+          <Route path="/alljobs" element={<  AllJobs />} />
+          <Route path="/jobdetails/:id" element={<  JobDetails />} />
           <Route path="/quiz/:id" element={<      Assestement />} />
           <Route path="/addquiz/:id" element={<      AddQuiz />} />
 

@@ -11,4 +11,5 @@ import ShortlistCandidates from "./Company/ShortlistCandidates";
 import JobDetails from "./Candidate/JobDetails";
 import Assestement from "./Candidate/Assestement";
 import AddQuiz from "./Company/AddQuiz";
-export {AddQuiz,Assestement,JobDetails, Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob,ApplicantsJob,MyJob,Package,ShortlistCandidates }
+import AllJobs from "./Candidate/AllJobs";
+export {AllJobs,AddQuiz,Assestement,JobDetails, Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob,ApplicantsJob,MyJob,Package,ShortlistCandidates }

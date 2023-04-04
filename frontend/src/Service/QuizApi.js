@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const quizApi = createApi({
     reducerPath: 'quizApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:4000/api/quiz/' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/api/quiz/' }),
     endpoints: (builder) => ({
 
         // Register the User:

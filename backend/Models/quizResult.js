@@ -10,19 +10,40 @@ const quizResultSchema = new mongoose.Schema({
         ref: "user",
         required: true,
     },
-
+    job: {
+        type: mongoose.Schema.ObjectId,
+        ref: "job",
+        required: true,
+    },
     score: {
         type: Number,
         required: true
     },
-    job: {
+    quiz: {
         type: mongoose.Schema.ObjectId,
         ref: "quiz",
         required: true,
     },
-    answer:{
-        type:String,
-        
+    attemptAnswer: [{
+        question: {
+            type: String,
+            required: true
+        },
+        answer: {
+            type: String,
+            required: true
+        },
+        correctAnswer: {
+            type: String
+        }
+    }],
+    attempt: {
+        type: Number,
+        default: 0
+    },
+    attemptDate: {
+        type: Date,
+        default: Date.now
     }
 })
 

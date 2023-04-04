@@ -1,6 +1,7 @@
 import express from 'express'
 const router = express.Router();
 import quizController from '../Controller/quizQuestionController.js';
+import quizAttemptController from '../Controller/quizResult.js'
 import checkUserAuth from '../Middleware/authMiddleware.js'
 
 // Route level Middleware - TO Protect Route
@@ -13,10 +14,12 @@ import checkUserAuth from '../Middleware/authMiddleware.js'
 router.post('/new/:id', quizController.quizCreate);
 router.get('/allquizs',quizController.getAllQuize);
 // router.get('/:id', quizController.getquizByID);
-router.get('/:id', quizController.getquizByJobID);
+router.get('/:id', quizController.getquizByID);
 router.put('/:id', quizController.updatequiz);
 router.delete('/:id', quizController.deletequiz);
 
+
+router.post('/quizattem',quizAttemptController.quizAttempt);
 
 
 //Private Routes:

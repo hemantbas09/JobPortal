@@ -5,10 +5,14 @@ import { GiMoneyStack } from "react-icons/gi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { BiTime } from "react-icons/bi";
 import { Link } from 'react-router-dom';
+import { useGetAllJobQuery } from '../../Service/jobApi';
+import { useParams } from 'react-router-dom';
 
 Link
 const JobDetails = () => {
-
+  const getAllJob = useGetAllJobQuery();
+  const { id } = useParams();
+  console.log("This is id", id)
   return (
     <>
 
@@ -52,7 +56,8 @@ const JobDetails = () => {
             </div>
 
             <div class="flex items-center">
-              <Link to='/quiz'><button class="bg-red-300 ">Apply Job</button></Link>
+
+              <Link to={`/quiz/${id}`} ><button class="bg-red-300 ">Apply Job</button></Link>
               <BsFillBookmarkHeartFill class="h-6 w-6 mr-2 ml-10" />
             </div>
 

@@ -78,7 +78,7 @@ const CompanySignUpForm = () => {
         <>
             <form className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2" method='POST' onSubmit={handleSubmit} encType='multipart/form-data' action="/uploadmultiple" >
 
-                <img src={image} alt="" />
+                
 
                 <div>
                     <label htmlFor="fullName" className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Company Name:</label>

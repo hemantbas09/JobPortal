@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const jobApi = createApi({
     reducerPath: 'jobApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:4000/api/job/' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/api/job/' }),
     endpoints: (builder) => ({
 
         // Register the User:
@@ -28,7 +28,7 @@ export const jobApi = createApi({
 
                 url: 'alljobs',
                 method: 'Get',
-            
+
             }),
 
         }),

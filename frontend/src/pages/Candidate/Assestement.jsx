@@ -5,8 +5,8 @@ const Assestement = () => {
     const { id } = useParams();
     const quizQuestion = useGetquizbyjobIdQuery(id);
     let questions
-    console.log(id)
-    console.log("Name", quizQuestion.data);
+    console.log("Nepal",id)
+    console.log("Name", quizQuestion);
     if (quizQuestion.data) {
         questions = quizQuestion.data.quiz
         console.log("CHal bay chal", questions)

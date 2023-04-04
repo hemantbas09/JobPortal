@@ -9,7 +9,7 @@ class jobController {
 
         // for store the user information:
         req.body.user = req.user;
-        
+
 
         // creating a object or instace of the JobModal:
         const job = new jobModel(req.body);
@@ -31,7 +31,7 @@ class jobController {
 
         // select all job:
         const jobs = await jobModel.find()
-
+        console.log(jobs)
         // response the client:
         res.status(201).json({
             success: true,

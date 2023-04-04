@@ -6,23 +6,32 @@ class jobController {
 
     // post a new Job
     static quizCreate = catchAsyncErrors(async (req, res, next) => {
-
         // for store the user information:
         req.body.user = req.user;
         req.body.job = req.params.id;
 
         // creating a object or instace of the JobModal:
         const quiz = new quizQuestionModel(req.body);
-        console.log("first", quiz);
-        // save in the database
-        await quiz.save();
+        let lengthOfQuizQuestion = quiz.quizQuestions.length
+        console.log("THe quizes are", lengthOfQuizQuestion);
+        console.log("first", quiz.length);
+        if (lengthOfQuizQuestion >= 6) {
+            // save in the database
+            await quiz.save();
 
-        // for the response:
-        res.status(201).json({
-            success: true,
-            quiz,
-        })
-
+            // for the response:
+            res.status(201).json({
+                success: true,
+                quiz,
+            })
+        } else {
+            console.log("Please Enter more the 6 Question")
+            // for the response:
+            res.status(400).json({
+                success: false,
+                message: "Please Enter the Question more than 6"
+            })
+        }
     });
 
 
@@ -46,6 +55,11 @@ class jobController {
 
         // select job by Id:
         const quiz = await quizQuestionModel.findById(req.params.id);
+        // Shuffle the quiz questions array
+        const shuffledQuestions = quiz.quizQuestions.sort(() => 0.5 - Math.random());
+
+        // Get the first 10 questions
+        const selectedQuestions = shuffledQuestions.slice(0, 10);
 
         // check quiz is found or not:
         if (!quiz) {
@@ -59,7 +73,7 @@ class jobController {
         // response the client:
         res.status(200).json({
             success: true,
-            quiz
+            selectedQuestions
         });
 
     });
@@ -69,7 +83,7 @@ class jobController {
     static getquizByJobID = catchAsyncErrors(async (req, res, next) => {
 
         // select job by Id:
-        const quiz = await quizQuestionModel.find({job:req.params.id});
+        const quiz = await quizQuestionModel.find({ job: req.params.id });
         console.log(req.params.id)
         // check job is found or not:
         if (!quiz) {
