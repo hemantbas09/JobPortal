@@ -18,7 +18,7 @@ export const AuthenticationForm = ({ onLoginClick }) => {
         <>
             <div className="flex justify-center items-center bg-zinc-100   ">
                 <div className=" w-fit   rounded-md   ">  {/* overflow-y-auto h-96 */}
-
+                    
                     <div className=" w-fit bg-white my-10 ">
                         <div className="flex justify-center gap-10 rounded-lg mt-6">
 
