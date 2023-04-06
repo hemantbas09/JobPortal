@@ -35,7 +35,7 @@ const AllUser = () => {
     console.log(userData)
     const handleDownload = (url, filename) => {
         console.log(url)
-        download("http://res.cloudinary.com/finalyearprojectjobportal09/image/upload/document/jqtdxpazgbn7ecxs0hlr.pdf", filename);
+        download(url, filename);
 
     };
 
