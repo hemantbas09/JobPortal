@@ -42,6 +42,7 @@ class userController {
 
                             try {
                                 var myCloud = await cloudinary.uploader.upload(document, {
+                                    // public_id: document.name.split(".")[0],
                                     allowed_formats: ['pdf'],
                                     folder: "document",
                                     width: 150,
@@ -66,8 +67,9 @@ class userController {
                                 email: email,
                                 password: hashPassword,
                                 document: {
+
                                     public_id: myCloud.public_id,
-                                    url: myCloud.secure_url,
+                                    url: myCloud.url,
                                 },
                                 role: role,
                             });
@@ -159,20 +161,46 @@ class userController {
 
         })
     })
-
-    static companyRegister = catchAsyncErrors(async (req, res, next) => {
-        const { userID, action } = req.body;
+    static getAllUser = catchAsyncErrors(async (req, res, next) => {
 
         // check if the user exists in the database:
-        const user = await userModel.findById(userID)
+        const user = await userModel.find()
+        res.status(201).json({
+            success: true,
+            user,
 
-        if (action === 'accept') {
-            user.status = 'approved';
-        } else if (action === 'reject') {
-            user.status = 'rejectd'
+        });
+
+
+    })
+
+    static companyRejectApproved = catchAsyncErrors(async (req, res, next) => {
+
+        const companyID = req.body["companyId"];
+        const status = req.body["status"];
+        console.log("this is n th body", companyID)
+        console.log("this is n uith body", status)
+        // check if the user exists in the database:
+        const company = await userModel.findById(companyID)
+
+       
+
+        const updatedCompany = await userModel.findByIdAndUpdate(companyID, { status }, { new: true });
+        if (status === '1') {
+            updatedCompany.status = 'approved';
+        } else if (status === '0') {
+            updatedCompany.status = 'rejected';
         } else {
-            user.status = 'pending'
+            updatedCompany.status = 'pending';
         }
+
+        await updatedCompany.save();
+
+        res.status(200).json({
+            success: true,
+            message: 'Company status updated successfully',
+            company: updatedCompany
+        });
     })
 
     static userLogin = catchAsyncErrors(async (req, res, next) => {
@@ -198,13 +226,13 @@ class userController {
                         const token = jwt.sign({ userID: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
                         res.send({ "status": "success", "message": "Login Success", "token": token, "role": user.role })
                         console.log("admin or user");
-                    } else if (user.role === 'company' && user.status === "active") {
+                    } else if (user.role === 'company' && user.status === "approved") {
                         const token = jwt.sign({ userID: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
                         res.send({ "status": "success", "message": "Login Success", "token": token, "role": user.role })
                         console.log("company");
-                    } else if (user.role === 'company' && user.status === "pending") {
-                        console.log("Your Request in Pending");
-                        res.send({ "status": "failed", "message": "Your request is pending" })
+                    } else if (user.role === 'company' && user.status === "rejected") {
+                        console.log("Your Request in Rejected");
+                        res.send({ "status": "failed", "message": "Your request is Rejected" })
                     }
 
                     else {

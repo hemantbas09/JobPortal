@@ -9,6 +9,8 @@ const upload = multer();
 router.use('/changepassword', checkUserAuth)
 router.use('/loggedUser', checkUserAuth)
 router.use('/register', upload.none());
+router.use('/approvedReject', upload.none());
+
 
 //public Routes:
 router.post('/register', userController.userRegistration);
@@ -21,7 +23,9 @@ router.post('/reset-password/:id/:token', userController.userPasswordReset)
 //Private Routes:
 router.post('/changepassword', userController.changeuserPassword);
 router.get('/loggedUser', userController.loggedUser)
+router.get('/getalluser', userController.getAllUser)
 router.post('/document/:id', userController.uploadDocument)
+router.post('/approvedReject', userController.companyRejectApproved)
 
 
 

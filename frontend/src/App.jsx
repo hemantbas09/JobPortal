@@ -2,7 +2,7 @@ import React from 'react'
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ResetPassword, Login, Navbar, Footer, AuthenticationForm, SendPasswordResetEmail } from './component/index.js'
-import {AllJobs, AddQuiz, Assestement, JobDetails, Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob, ApplicantsJob, MyJob, Package, ShortlistCandidates } from './pages/index.js'
+import { AllUser, AllJobs, AddQuiz, Assestement, JobDetails, Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob, ApplicantsJob, MyJob, Package, ShortlistCandidates } from './pages/index.js'
 import MyForm from './component/Authentication/MyForm.jsx'
 // import work from './images/work.jpg'
 import { Link } from 'react-router-dom'
@@ -14,9 +14,9 @@ const App = () => {
 
       <BrowserRouter>
         <Navbar />
-       
+
         <Routes>
-        
+
           <Route path="/" element={<Home />} />
           <Route path="/home" element={< MyForm />} />
           <Route path="/register" element={<AuthenticationForm />} />
@@ -38,7 +38,8 @@ const App = () => {
           <Route path="/jobdetails/:id" element={<  JobDetails />} />
           <Route path="/quiz/:id" element={<      Assestement />} />
           <Route path="/addquiz/:id" element={<      AddQuiz />} />
-
+          <Route path="/alluser" element={<       AllUser />} />
+         
 
         </Routes >
       </BrowserRouter>

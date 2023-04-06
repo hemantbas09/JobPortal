@@ -24,19 +24,30 @@ export const quizApi = createApi({
         }),
 
         // Access all the job:
-        getquizbyjobId: builder.query({
+        getquizbyId: builder.query({
 
             query: (id) => ({
-
                 url: `${id}`,
                 method: 'Get',
             }),
         }),
 
+        quizAttemtQuestion: builder.mutation({
+            query: (myForm) => {
+                console.log("attempt question", myForm)
 
+                return {
+                    url: `/quizattem`,
+                    method: 'POST',
+                    body: myForm,
+                   
+                }
+            },
+
+        }),
 
 
     }),
 });
 
-export const { useAddquizQuestionMutation, useGetquizbyjobIdQuery } = quizApi;
+export const { useAddquizQuestionMutation, useGetquizbyIdQuery, useQuizAttemtQuestionMutation } = quizApi;

@@ -3,11 +3,12 @@ const router = express.Router();
 import quizController from '../Controller/quizQuestionController.js';
 import quizAttemptController from '../Controller/quizResult.js'
 import checkUserAuth from '../Middleware/authMiddleware.js'
-
+import multer from 'multer'
+const upload = multer();
 // Route level Middleware - TO Protect Route
 // router.use('/changepassword', checkUserAuth)
 // router.post('/new/:id', checkUserAuth);
-
+router.use('/quizattem', upload.none());
 
 
 //public Routes:

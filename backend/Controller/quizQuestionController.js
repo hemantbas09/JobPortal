@@ -54,7 +54,9 @@ class jobController {
     static getquizByID = catchAsyncErrors(async (req, res, next) => {
 
         // select job by Id:
+        console.log(req.params.id)
         const quiz = await quizQuestionModel.findById(req.params.id);
+        console.log(quiz)
         // Shuffle the quiz questions array
         const shuffledQuestions = quiz.quizQuestions.sort(() => 0.5 - Math.random());
 
