@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  /* background: papayawhip; */
 }
 
 .logo {
@@ -16,6 +17,9 @@
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+}
+.my-toast-body {
+  font-size: 20px;
 }
 
 @keyframes logo-spin {

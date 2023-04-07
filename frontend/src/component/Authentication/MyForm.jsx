@@ -1,6 +1,7 @@
 import { React, useState } from 'react'
 import CompanySignUpForm from './CompanySignUpForm';
 import CandidateSignUpForm from './CandidateSignUpForm';
+import { Link } from 'react-router-dom';
 const MyForm = () => {
     const [isUserType, setIsUserType] = useState(false);
     const openCompany = () => {
@@ -26,14 +27,14 @@ const MyForm = () => {
                                 Get your free account now.
                             </h1>
 
-                            <p className="mt-4 text-gray-500 dark:text-gray-400">
+                            <p className="mt-4 text-xl text-gray-500 dark:text-gray-400">
                                 Let’s get you all set up so you can verify your personal account and begin setting up your profile.
                             </p>
 
 
                             {/* Select the type of the Account */}
                             <div className="mt-6">
-                                <h1 className="text-gray-500 dark:text-gray-300">Select type of account</h1>
+                                <h1 className="text-gray-500 text-xl dark:text-gray-300">Select type of account</h1>
 
                                 <div className=" mt-10 md:flex md:items-center md:-mx-2  ">
 
@@ -43,7 +44,7 @@ const MyForm = () => {
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                         </svg>
 
-                                        <span className="mx-2">
+                                        <span className="mx-2 text-xl">
                                             JobSeeker
                                         </span>
                                     </button>
@@ -52,7 +53,7 @@ const MyForm = () => {
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                         </svg>
 
-                                        <span className="mx-2">
+                                        <span className="mx-2 text-xl">
                                             Company
                                         </span>
                                     </button>
@@ -63,7 +64,7 @@ const MyForm = () => {
                             {
                                 isUserType ? <CompanySignUpForm /> : <CandidateSignUpForm />
                             }
-                            <p class="mt-4 text-center text-gray-600 dark:text-gray-400">or sign up Google</p>
+                            <p class="mt-4 text-xl text-center text-gray-600 dark:text-gray-400">or sign up with Google</p>
 
                             <a href="#" class="flex items-center justify-center px-6 py-3 mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <svg class="w-6 h-6 mx-2" viewBox="0 0 40 40">
@@ -73,12 +74,13 @@ const MyForm = () => {
                                     <path d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.7592 25.1975 27.56 26.805 26.0133 27.9758C26.0142 27.975 26.015 27.975 26.0158 27.9742L31.1742 32.3392C30.8092 32.6708 36.6667 28.3333 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z" fill="#1976D2" />
                                 </svg>
 
-                                <span class="mx-2">Sign up with Google</span>
+                                <span class="mx-2 text-xl">Sign up with Google</span>
                             </a>
 
-                            <div class="mt-6 text-center ">
-                                <a href="#" class="text-sm text-blue-500 hover:underline dark:text-blue-400">
-                                    Don’t have an account yet? Sign up
+                            <div class="mt-6 text-center text-xl  ">
+                                Already Account ?
+                                <a href="#" class="text-xl text-blue-500 hover:underline dark:text-blue-400">
+                                    <Link to={'/login'}> Login </Link>
                                 </a>
                             </div>
 

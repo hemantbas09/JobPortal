@@ -1,5 +1,6 @@
 import React from 'react'
 import loginImage from '../../images/login.jpg'
+import { Link } from 'react-router-dom'
 const LoginForm = () => {
     return (
         <>
@@ -44,7 +45,7 @@ const LoginForm = () => {
 
                                 </form>
                                 <a href="#" class="  text-xl text-gray-400 focus:text-blue-500 hover:text-blue-500 hover:underline">Forgot password?</a>
-                                <p class="mt-6 text-xl text-center text-gray-400">Don&#x27;t have an account yet? <a href="#" class="text-blue-500 focus:outline-none focus:underline hover:underline">Sign up</a>.</p>
+                                <p class="mt-6 text-xl text-center text-gray-400">Don&#x27;t have an account yet? <a href="#" class="text-blue-500 focus:outline-none focus:underline hover:underline"> <Link to={'/signup'}>Sign up</Link>  </a>.</p>
                             </div>
                         </div>
                     </div>

@@ -5,6 +5,7 @@ import { useRegisterUserMutation } from '../../Service/userAuth'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { storeToken } from '../../Service/localStorageService';
+import { toast } from 'react-toastify';
 import { createUser, uploadDocument } from '../../Redux/Action/userApiAction';
 
 const CompanySignUpForm = () => {
@@ -42,7 +43,7 @@ const CompanySignUpForm = () => {
         reader.onloadend = () => {
 
             setimage(reader.result)
-            console.log("This is Image",image)
+            console.log("This is Image", image)
         }
     }
     const handleFileInput = (e) => {
@@ -56,7 +57,7 @@ const CompanySignUpForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (user.fullName && user.email && user.password && user.passwordConfirmation) {
-           
+
             const formData = new FormData();
             formData.append('fullName', user.fullName);
             formData.append('email', user.email);
@@ -65,9 +66,35 @@ const CompanySignUpForm = () => {
             formData.append('role', user.role);
             formData.append('document', image);
             const res = await registerUser(formData);
-            if (res.data.success === true) {
-                storeToken(res.data.token);
-                navigate('/');
+            if (res.data) {
+                console.log(res.data.message)
+
+                toast.success(res.data.message, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+                storeToken(res.data.token)
+                navigate("/")
+            } else {
+
+                console.log(res.error.data.message)
+                toast.error(res.error.data.message, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+
             }
         } else {
             console.log('Please add all input');
@@ -78,11 +105,11 @@ const CompanySignUpForm = () => {
         <>
             <form className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2" method='POST' onSubmit={handleSubmit} encType='multipart/form-data' action="/uploadmultiple" >
 
-                
+
 
                 <div>
-                    <label htmlFor="fullName" className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Company Name:</label>
-                    <input id="fullName" name="fullName" type="text" placeholder="Apple" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                    <label htmlFor="fullName" className="block mb-2 text-xl text-gray-600 dark:text-gray-200">Company Name:</label>
+                    <input id="fullName" name="fullName" type="text" placeholder="Apple" className="block w-full px-5 text-xl py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
 
 
                         onChange={handleInputs}
@@ -91,8 +118,8 @@ const CompanySignUpForm = () => {
                 </div>
 
                 <div>
-                    <label htmlFor="email" className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Email address</label>
-                    <input email="email" name="email" type="email" placeholder="company@gmail.com" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                    <label htmlFor="email" className="block mb-2 text-xl text-gray-600 dark:text-gray-200">Email address</label>
+                    <input email="email" name="email" type="email" placeholder="company@gmail.com" className="block text-xl w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
 
                         onChange={handleInputs}
                         required
@@ -101,9 +128,9 @@ const CompanySignUpForm = () => {
 
 
                 <div className="relative">
-                    <label htmlFor="password" className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Password</label>
+                    <label htmlFor="password" className="block mb-2 text-xl text-gray-600 dark:text-gray-200">Password</label>
                     <div className="relative">
-                        <input id="password" name="password" type={showPassword ? "text" : "password"} placeholder="Enter your password" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                        <input id="password" name="password" type={showPassword ? "text" : "password"} placeholder="Enter your password" className="block text-xl w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
 
 
                             onChange={handleInputs}
@@ -121,9 +148,9 @@ const CompanySignUpForm = () => {
 
 
                 <div className="relative">
-                    <label htmlFor="passwordConfirmation" className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Confirm password</label>
+                    <label htmlFor="passwordConfirmation" className="block mb-2 text-xl text-gray-600 dark:text-gray-200">Confirm password</label>
                     <div className="relative">
-                        <input id="passwordConfirmation" name="passwordConfirmation" type={showPassword ? "text" : "password"} placeholder="Enter your password" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                        <input id="passwordConfirmation" name="passwordConfirmation" type={showPassword ? "text" : "password"} placeholder="Enter your password" className="block text-xl w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
 
                             onChange={handleInputs}
                             required
@@ -141,16 +168,16 @@ const CompanySignUpForm = () => {
 
                 <br />
                 <div className='md:-ml-72'>
-                    <label htmlFor="document" class="block text-sm text-gray-500 dark:text-gray-300">Company Document</label>
+                    <label htmlFor="document" class="block text-xl text-gray-500 dark:text-gray-300">Company Document</label>
 
                     <label htmlFor="document" class="flex flex-col items-center w-full max-w-lg p-5 mx-auto mt-2 text-center bg-white border-2 border-gray-300 border-dashed cursor-pointer dark:bg-gray-900 dark:border-gray-700 rounded-xl">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-gray-500 dark:text-gray-400">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
                         </svg>
 
-                        <h2 class="mt-1 font-medium tracking-wide text-gray-700 dark:text-gray-200">Upload Document</h2>
+                        <h2 class="mt-1 text-xl font-medium tracking-wide text-gray-700 dark:text-gray-200">Upload Document</h2>
 
-                        <p class="mt-2 text-xs tracking-wide text-gray-500 dark:text-gray-400"> {document ? document.name : "Upload your compeny Register Document in pdf"} </p>
+                        <p class="mt-2  tracking-wide text-xl text-gray-500 dark:text-gray-400"> {document ? document.name : "Upload your compeny Register Document in pdf"} </p>
 
                         <input id="document" type="file" class="hidden" name="document"
                             onChange={handleFileInput}
@@ -164,7 +191,7 @@ const CompanySignUpForm = () => {
                 </div>
 
                 <button
-                    className="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                    className="flex items-center justify-between w-full px-6 py-3 text-xl tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                     <span>Sign Up </span>
 
 

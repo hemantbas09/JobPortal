@@ -25,9 +25,13 @@ class userController {
         if (fullName && email && password && passwordConfirmation && role) {
 
             if (existingUser.length != 0) {
-                console.log("oya jhuma oe jhuma email pahilai xa")
-                res.send({ "status": "failed", "message": "Email already exist" })
+
                 console.log("pp not match");
+                res.status(401).json({
+                    success: false,
+                    message: "Email already exist"
+
+                });
 
 
             } else {
@@ -38,23 +42,31 @@ class userController {
 
                     console.log("J payo tai")
                     if (password.length >= 8) {
-                        if (document) {
 
-                            try {
-                                var myCloud = await cloudinary.uploader.upload(document, {
-                                    // public_id: document.name.split(".")[0],
-                                    allowed_formats: ['jpeg','jpg','png'],
-                                    folder: "document",
-                                    width: 150,
-                                    crop: "scale",
-                                });
-                                console.log("Document upload successful:", myCloud);
-                            } catch (error) {
-                                console.log("Document upload failed:", error);
-                            }
-                        } else {
-                            console.log("Document is not found")
+
+                        try {
+                            var myCloud = await cloudinary.uploader.upload(document, {
+                                // public_id: document.name.split(".")[0],
+                                allowed_formats: ['jpeg', 'jpg', 'png'],
+                                folder: "document",
+                                width: 150,
+                                crop: "scale",
+                            });
+                            console.log("Document upload successful:", myCloud);
+                            res.status(401).json({
+                                success: true,
+                                myCloud,
+                                message: "Document upload successful"
+
+                            });
+                        } catch (error) {
+                            res.status(401).json({
+                                success: false,
+                                message: "File Formate is Not match"
+
+                            });
                         }
+
 
 
                         // hash the password: 
@@ -92,6 +104,7 @@ class userController {
 
                         res.status(201).json({
                             success: true,
+                            message: "Successfully Sign Up",
                             user,
                             token,
                         });
@@ -100,9 +113,12 @@ class userController {
                     } else {
 
 
+                        res.status(401).json({
+                            success: false,
+                            message: "Password should be greater then 8 digits"
 
-                        res.send({ "status": "failed", "message": "Password should be greater then 8 digits" })
-                        console.log("pp not match");
+                        });
+
 
                     }
 
@@ -110,18 +126,26 @@ class userController {
 
                 }
                 else {
+                    res.status(401).json({
+                        success: false,
+                        message: "Password and Confirm Password doesn't match"
+
+                    });
 
 
-                    res.send({ "status": "failed", "message": "Password and Confirm Password doesn't match" })
-                    console.log("pp not match");
                 }
 
 
             }
         }
         else {
-            res.send({ "status": "failed", "message": "Please Enter all Details" })
-            console.log("Enter all Details");
+
+            res.status(401).json({
+                success: false,
+                message: "Please Enter all Details"
+
+            });
+
         }
 
 
@@ -183,7 +207,7 @@ class userController {
         // check if the user exists in the database:
         const company = await userModel.findById(companyID)
 
-       
+
 
         const updatedCompany = await userModel.findByIdAndUpdate(companyID, { status }, { new: true });
         if (status === '1') {
