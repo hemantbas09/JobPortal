@@ -7,5 +7,5 @@ import Home from "./Admin/Home"
 import { Login } from "./Authentication/Login";
 import SendPasswordResetEmail from "./Authentication/SendPasswordResetEmail";
 import ResetPassword from "./Authentication/ResetPassword";
-
-export {ResetPassword, SendPasswordResetEmail,Login, Navbar,Footer, AuthenticationForm,Job, Category,Home}
+import LoginForm from "./Authentication/LoginForm";
+export {LoginForm,ResetPassword, SendPasswordResetEmail,Login, Navbar,Footer, AuthenticationForm,Job, Category,Home}

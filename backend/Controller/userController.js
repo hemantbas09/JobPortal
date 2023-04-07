@@ -43,7 +43,7 @@ class userController {
                             try {
                                 var myCloud = await cloudinary.uploader.upload(document, {
                                     // public_id: document.name.split(".")[0],
-                                    allowed_formats: ['pdf'],
+                                    allowed_formats: ['jpeg','jpg','png'],
                                     folder: "document",
                                     width: 150,
                                     crop: "scale",

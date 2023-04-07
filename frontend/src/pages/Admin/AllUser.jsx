@@ -78,8 +78,7 @@ const AllUser = () => {
                                                     return (
                                                         <>
 
-                                                            <img src={company.document.url} alt="Nepal" />
-                                                            <div>{company.document.url}</div>
+                                                          
                                                             <tr>
                                                                 <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                                     <div class="inline-flex items-center gap-x-3">
@@ -99,9 +98,13 @@ const AllUser = () => {
                                                                     <button onClick={() => {
                                                                         handleDownload(
                                                                             company.document.url,
-                                                                            "document.pdf"
+                                                                            console.log("first", company.document.public_id)
+                                                                            
+                                                                            // company.document.public_id.pdf,
                                                                         );
                                                                     }}>
+                                                                        
+
                                                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-text" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00abfb" fill="none" stroke-linecap="round" stroke-linejoin="round" className='text-blue-600 hover:bg-blue-50'>
                                                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                                             <path d="M14 3v4a1 1 0 0 0 1 1h4" />
@@ -113,10 +116,14 @@ const AllUser = () => {
                                                                     </button>
                                                                 </td>
                                                                 <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                                    <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                                                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                                                                    <div class={`inline-flex items-center px-3 py-1 rounded-full gap-x-2  dark:bg-gray-800 ${company.status === "approved" ? "bg-green-100" : company.status === "rejected" ? "bg-red-300" : "bg-yellow-200"}`}>
+                                                                        <span class={`h-1.5 w-1.5 rounded-full bg-emerald-500`}></span>
 
-                                                                        <h2 class="text-sm font-normal text-emerald-500">{company.status}</h2>
+                                                                        {/* <h2 class={`text - sm font-normal  `}>{company.status}</h2> */}
+                                                                        <h2 class={`text-sm font-normal `}>
+                                                                            {company.status}
+                                                                        </h2>
+
                                                                     </div>
                                                                 </td>
                                                                 <td class="px-4 pl-16 py-4 text-sm whitespace-nowrap">
@@ -154,7 +161,7 @@ const AllUser = () => {
                                                                         </button>
                                                                     </div>
                                                                 </td>
-                                                            </tr>
+                                                            </tr >
 
                                                         </>
                                                     )
@@ -201,7 +208,7 @@ const AllUser = () => {
                         </svg>
                     </a>
                 </div>
-            </section>
+            </section >
         </>
     )
 }
