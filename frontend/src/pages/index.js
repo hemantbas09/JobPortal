@@ -12,10 +12,10 @@ import JobDetails from "./Candidate/JobDetails";
 import Assestement from "./Candidate/Assestement";
 import AddQuiz from "./Company/AddQuiz";
 import AllJobs from "./Candidate/AllJobs";
-
+import CandidateInformation from "./Admin/CandidateInformation";
 
 // Admin: 
 import AllUser from "./Admin/AllUser";
 
 
-export {AllUser,AllJobs,AddQuiz,Assestement,JobDetails, Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob,ApplicantsJob,MyJob,Package,ShortlistCandidates }
+export {CandidateInformation,AllUser,AllJobs,AddQuiz,Assestement,JobDetails, Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob,ApplicantsJob,MyJob,Package,ShortlistCandidates }

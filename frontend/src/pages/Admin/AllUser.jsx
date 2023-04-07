@@ -58,13 +58,13 @@ const AllUser = () => {
                                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                                     <thead class="bg-gray-50 dark:bg-gray-800">
                                         <tr className=''>
-                                            <th scope="col" class="  px-20 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Company Name</th>
-                                            <th scope="col" class=" px-20 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Company Email</th>
+                                            <th scope="col" class="  px-20 py-3.5 text-xl font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Company Name</th>
+                                            <th scope="col" class=" px-20 py-3.5 text-xl font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Company Email</th>
 
-                                            <th scope="col" class=" px-20 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Document</th>
+                                            <th scope="col" class=" px-20 py-3.5 text-xl font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Document</th>
 
-                                            <th scope="col" class=" px-20 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Status</th>
-                                            <th scope="col" class=" px-20 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            <th scope="col" class=" px-20 py-3.5 text-xl font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Status</th>
+                                            <th scope="col" class=" px-20 py-3.5 text-xl font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Action
                                             </th>
 
@@ -80,7 +80,7 @@ const AllUser = () => {
 
                                                           
                                                             <tr>
-                                                                <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                <td class="px-4 py-4 text-xl font-medium text-gray-700 whitespace-nowrap">
                                                                     <div class="inline-flex items-center gap-x-3">
 
 
@@ -93,8 +93,8 @@ const AllUser = () => {
                                                                         </div>
                                                                     </div>
                                                                 </td>
-                                                                <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{company.email}</td>
-                                                                <td class="pl-24 py-4 text-sm hover:text-green-500 dark:text-gray-300 whitespace-nowrap">
+                                                                <td class="px-4 py-4 text-xl text-gray-500 dark:text-gray-300 whitespace-nowrap">{company.email}</td>
+                                                                <td class="pl-24 py-4 text-xl hover:text-green-500 dark:text-gray-300 whitespace-nowrap">
                                                                     <button onClick={() => {
                                                                         handleDownload(
                                                                             company.document.url,
@@ -115,18 +115,18 @@ const AllUser = () => {
                                                                         </svg>
                                                                     </button>
                                                                 </td>
-                                                                <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                                <td class="px-12 py-4 text-xl font-medium text-gray-700 whitespace-nowrap">
                                                                     <div class={`inline-flex items-center px-3 py-1 rounded-full gap-x-2  dark:bg-gray-800 ${company.status === "approved" ? "bg-green-100" : company.status === "rejected" ? "bg-red-300" : "bg-yellow-200"}`}>
                                                                         <span class={`h-1.5 w-1.5 rounded-full bg-emerald-500`}></span>
 
                                                                         {/* <h2 class={`text - sm font-normal  `}>{company.status}</h2> */}
-                                                                        <h2 class={`text-sm font-normal `}>
+                                                                        <h2 class={`text-xl font-normal `}>
                                                                             {company.status}
                                                                         </h2>
 
                                                                     </div>
                                                                 </td>
-                                                                <td class="px-4 pl-16 py-4 text-sm whitespace-nowrap">
+                                                                <td class="px-4 pl-16 py-4 text-xl whitespace-nowrap">
                                                                     <div class="flex items-center gap-x-6">
 
                                                                         <button onClick={() => handleApprove(company._id, 1)} disabled={isLoading} class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
@@ -178,7 +178,7 @@ const AllUser = () => {
                 </div>
 
                 <div class="flex items-center justify-between mt-6">
-                    <a href="#" class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
+                    <a href="#" class="flex items-center px-5 py-2 text-xl text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
                         </svg>
@@ -189,16 +189,16 @@ const AllUser = () => {
                     </a>
 
                     <div class="items-center hidden lg:flex gap-x-3">
-                        <a href="#" class="px-2 py-1 text-sm text-blue-500 rounded-md dark:bg-gray-800 bg-blue-100/60">1</a>
-                        <a href="#" class="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">2</a>
-                        <a href="#" class="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">3</a>
-                        <a href="#" class="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">...</a>
-                        <a href="#" class="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">12</a>
-                        <a href="#" class="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">13</a>
-                        <a href="#" class="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">14</a>
+                        <a href="#" class="px-2 py-1 text-xl text-blue-500 rounded-md dark:bg-gray-800 bg-blue-100/60">1</a>
+                        <a href="#" class="px-2 py-1 text-xl text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">2</a>
+                        <a href="#" class="px-2 py-1 text-xl text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">3</a>
+                        <a href="#" class="px-2 py-1 text-xl text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">...</a>
+                        <a href="#" class="px-2 py-1 text-xl text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">12</a>
+                        <a href="#" class="px-2 py-1 text-xl text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">13</a>
+                        <a href="#" class="px-2 py-1 text-xl text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">14</a>
                     </div>
 
-                    <a href="#" class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
+                    <a href="#" class="flex items-center px-5 py-2 text-xl text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
                         <span>
                             Next
                         </span>
