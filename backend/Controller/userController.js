@@ -11,101 +11,101 @@ class userController {
 
     // Regestration of the user:
     static userRegistration = catchAsyncErrors(async (req, res, next) => {
-        // console.log("Is that good", Object.fromEntries(req.body.entries()));
-        // Take the input from the frontend
 
-        // console.log("Is that good", Object.fromEntries(req.body.entries()));
+        //  Destructing all the value from the body:
         const { fullName, email, password, passwordConfirmation, role, document } = req.body
-        // console.log("THis is the Document", document);
+
+        // check the user existing or not:
         const existingUser = await userModel.find({ email: email })
-        console.log(existingUser.length)
 
-
-        // check the password and conformation password are same or not:
+        // Check the all field are completed or not:
         if (fullName && email && password && passwordConfirmation && role) {
 
+            // If the register user is exist or not-- already exist:
             if (existingUser.length != 0) {
-
-                console.log("pp not match");
                 res.status(401).json({
                     success: false,
                     message: "Email already exist"
-
                 });
 
 
-            } else {
+            }
+            // If user is not already exist:
+            else {
 
-                console.log("yo nani ko sirai ma indra komal full hlyo")
-
+                // Check the password and conformation password matched or not:-->If matched
                 if (password === passwordConfirmation) {
 
-                    console.log("J payo tai")
+                    // Password length must be equal or greater than the 8 digits---> true statement:
                     if (password.length >= 8) {
 
-                        if (document) {
+                        // If the role is Comapny:
+                        if (role === "company") {
+                            // If document is found:
 
-
-
-                            var myCloud = await cloudinary.uploader.upload(document, {
-                                // public_id: document.name.split(".")[0],
-                                allowed_formats: ['jpeg', 'jpg', 'png'],
-                                folder: "document",
-                                width: 150,
-                                crop: "scale",
-                            });
-
-
-
-
-                            // hash the password: 
-                            const salt = await bcrypt.genSalt(10)
-                            const hashPassword = await bcrypt.hash(password, salt)
-                            let user
                             if (document) {
-                                user = new userModel({
-                                    fullName: fullName,
-                                    email: email,
-                                    password: hashPassword,
-                                    document: {
+                                try {
+                                    var myCloud = await cloudinary.uploader.upload(document, {
+                                        allowed_formats: ['jpeg', 'jpg', 'png'],
+                                        folder: "document",
+                                        width: 150,
+                                        crop: "scale",
+                                    });
 
-                                        public_id: myCloud.public_id,
-                                        url: myCloud.url,
-                                    },
-                                    role: role,
-                                });
+                                    console.log("the document", document)
+                                    // hash the password: 
+                                    const salt = await bcrypt.genSalt(10)
+                                    const hashPassword = await bcrypt.hash(password, salt)
+                                    let user
+                                    // Make the new Instance of the useModel for the company
+
+                                    user = new userModel({
+                                        fullName: fullName,
+                                        email: email,
+                                        password: hashPassword,
+                                        document: {
+
+                                            public_id: myCloud.public_id,
+                                            url: myCloud.url,
+                                        },
+                                        role: role,
+                                    });
+                                    // Save the user or company:
+                                    await user.save()
+                                    // use JWT Token:
+                                    const saved_user = await userModel.findOne({ email: email })
+                                    // Generate JWT Token:
+                                    const token = jwt.sign({ userID: saved_user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
+                                    // Give Response:
+                                    res.status(201).json({
+                                        success: true,
+                                        message: "Successfully Sign Up",
+                                        user,
+                                        token,
+                                    });
+                                } catch (error) {
+                                    res.status(401).json({
+                                        success: false,
+                                        message: "Document File Formate is not Matched",
+                                    });
+                                }
                             } else {
-                                user = new userModel({
-                                    fullName: fullName,
-                                    email: email,
-                                    password: hashPassword,
-                                    role: role,
+                                console.log("Document File Formate is not Matched")
+                                res.status(401).json({
+                                    success: false,
+                                    message: "Please Upload the Document",
                                 });
+
                             }
-
-                            await user.save()
-                            console.log("Name", fullName);
-
-                            // use JWT Token:
-                            const saved_user = await userModel.findOne({ email: email })
-                            // Generate JWT Token:
-                            const token = jwt.sign({ userID: saved_user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
-
-                            res.status(201).json({
-                                success: true,
-                                message: "Successfully Sign Up",
-                                user,
-                                token,
-                            });
-
-
-
-                        } else {
+                        }
+                        // If the role is User:
+                        else {
 
                             // hash the password: 
                             const salt = await bcrypt.genSalt(10)
                             const hashPassword = await bcrypt.hash(password, salt)
 
+                            // Making New Instance of the userModel:
                             let user = new userModel({
                                 fullName: fullName,
                                 email: email,
@@ -114,26 +114,26 @@ class userController {
                             });
 
 
+                            // to save the user
                             await user.save()
-                            console.log("Name", fullName);
+
 
                             // use JWT Token:
                             const saved_user = await userModel.findOne({ email: email })
                             // Generate JWT Token:
                             const token = jwt.sign({ userID: saved_user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
 
+                            // Give response:
                             res.status(201).json({
                                 success: true,
                                 message: "Successfully Sign Up",
                                 user,
                                 token,
                             });
-
-
-
                         }
-                    } else {
-
+                    }
+                    // If length of passowrd is samller than 8 digits:
+                    else {
 
                         res.status(401).json({
                             success: false,
@@ -147,6 +147,7 @@ class userController {
 
 
                 }
+                // If Password and Conformation are not match:
                 else {
                     res.status(401).json({
                         success: false,
@@ -160,8 +161,8 @@ class userController {
 
             }
         }
+        // If all field are not entered
         else {
-
             res.status(401).json({
                 success: false,
                 message: "Please Enter all Details"
@@ -169,10 +170,6 @@ class userController {
             });
 
         }
-
-
-
-
     })
 
     static uploadDocument = catchAsyncErrors(async (req, res, next) => {
@@ -207,6 +204,8 @@ class userController {
 
         })
     })
+
+    // Get all the User:
     static getAllUser = catchAsyncErrors(async (req, res, next) => {
 
         // check if the user exists in the database:
@@ -289,7 +288,7 @@ class userController {
 
                         });
                     } else if (user.role === 'company' && user.status === "rejected") {
-               
+
                         res.status(401).json({
                             success: false,
                             message: "Your Request is Rejected or Blocked please concern in hemantbasnet61@gmail.com"
@@ -303,32 +302,32 @@ class userController {
                             message: "Your Request is Pending please Concern in hemantbasnet61@gmail.com"
 
                         });
-                        
+
                     }
 
 
                 } else {
-                    
+
                     res.status(401).json({
                         success: false,
-                
-                        message:"Email or Password are not valid"
+
+                        message: "Email or Password are not valid"
 
                     });
                 }
             } else {
-                
+
                 res.status(401).json({
                     success: false,
-                    message:"Email or Password are not valid"
+                    message: "Email or Password are not valid"
 
                 });
             }
         } else {
-           
+
             res.status(401).json({
                 success: false,
-                message:"All Fields are Required"
+                message: "All Fields are Required"
 
             });
         }

@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { FiLogIn } from "react-icons/fi";
+
 import { IoIosArrowDropright } from "react-icons/io";
 
-import { IoMdNotificationsOutline } from "react-icons/io";
-import { Mymodel } from '../Authentication/MyModel';
 import { getToken } from '../../Service/localStorageService';
 const Navbar = () => {
   const token = getToken('token');
@@ -40,10 +38,10 @@ const Navbar = () => {
 
           </div>
           <button className='ml-32 lg:ml-96 lg:-mr-32' >
-            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27 4a2 2 0 0 1-3.46 0"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27 4a2 2 0 0 1-3.46 0"></path></svg>
           </button>
           <div className='md:hidden md:px-5 ' onClick={handleClick}>
-            <span>{toggle ? <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 9.5H3M21 4.5H3M21 14.5H3M21 19.5H3" /></svg> : <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 9.5H3M21 4.5H3M21 14.5H3M21 19.5H3" /></svg>}</span>
+            <span>{toggle ? <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 9.5H3M21 4.5H3M21 14.5H3M21 19.5H3" /></svg> : <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 9.5H3M21 4.5H3M21 14.5H3M21 19.5H3" /></svg>}</span>
           </div>
 
         </div>

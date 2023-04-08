@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { LoginForm,ResetPassword, Login, Navbar, Footer, AuthenticationForm, SendPasswordResetEmail } from './component/index.js'
+import { LoginForm,ResetPassword,  Navbar, Footer, SendPasswordResetEmail } from './component/index.js'
 import {CandidateInformation, AllUser, AllJobs, AddQuiz, Assestement, JobDetails, Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob, ApplicantsJob, MyJob, Package, ShortlistCandidates } from './pages/index.js'
 import MyForm from './component/Authentication/MyForm.jsx'
 // import work from './images/work.jpg'
@@ -19,7 +19,6 @@ const App = () => {
 
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={< MyForm />} />
-          <Route path="/register" element={<AuthenticationForm />} />
           {/* <Route path="/login" element={<Login />} /> */}
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/user" element={<CandidateDashboard />} />

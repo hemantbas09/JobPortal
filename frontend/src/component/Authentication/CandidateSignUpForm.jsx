@@ -150,8 +150,6 @@ const CandidateSignUpForm = () => {
           });
 
         }
-
-
       }
     } else {
       // for give error message to the user if all field are not fill:
