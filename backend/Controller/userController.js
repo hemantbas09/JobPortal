@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import catchAsyncErrors from '../Middleware/catchAsyncErrors.js'
 import transporter from '../config/emailConfig.js'
-import pdfUpload from '../utils/pdfUpload.js'
 import { v2 as cloudinary } from 'cloudinary';
 import path from 'path'
 
@@ -170,39 +169,6 @@ class userController {
             });
 
         }
-    })
-
-    static uploadDocument = catchAsyncErrors(async (req, res, next) => {
-
-
-
-        const user = await userModel.findById(req.params.id);
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-
-        const document = req.files?.document;
-        if (!document) {
-            return res.status(400).json({ message: "Document file is required" });
-        }
-
-        // Check if the uploaded file is a valid document file
-        const allowedExtensions = [".pdf", ".doc", ".docx", ".png"];
-        const fileExtension = path.extname(document.name).toLowerCase();
-        if (!allowedExtensions.includes(fileExtension)) {
-            return res.status(400).json({ message: "Invalid document file type" });
-        }
-
-        document.mv(`uploads/document/${document.name}`, async (err) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).json({ message: "Failed to upload document" });
-            }
-
-            await userModel.findByIdAndUpdate(req.params.id, { document: document.name });
-            return res.status(200).json({ message: "Document file uploaded successfully" });
-
-        })
     })
 
     // Get all the User:

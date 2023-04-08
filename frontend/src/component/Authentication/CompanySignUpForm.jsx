@@ -138,10 +138,13 @@ const CompanySignUpForm = () => {
                 formData.append('passwordConfirmation', user.passwordConfirmation);
                 formData.append('role', user.role);
                 formData.append('document', image);
-                // check after register is success or not: if success get res.data otherwise res.error:
+
+                // Asynchronously registers the user with the provided user data.
                 const res = await registerUser(formData);
+                
+                // check after register is success or not: if success get res.data otherwise res.error:
                 if (res.data) {
-                    // Gice Success message to user:
+                    // Give Success message to user:
                     toast.success(res.data.message, {
                         position: "top-right",
                         autoClose: 1000,

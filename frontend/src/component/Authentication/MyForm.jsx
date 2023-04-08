@@ -1,18 +1,23 @@
+// import All
 import { React, useState } from 'react'
 import CompanySignUpForm from './CompanySignUpForm';
 import CandidateSignUpForm from './CandidateSignUpForm';
 import { Link } from 'react-router-dom';
 const MyForm = () => {
+
+    // create Intial state variable using useState Hook:
     const [isUserType, setIsUserType] = useState(false);
+
+    // function to change the state of the user type and to Open the candidate company form:
     const openCompany = () => {
         setIsUserType(true);
-        console.log(isUserType);
     };
 
+    // function to change the state of the user type and to Open the candidate user form:
     const openCandidate = () => {
         setIsUserType(false);
-        console.log(isUserType)
     };
+
     return (
         <>
             <section className=" dark:bg-gray-900  ">
@@ -60,7 +65,7 @@ const MyForm = () => {
                                 </div>
 
                             </div>
-
+                            {/* change the candiadte form and company sign of Form: */}
                             {
                                 isUserType ? <CompanySignUpForm /> : <CandidateSignUpForm />
                             }
@@ -87,8 +92,6 @@ const MyForm = () => {
                         </div>
                     </div>
                 </div>
-
-
             </section>
 
         </>
