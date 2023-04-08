@@ -1,8 +1,8 @@
 import React from 'react'
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { LoginForm,ResetPassword,  Navbar, Footer, SendPasswordResetEmail } from './component/index.js'
-import {CandidateInformation, AllUser, AllJobs, AddQuiz, Assestement, JobDetails, Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob, ApplicantsJob, MyJob, Package, ShortlistCandidates } from './pages/index.js'
+import { LoginForm, ResetPassword, Navbar, Footer, SendPasswordResetEmail } from './component/index.js'
+import { CandidateInformation, AllUser, AllJobs, AddQuiz, Assestement, JobDetails, Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob, ApplicantsJob, MyJob, Package, ShortlistCandidates } from './pages/index.js'
 import MyForm from './component/Authentication/MyForm.jsx'
 // import work from './images/work.jpg'
 import { Link } from 'react-router-dom'
@@ -24,10 +24,12 @@ const App = () => {
           <Route path="/user" element={<CandidateDashboard />} />
           <Route path="/forgetpassword" element={<SendPasswordResetEmail />} />
           <Route path="api/user/reset-password/:id/:token" element={< ResetPassword />} />
-          
-          <Route path="admin/candidateinfo" element={< CandidateInformation />} />
+
+          {/* -------------------------Admin Route-------------------------- */}
+          <Route path="/admin/candidateinformation" element={< CandidateInformation />} />
+          <Route path="/admin/companyinformation" element={<       AllUser />} />
           {/* Company */}
-        
+
           <Route path="/login" element={<   LoginForm />} />
           <Route path="/company" element={< CompanyDashboard />} />
           <Route path="/company/addjob" element={< AddJob />} />
@@ -40,7 +42,7 @@ const App = () => {
           <Route path="/quiz/:id" element={<      Assestement />} />
           <Route path="/addquiz/:id" element={<      AddQuiz />} />
           <Route path="/alluser" element={<       AllUser />} />
-         
+
 
         </Routes >
       </BrowserRouter>

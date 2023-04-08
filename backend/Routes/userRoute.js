@@ -26,6 +26,7 @@ router.get('/loggedUser', userController.loggedUser)
 router.get('/getalluser', userController.getAllUser)
 router.post('/approvedReject', userController.companyRejectApproved)
 
+router.delete('/:id', userController.deleteUser)
 
 
 export default router

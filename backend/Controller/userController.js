@@ -62,6 +62,7 @@ class userController {
                                         fullName: fullName,
                                         email: email,
                                         password: hashPassword,
+                                        status: "pending",
                                         document: {
 
                                             public_id: myCloud.public_id,
@@ -110,6 +111,7 @@ class userController {
                                 email: email,
                                 password: hashPassword,
                                 role: role,
+                                status: "active"
                             });
 
 
@@ -185,6 +187,7 @@ class userController {
 
     })
 
+    // Approve, Reject or block user and compeny:
     static companyRejectApproved = catchAsyncErrors(async (req, res, next) => {
 
         const companyID = req.body["companyId"];
@@ -201,7 +204,14 @@ class userController {
             updatedCompany.status = 'approved';
         } else if (status === '0') {
             updatedCompany.status = 'rejected';
-        } else {
+        } else if (status === '3') {
+            updatedCompany.status = 'active';
+
+        } else if (status === '4') {
+            updatedCompany.status = 'blocked';
+
+        }
+        else {
             updatedCompany.status = 'pending';
         }
 
@@ -416,6 +426,30 @@ class userController {
         }
     }
     )
+
+    // Delete the User:
+    static deleteUser = catchAsyncErrors(async (req, res, next) => {
+
+
+        const user = await userModel.findById(req.params.id)
+        console.log("This is User", user)
+        res.status("Ok")
+        if (!user) {
+            res.status(401).json({
+                success: false,
+                message: "User is not found"
+            })
+        } else {
+            await user.deleteOne();
+            res.status(200).json({
+                success: true,
+                message: "User Deleted Successfully"
+            })
+        }
+
+
+
+    })
 }
 
 

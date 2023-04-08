@@ -1,10 +1,11 @@
 import { React, useState } from 'react'
-import { useGetallUserQuery, useAcceptRejectMutation } from '../../Service/userAuth'
+import { useGetallUserQuery, useAcceptRejectMutation, useDeleteUserMutation } from '../../Service/userAuth'
 import { GrDocumentPdf } from "react-icons/gr";
 import download from 'downloadjs';
 const AllUser = () => {
 
     const [acceptReject, { isLoading, error }] = useAcceptRejectMutation();
+    const [deleteUser, response] = useDeleteUserMutation();
     console.log("isloading", isLoading)
     const handleApprove = async (companyId, status) => {
         const formData = new FormData();
@@ -78,7 +79,7 @@ const AllUser = () => {
                                                     return (
                                                         <>
 
-                                                          
+
                                                             <tr>
                                                                 <td class="px-4 py-4 text-xl font-medium text-gray-700 whitespace-nowrap">
                                                                     <div class="inline-flex items-center gap-x-3">
@@ -99,11 +100,11 @@ const AllUser = () => {
                                                                         handleDownload(
                                                                             company.document.url,
                                                                             console.log("first", company.document.public_id)
-                                                                            
+
                                                                             // company.document.public_id.pdf,
                                                                         );
                                                                     }}>
-                                                                        
+
 
                                                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-text" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00abfb" fill="none" stroke-linecap="round" stroke-linejoin="round" className='text-blue-600 hover:bg-blue-50'>
                                                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -149,7 +150,7 @@ const AllUser = () => {
 
 
 
-                                                                        <button className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
+                                                                        <button  onClick={() => deleteUser(company._id)} className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
                                                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fb2600" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                                                 <line x1="4" y1="7" x2="20" y2="7" />
