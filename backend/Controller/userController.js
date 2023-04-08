@@ -270,34 +270,67 @@ class userController {
                     // Generate JWT Token:
                     if (user.role === 'admin' || user.role === 'user') {
                         const token = jwt.sign({ userID: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
-                        res.send({ "status": "success", "message": "Login Success", "token": token, "role": user.role })
-                        console.log("admin or user");
+
+                        res.status(201).json({
+                            success: true,
+                            token,
+                            role: user.role,
+                            message: "Login Success"
+
+                        });
                     } else if (user.role === 'company' && user.status === "approved") {
                         const token = jwt.sign({ userID: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
-                        res.send({ "status": "success", "message": "Login Success", "token": token, "role": user.role })
-                        console.log("company");
+
+                        res.status(201).json({
+                            success: true,
+                            token,
+                            role: user.role,
+                            message: "Login Success"
+
+                        });
                     } else if (user.role === 'company' && user.status === "rejected") {
-                        console.log("Your Request in Rejected");
-                        res.send({ "status": "failed", "message": "Your request is Rejected" })
+               
+                        res.status(401).json({
+                            success: false,
+                            message: "Your Request is Rejected or Blocked please concern in hemantbasnet61@gmail.com"
+
+                        });
                     }
 
                     else {
-                        res.send({ "status": "failed", "message": "Your request is pending" })
-                        console.log("Error");
+                        res.status(401).json({
+                            success: false,
+                            message: "Your Request is Pending please Concern in hemantbasnet61@gmail.com"
+
+                        });
+                        
                     }
 
 
                 } else {
-                    res.send({ "status": "failed", "message": "Email or Password is not Valid" })
-                    console.log("Pass is not valid");
+                    
+                    res.status(401).json({
+                        success: false,
+                
+                        message:"Email or Password are not valid"
+
+                    });
                 }
             } else {
-                res.send({ "status": "failed", "message": "You are not a Registered User" })
-                console.log("Not register User")
+                
+                res.status(401).json({
+                    success: false,
+                    message:"Email or Password are not valid"
+
+                });
             }
         } else {
-            res.send({ "status": "failed", "message": "All Fields are Required" })
-            console.log("All field required")
+           
+            res.status(401).json({
+                success: false,
+                message:"All Fields are Required"
+
+            });
         }
 
     })

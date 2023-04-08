@@ -21,8 +21,29 @@
 }
 .my-toast-body {
   font-size: 20px;
-  width: 800px;
+  width: 700px;
   /* margin-top: 8rem; */
+}
+.my-toast-animation {
+  animation: my-toast-animation 0.5s ease-out;
+}
+
+@keyframes my-toast-animation {
+  0% {
+    transform: translate(-0%, -0%) rotate(-1deg);
+  }
+  25% {
+    transform: translate(-0%, -0%) rotate(1deg);
+  }
+  0% {
+    transform: translate(-0%, -0%) rotate(-1deg);
+  }
+  75% {
+    transform: translate(-0%, -0%) rotate(1deg);
+  }
+  100% {
+    transform: translate(-0%, -0%) rotate(0deg);
+  }
 }
 
 @keyframes logo-spin {

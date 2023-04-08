@@ -74,14 +74,14 @@ const CompanySignUpForm = () => {
            
                 toast.error("Password must have of 8 digits", {
                     position: "top-center",
-                    autoClose: 5000,
+                    autoClose: 1000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
                     theme: "colored",
-                    className: " mt-32 text-xl"
+                    className: "my-toast-body mt-28 lg:ml-72 -ml-44 text-xl",
                 });
             }
             else if (!(hasUppercase && hasLowercase && hasNumber && hasSpecialChar)) {
@@ -89,41 +89,40 @@ const CompanySignUpForm = () => {
 
                 toast.error("Password should be combination of uppercase,lowercase,numbers,special characters", {
                     position: "top-center",
-                    autoClose: 5000,
+                    autoClose: 1000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
                     theme: "colored",
-                    className: "my-toast-body mt-32 text-xl",
-                    // className: " mt-32 text-xl w-full"
+                    className: "my-toast-body my-toast-animation mt-28 lg:ml-72 -ml-44 text-xl",
                 });
             } else if (!hasPersonalInfo) {
 
                 toast.error("Password should not match name and email", {
                     position: "top-center",
-                    autoClose: 5000,
+                    autoClose: 1000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
                     theme: "colored",
-                    className: " mt-32 text-xl w-full"
+                    className: "my-toast-body my-toast-animation mt-28 lg:ml-72 -ml-44 text-xl",
                 });
             } else if (hasSequentialChars || hasRepeatedChars) {
 
                 toast.error("Password should not have sequential or repeated characters", {
                     position: "top-center",
-                    autoClose: 5000,
+                    autoClose: 1000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
                     theme: "colored",
-                    className: " mt-32 text-xl"
+                    className: "my-toast-body mt-28 lg:ml-72 -ml-44 text-xl",
                 });
             } else {
                 const formData = new FormData();
@@ -139,7 +138,7 @@ const CompanySignUpForm = () => {
 
                     toast.success(res.data.message, {
                         position: "top-right",
-                        autoClose: 5000,
+                        autoClose: 1000,
                         hideProgressBar: false,
                         closeOnClick: true,
                         pauseOnHover: true,
@@ -147,7 +146,7 @@ const CompanySignUpForm = () => {
                         progress: undefined,
                         theme: "colored",
                         // bodyClassName: "my-toast-body",
-                        className: " mt-32 text-xl"
+                        className: "my-toast-body mt-28 lg:ml-72 -ml-44 text-xl",
                     });
                     navigate("/")
                     storeToken(res.data.token)
@@ -157,7 +156,7 @@ const CompanySignUpForm = () => {
                     console.log(res.error.data.message)
                     toast.error(res.error.data.message, {
                         position: "top-center",
-                        autoClose: 5000,
+                        autoClose: 1000,
                         hideProgressBar: false,
                         closeOnClick: true,
                         pauseOnHover: true,
@@ -165,7 +164,7 @@ const CompanySignUpForm = () => {
                         progress: undefined,
                         theme: "colored",
                         // bodyClassName: "my-toast-body",
-                        className: " mt-32 text-xl"
+                        className: "my-toast-body mt-28 lg:ml-72 -ml-44 text-xl",
                     });
 
                 }
@@ -246,7 +245,7 @@ const CompanySignUpForm = () => {
                     <label htmlFor="document" class="block text-xl text-gray-500 dark:text-gray-300">Company Document</label>
 
                     <label htmlFor="document" class="flex flex-col items-center w-full max-w-lg p-5 mx-auto mt-2 text-center bg-white border-2 border-gray-300 border-dashed cursor-pointer dark:bg-gray-900 dark:border-gray-700 rounded-xl">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-gray-500 dark:text-gray-400">
+                        <svg xmlns="http://www.w3.org/1000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-gray-500 dark:text-gray-400">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
                         </svg>
 

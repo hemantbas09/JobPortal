@@ -4,6 +4,7 @@ import { useLoginUserMutation } from '../../Service/userAuth';
 import loginImage from '../../images/login.jpg'
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom'
+import '../../App.css'
 const LoginForm = () => {
 
     const [loginUser, { isLoading }] = useLoginUserMutation();
@@ -37,9 +38,9 @@ const LoginForm = () => {
                     draggable: true,
                     progress: undefined,
                     theme: "colored",
-                    // bodyClassName: "my-toast-body",
-                    className: " mt-32 text-xl"
+                    className: "my-toast-body mt-28 lg:ml-72 -ml-44 text-xl",
                 });
+        
                 storeToken(res.data.token)
 
             } else {
@@ -54,8 +55,7 @@ const LoginForm = () => {
                     draggable: true,
                     progress: undefined,
                     theme: "colored",
-                    // bodyClassName: "my-toast-body",
-                    className: " mt-32 text-xl"
+                    className: "my-toast-body mt-28 lg:ml-72 -ml-44 text-xl",
                 });
 
             }
