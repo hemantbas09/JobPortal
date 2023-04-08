@@ -6,9 +6,13 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { storeToken } from '../../Service/localStorageService';
 import { toast } from 'react-toastify';
+import '../../App.css'
 import { createUser, uploadDocument } from '../../Redux/Action/userApiAction';
 
 const CompanySignUpForm = () => {
+
+
+
     const [showPassword, setshowPassword] = useState(true);
 
     const [registerUser, { isLoading }] = useRegisterUserMutation();
@@ -52,25 +56,24 @@ const CompanySignUpForm = () => {
         previewFiles(document)
         console.log("this is file", document)
     }
-
+    const minLength = 8;
+    const hasUppercase = /[A-Z]/.test(user.password);
+    const hasLowercase = /[a-z]/.test(user.password);
+    const hasNumber = /\d/.test(user.password);
+    const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(user.password);
+    const hasPersonalInfo = user.password.includes(user.fullName) && user.password.includes(user.email);
+    const hasSequentialChars = /01234567890qwertyuiopasdfghjklzxcvbnm/.test(user.password.toLowerCase());
+    const hasRepeatedChars = /(.)\1\1/.test(user.password);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (user.fullName && user.email && user.password && user.passwordConfirmation) {
-
-            const formData = new FormData();
-            formData.append('fullName', user.fullName);
-            formData.append('email', user.email);
-            formData.append('password', user.password);
-            formData.append('passwordConfirmation', user.passwordConfirmation);
-            formData.append('role', user.role);
-            formData.append('document', image);
-            const res = await registerUser(formData);
-            if (res.data) {
-                console.log(res.data.message)
-
-                toast.success(res.data.message, {
-                    position: "top-right",
+            console.log(user.password.length)
+            if (user.password.length < minLength && user.passwordConfirmation.length<minLength) {
+                
+           
+                toast.error("Password must have of 8 digits", {
+                    position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
                     closeOnClick: true,
@@ -78,24 +81,96 @@ const CompanySignUpForm = () => {
                     draggable: true,
                     progress: undefined,
                     theme: "colored",
+                    className: " mt-32 text-xl"
                 });
-                storeToken(res.data.token)
-                navigate("/")
-            } else {
-
-                console.log(res.error.data.message)
-                toast.error(res.error.data.message, {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
-
             }
+            else if (!(hasUppercase && hasLowercase && hasNumber && hasSpecialChar)) {
+                
+
+                toast.error("Password should be combination of uppercase,lowercase,numbers,special characters", {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    className: "my-toast-body mt-32 text-xl",
+                    // className: " mt-32 text-xl w-full"
+                });
+            } else if (!hasPersonalInfo) {
+
+                toast.error("Password should not match name and email", {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    className: " mt-32 text-xl w-full"
+                });
+            } else if (hasSequentialChars || hasRepeatedChars) {
+
+                toast.error("Password should not have sequential or repeated characters", {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    className: " mt-32 text-xl"
+                });
+            } else {
+                const formData = new FormData();
+                formData.append('fullName', user.fullName);
+                formData.append('email', user.email);
+                formData.append('password', user.password);
+                formData.append('passwordConfirmation', user.passwordConfirmation);
+                formData.append('role', user.role);
+                formData.append('document', image);
+                const res = await registerUser(formData);
+                if (res.data) {
+                    console.log(res.data.message)
+
+                    toast.success(res.data.message, {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                        // bodyClassName: "my-toast-body",
+                        className: " mt-32 text-xl"
+                    });
+                    navigate("/")
+                    storeToken(res.data.token)
+
+                } else {
+
+                    console.log(res.error.data.message)
+                    toast.error(res.error.data.message, {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                        // bodyClassName: "my-toast-body",
+                        className: " mt-32 text-xl"
+                    });
+
+                }
+            }
+
         } else {
             console.log('Please add all input');
         }

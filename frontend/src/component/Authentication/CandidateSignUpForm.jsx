@@ -50,7 +50,7 @@ const CandidateSignUpForm = () => {
           draggable: true,
           progress: undefined,
           theme: "colored",
-          bodyClassName: "my-toast-body"
+          className:" mt-32 text-xl"
         });
         storeToken(res.data.token)
         navigate("/")
@@ -66,7 +66,8 @@ const CandidateSignUpForm = () => {
           draggable: true,
           progress: undefined,
           theme: "colored",
-          bodyClassName: "my-toast-body"
+          bodyClassName: "my-toast-body",
+          className:" mt-32 text-xl"
         });
 
       }

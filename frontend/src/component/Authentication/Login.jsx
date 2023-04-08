@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import React, { useState } from 'react';
 import { FcGoogle } from "react-icons/fc";
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useLoginUserMutation } from '../../Service/userAuth';
 import Button from '../Comman/Button';

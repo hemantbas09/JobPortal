@@ -1,7 +1,68 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLoginUserMutation } from '../../Service/userAuth';
 import loginImage from '../../images/login.jpg'
+import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom'
 const LoginForm = () => {
+
+    const [loginUser, { isLoading }] = useLoginUserMutation();
+    let navigate = useNavigate();
+    const [user, setUser] = useState({
+        email: "", password: ""
+    })
+    let name, value;
+    const handleInputs = (e) => {
+        name = e.target.name;
+        value = e.target.value
+        setUser({ ...user, [name]: value })
+        console.log(user);
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        // code to submit form data to server or handle form validation goes here
+        if (user.email && user.password) {
+            const res = await loginUser(user);
+            console.log('Second', res)
+            if (res.data) {
+                console.log(res.data.message)
+                navigate("/")
+                toast.success(res.data.message, {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    // bodyClassName: "my-toast-body",
+                    className: " mt-32 text-xl"
+                });
+                storeToken(res.data.token)
+
+            } else {
+
+                console.log(res.error.data.message)
+                toast.error(res.error.data.message, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    // bodyClassName: "my-toast-body",
+                    className: " mt-32 text-xl"
+                });
+
+            }
+        } else {
+            console.log('Please add all input');
+        }
+    };
     return (
         <>
             <div class="bg-white dark:bg-gray-900 mt-28 mb-28 ">
@@ -22,19 +83,16 @@ const LoginForm = () => {
                             </div>
 
                             <div class="mt-8">
-                                <form>
+                                <form method='POSt' onSubmit={handleSubmit}>
                                     <div>
                                         <label for="email" class="block mb-2 text-xl  text-gray-600 dark:text-gray-200 ">Email Address</label>
-                                        <input type="email" name="email" id="email" placeholder="example@example.com" className="block  text-xl w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+                                        <input onChange={handleInputs} type="email" name="email" id="email" placeholder="example@example.com" className="block  text-xl w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
                                     </div>
 
                                     <div class="mt-6">
 
                                         <label for="password" class="text-xl text-gray-600 dark:text-gray-200">Password</label>
-
-
-
-                                        <input type="password" name="password" id="password" placeholder="Your Password" class="block w-full px-4 text-xl py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+                                        <input onChange={handleInputs} type="password" name="password" id="password" placeholder="Your Password" class="block w-full px-4 text-xl py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
                                     </div>
 
                                     <div class="mt-6 mb-5">

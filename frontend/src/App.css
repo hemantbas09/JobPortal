@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+
   /* background: papayawhip; */
 }
 
@@ -20,6 +21,8 @@
 }
 .my-toast-body {
   font-size: 20px;
+  width: 800px;
+  /* margin-top: 8rem; */
 }
 
 @keyframes logo-spin {

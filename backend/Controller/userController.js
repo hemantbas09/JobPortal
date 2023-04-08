@@ -43,8 +43,10 @@ class userController {
                     console.log("J payo tai")
                     if (password.length >= 8) {
 
+                        if (document) {
 
-                        try {
+
+
                             var myCloud = await cloudinary.uploader.upload(document, {
                                 // public_id: document.name.split(".")[0],
                                 allowed_formats: ['jpeg', 'jpg', 'png'],
@@ -52,64 +54,84 @@ class userController {
                                 width: 150,
                                 crop: "scale",
                             });
-                            console.log("Document upload successful:", myCloud);
-                            res.status(401).json({
+
+
+
+
+                            // hash the password: 
+                            const salt = await bcrypt.genSalt(10)
+                            const hashPassword = await bcrypt.hash(password, salt)
+                            let user
+                            if (document) {
+                                user = new userModel({
+                                    fullName: fullName,
+                                    email: email,
+                                    password: hashPassword,
+                                    document: {
+
+                                        public_id: myCloud.public_id,
+                                        url: myCloud.url,
+                                    },
+                                    role: role,
+                                });
+                            } else {
+                                user = new userModel({
+                                    fullName: fullName,
+                                    email: email,
+                                    password: hashPassword,
+                                    role: role,
+                                });
+                            }
+
+                            await user.save()
+                            console.log("Name", fullName);
+
+                            // use JWT Token:
+                            const saved_user = await userModel.findOne({ email: email })
+                            // Generate JWT Token:
+                            const token = jwt.sign({ userID: saved_user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
+
+                            res.status(201).json({
                                 success: true,
-                                myCloud,
-                                message: "Document upload successful"
-
+                                message: "Successfully Sign Up",
+                                user,
+                                token,
                             });
-                        } catch (error) {
-                            res.status(401).json({
-                                success: false,
-                                message: "File Formate is Not match"
-
-                            });
-                        }
 
 
 
-                        // hash the password: 
-                        const salt = await bcrypt.genSalt(10)
-                        const hashPassword = await bcrypt.hash(password, salt)
-                        let user
-                        if (document) {
-                            user = new userModel({
-                                fullName: fullName,
-                                email: email,
-                                password: hashPassword,
-                                document: {
-
-                                    public_id: myCloud.public_id,
-                                    url: myCloud.url,
-                                },
-                                role: role,
-                            });
                         } else {
-                            user = new userModel({
+
+                            // hash the password: 
+                            const salt = await bcrypt.genSalt(10)
+                            const hashPassword = await bcrypt.hash(password, salt)
+
+                            let user = new userModel({
                                 fullName: fullName,
                                 email: email,
                                 password: hashPassword,
                                 role: role,
                             });
+
+
+                            await user.save()
+                            console.log("Name", fullName);
+
+                            // use JWT Token:
+                            const saved_user = await userModel.findOne({ email: email })
+                            // Generate JWT Token:
+                            const token = jwt.sign({ userID: saved_user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
+
+                            res.status(201).json({
+                                success: true,
+                                message: "Successfully Sign Up",
+                                user,
+                                token,
+                            });
+
+
+
                         }
-
-                        await user.save()
-                        console.log("Name", fullName);
-
-                        // use JWT Token:
-                        const saved_user = await userModel.findOne({ email: email })
-                        // Generate JWT Token:
-                        const token = jwt.sign({ userID: saved_user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' });
-
-                        res.status(201).json({
-                            success: true,
-                            message: "Successfully Sign Up",
-                            user,
-                            token,
-                        });
-
-
                     } else {
 
 
