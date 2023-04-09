@@ -14,7 +14,7 @@ const CompanyDashboard = () => {
 
   return (
     <>
-
+      <h1>This is Company Dashboard</h1>
       <div className='flex relative '>
         <div>
           <AdminSidebar />

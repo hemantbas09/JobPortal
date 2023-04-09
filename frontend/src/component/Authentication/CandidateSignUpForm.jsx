@@ -228,7 +228,7 @@ const CandidateSignUpForm = () => {
               event.preventDefault();
               setShowConfirmationPassword(!showConfirmationPassword);
             }}>
-              {showConfirmationPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+              {showConfirmationPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
             </button>
           </div>
 

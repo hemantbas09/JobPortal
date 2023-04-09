@@ -5,10 +5,14 @@ import { useLoginUserMutation } from '../../Service/userAuth';
 import loginImage from '../../images/login.jpg'
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom'
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { IoIosArrowDropright } from "react-icons/io";
+import { storeToken } from '../../Service/localStorageService';
 import '../../App.css'
 const LoginForm = () => {
 
     // create Intial state variable using useState Hook:
+    const [showPassword, setshowPassword] = useState(true);
     const [user, setUser] = useState({
         email: "", password: ""
     })
@@ -43,6 +47,7 @@ const LoginForm = () => {
 
             // check after login is success or not: if success get res.data otherwise res.error:
             if (res.data) {
+                storeToken([res.data.token,res.data.role])
                 navigate("/")
                 toast.success(res.data.message, {
                     position: "top-right",
@@ -55,8 +60,8 @@ const LoginForm = () => {
                     theme: "colored",
                     className: "my-toast-body mt-28 lg:ml-72 -ml-44 text-xl",
                 });
+                console.log("Hemant", res.data.token)
 
-                storeToken(res.data.token)
 
             } else {
 
@@ -119,18 +124,27 @@ const LoginForm = () => {
                                     </div>
 
                                     {/* Password Input */}
-                                    <div className="mt-6">
+                                    <div className="mt-6 relative">
 
                                         <label htmlFor="password" className="text-xl text-gray-600 dark:text-gray-200">Password</label>
-                                        <input onChange={handleInputs} type="password" name="password" id="password" placeholder="Your Password" className="block w-full px-4 text-xl py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+                                        <input onChange={handleInputs} type={showPassword ? "text" : "password"} name="password" id="password" placeholder="Your Password" className="block w-full px-4 text-xl py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+
+                                        {/* Eye for the password hide or seen */}
+                                        <button className=" mt-5  absolute top-1/2 right-0 transform -translate-y-1/2 pr-3   text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200" onClick={(event) => {
+                                            event.preventDefault();
+                                            setshowPassword(!showPassword);
+                                        }}>
+                                            {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+                                        </button>
+
                                     </div>
 
                                     {/* Sign In Button */}
-                                    <div className="mt-6 mb-5">
-                                        <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-                                            Sign in
-                                        </button>
-                                    </div>
+                                    <button
+                                        className="flex items-center mt-6 mb-5 justify-between w-full px-6 py-3 text-xl tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                                        <span>Sign In </span>
+                                        <IoIosArrowDropright className="w-5 h-5 rtl:-scale-x-100" size={20} />
+                                    </button>
 
                                 </form>
                                 <a href="#" className="  text-xl text-gray-400 focus:text-blue-500 hover:text-blue-500 hover:underline">Forgot password?</a>

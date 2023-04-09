@@ -4,8 +4,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { LoginForm, ResetPassword, Navbar, Footer, SendPasswordResetEmail } from './component/index.js'
 import { CandidateInformation, AllUser, AllJobs, AddQuiz, Assestement, JobDetails, Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob, ApplicantsJob, MyJob, Package, ShortlistCandidates } from './pages/index.js'
 import MyForm from './component/Authentication/MyForm.jsx'
-// import work from './images/work.jpg'
 import { Link } from 'react-router-dom'
+import ProtectedRoute from './ProtectedRoute'
 
 const App = () => {
   const Menu = []
@@ -20,18 +20,18 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={< MyForm />} />
           {/* <Route path="/login" element={<Login />} /> */}
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/user" element={<CandidateDashboard />} />
+          <Route path="/admin" element={<ProtectedRoute Component={AdminDashboard} />} />
+          <Route path="/user" element={<ProtectedRoute Component={CandidateDashboard} />} />
           <Route path="/forgetpassword" element={<SendPasswordResetEmail />} />
           <Route path="api/user/reset-password/:id/:token" element={< ResetPassword />} />
 
           {/* -------------------------Admin Route-------------------------- */}
-          <Route path="/admin/candidateinformation" element={< CandidateInformation />} />
-          <Route path="/admin/companyinformation" element={<       AllUser />} />
+          <Route path="/admin/candidateinformation" element={<ProtectedRoute Component={CandidateInformation} />} />
+          <Route path="/admin/companyinformation" element={<ProtectedRoute Component={AllUser} />} />
           {/* Company */}
 
-          <Route path="/login" element={<   LoginForm />} />
-          <Route path="/company" element={< CompanyDashboard />} />
+          <Route path="/login" element={<ProtectedRoute Component={LoginForm} />} />
+          <Route path="/company" element={<ProtectedRoute Component={CompanyDashboard} />} />
           <Route path="/company/addjob" element={< AddJob />} />
           <Route path="/company/Applicant" element={< ApplicantsJob />} />
           <Route path="/company/job" element={< MyJob />} />

@@ -23,7 +23,7 @@ const CompanySignUpForm = () => {
     /* This line uses the useRegisterUserMutation hook to create a function for 
     registering a user and sets a isLoading flag to show loading state. */
     const [registerUser, { isLoading }] = useRegisterUserMutation();
-
+    
     /*navigate is function created using useNavigate 
     hook for navigate to different route:*/
     const navigate = useNavigate();
@@ -158,6 +158,7 @@ const CompanySignUpForm = () => {
                     });
                     navigate("/")
                     storeToken(res.data.token)
+                    
 
                 } else {
 
@@ -232,7 +233,7 @@ const CompanySignUpForm = () => {
                             event.preventDefault();
                             setshowPassword(!showPassword);
                         }}>
-                            {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                            {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
                         </button>
                     </div>
 
