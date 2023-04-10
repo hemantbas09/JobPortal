@@ -4,9 +4,6 @@ import Box from './Box'
 const Home = () => {
   return (
     <>
-
-
-
       <div className="flex justify-between gap-6 mt-6 mb-6  ">
         <div class=""> <Box /></div>
         <div class=" "> <Box /></div>
@@ -21,8 +18,6 @@ const Home = () => {
           <h1 className="text-2xl font-semibold ">Notification</h1>
         </div>
       </div>
-
-
     </>
   )
 }

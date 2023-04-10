@@ -6,7 +6,7 @@ import { CandidateInformation, AllUser, AllJobs, AddQuiz, Assestement, JobDetail
 import MyForm from './component/Authentication/MyForm.jsx'
 import { Link } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
-
+import Check from './pages/Company/check'
 const App = () => {
   const Menu = []
   return (
@@ -16,7 +16,7 @@ const App = () => {
         <Navbar />
 
         <Routes>
-
+        <Route path="/check" element={<Check />} />
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={< MyForm />} />
           {/* <Route path="/login" element={<Login />} /> */}
@@ -48,7 +48,7 @@ const App = () => {
       </BrowserRouter>
 
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }

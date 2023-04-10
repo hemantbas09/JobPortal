@@ -17,12 +17,12 @@ const AdminSidebar = () => {
           <Sidebar Menus={Menus} />
         </div>
 
-        <div className="fixed overflow-y-scroll top-28 left-72 right-0 p-7 flex-1 mx-10  bg-zinc-100 h-screen left-30 ">
+        {/* <div className="fixed overflow-y-scroll top-28 left-72 right-0 p-7 flex-1 mx-10  bg-zinc-100 h-screen left-30 ">
 
           <h1 className="text-2xl font-semibold ">Applications statistics</h1>
           
           
-        </div>
+        </div> */}
 
 
 

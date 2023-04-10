@@ -3,17 +3,26 @@ import React from 'react'
 const Box = () => {
   return (
     <>
-    
-    
-    <div className='bg-white w-80 rounded-lg   flex justify-between'>
-        {/* <h1>Job Categories</h1>
-    <p>Your Career Starts with Us</p> */}
 
-        <img className=" pl-8 p-3 block mx-auto h-24 rounded-full sm:mx-0 sm:shrink-0" src="image/heroImage.svg" alt="category Pic" />
-        <h2 className='pr-8 p-3 mt-6'>Account</h2>
 
-      </div>
-    
+      
+
+
+
+        <div class="bg-gray-50  dark:bg-gray-800 shadow-lg rounded-md flex items-center justify-between p-8 border-b-4 border-blue-600 dark:border-gray-600  font-medium group">
+          <div class="flex justify-center items-center w-25 h-25 bg-white p-6 rounded-full transition-all duration-300 transform group-hover:rotate-12">
+            <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+          </div>
+          <div class="text-right text-black">
+            <p class="text-2xl">1,257</p>
+            <p>Visitors</p>
+          </div>
+        </div>
+
+
+        {/* <Home /> */}
+
+
     </>
   )
 }
