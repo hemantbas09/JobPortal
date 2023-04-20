@@ -19,8 +19,8 @@ router.get('/:id', quizController.getquizByID);
 router.put('/:id', quizController.updatequiz);
 router.delete('/:id', quizController.deletequiz);
 router.post('/quizattem',quizAttemptController.quizAttempt);
-
-
+router.get('/quizresult/all',quizAttemptController.quizAllResult)
+router.get('/quizresult/:id',quizAttemptController.quizAllResult)
 //Private Routes:
 
 

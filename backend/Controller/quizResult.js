@@ -3,7 +3,7 @@ import quizQuestionModel from '../Models/quizQuestion.js';
 
 import catchAsyncErrors from '../Middleware/catchAsyncErrors.js'
 
-class jobAtemptController {
+class quizAtemptController {
 
   // post a new Job
   static quizAttempt = catchAsyncErrors(async (req, res, next) => {
@@ -59,7 +59,19 @@ class jobAtemptController {
     }
   });
 
+  static quizAllResult = catchAsyncErrors(async (req, res, next) => {
+
+    const allQuizResult = await quizResultModel.find({})
+    console.log(allQuizResult)
+  })
+
+  static quizResultById = catchAsyncErrors(async (req, res, next) => {
+    const jobId = req.params.id
+    const quizResultById = await quizResultModel.find({ job: jobId })
+    console.log(quizResultById)
+  })
+
 }
 
 
-export default jobAtemptController
+export default quizAtemptController

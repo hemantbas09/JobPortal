@@ -46,6 +46,15 @@ export const quizApi = createApi({
 
         }),
 
+         // Access the quiz result:
+         getquizbyId: builder.query({
+
+            query: (id) => ({
+                url: `${id}`,
+                method: 'Get',
+            }),
+        }),
+
 
     }),
 });
