@@ -9,7 +9,7 @@ const upload = multer();
 // router.use('/changepassword', checkUserAuth)
 // router.post('/new/:id', checkUserAuth);
 router.use('/quizattem', upload.none());
-
+router.use('/new/:id',upload.none());
 
 //public Routes:
 router.post('/new/:id', quizController.quizCreate);
@@ -18,8 +18,6 @@ router.get('/allquizs',quizController.getAllQuize);
 router.get('/:id', quizController.getquizByID);
 router.put('/:id', quizController.updatequiz);
 router.delete('/:id', quizController.deletequiz);
-
-
 router.post('/quizattem',quizAttemptController.quizAttempt);
 
 

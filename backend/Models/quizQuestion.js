@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 // Defining Schema:
 
 const quizQuestionSchema = new mongoose.Schema({
-    quizQuestions:
+    questions:
         [{
             question: {
                 type: String,
@@ -18,18 +18,25 @@ const quizQuestionSchema = new mongoose.Schema({
                 type: String,
                 required: true
             },
-            time: {
-                type: String,
-                required: true
-            },
         }]
     ,
-
     job: {
         type: mongoose.Schema.ObjectId,
         ref: "job",
         required: true,
     },
+    passMark:{
+        type:Number,
+        required:true
+    },
+    time:{
+        type:Number,
+        required:true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+      },
 
 
     // user: {

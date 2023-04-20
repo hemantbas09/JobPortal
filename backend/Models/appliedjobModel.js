@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-
+import mongoose from "mongoose";
 const appliedJobSchema = mongoose.Schema(
     {
 
@@ -13,15 +12,24 @@ const appliedJobSchema = mongoose.Schema(
             ref: 'user',
             required: true
         },
-        user: {
+        company: {
             type: mongoose.Schema.ObjectId,
             ref: 'user',
             required: true
         },
         resume: {
-            type: String,
-            required: true
+            public_id: {
+                type: String,
+                required:true
+
+            },
+            url: {
+                type: String,
+                required:true
+
+            },
         },
+    
         applyDate: {
             type: Date,
             default: Date.now

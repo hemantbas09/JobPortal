@@ -8,11 +8,11 @@ class jobAtemptController {
   // post a new Job
   static quizAttempt = catchAsyncErrors(async (req, res, next) => {
     const { user, job, quiz, attemptAnswer } = req.body;
-  
+    console.log(quiz)
     // Get the quiz questions from the database
     const questions = await quizQuestionModel.findById(quiz);
-    const quizQuestions = questions.quizQuestions;
-  
+    const quizQuestions = questions.questions;
+
     // Calculate the score based on the user's answers to each question
     let score = 0;
     if (quizQuestions && attemptAnswer) {
@@ -39,7 +39,7 @@ class jobAtemptController {
           };
         }
       });
-  
+
       // Find or create a quiz result document and update its attempt and score fields
       quizResultModel.findOneAndUpdate(
         { quiz: quiz, user: user },
@@ -58,7 +58,7 @@ class jobAtemptController {
       console.log("Quiz Question and Attempt Answer are not found")
     }
   });
-  
+
 }
 
 

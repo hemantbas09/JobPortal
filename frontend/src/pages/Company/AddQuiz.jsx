@@ -4,15 +4,16 @@ import { useParams } from 'react-router-dom';
 import { useAddquizQuestionMutation } from '../../Service/QuizApi';
 
 const AddQuiz = () => {
-    const { id } = useParams();
-    console.log(id)
+    // const { id } = useParams();
+    const id="642e80e1036cbea81fae413e";
+    // console.log(id)
     const [addquizQuestion, { isLoading }] = useAddquizQuestionMutation();
 
     const [questions, setQuestions] = useState([
         {
             question: "",
             options: ["", "", "", ""],
-            answer: "",
+            correctAnswer: "",
         },
     ]);
     const [time, setTime] = useState('');
@@ -24,9 +25,9 @@ const AddQuiz = () => {
         setQuestions([
             ...questions,
             {
-                question: "",
-                options: ["", "", "", ""],
-                answer: "",
+                question: '',
+                options: ['', '', '', ''],
+                correctAnswer: '',
 
             },
         ]);
@@ -38,22 +39,25 @@ const AddQuiz = () => {
             newQuestions[i].question = value;
         } else if (name === "option") {
             newQuestions[i].options[j] = value;
-        } else if (name === "answer") {
-            newQuestions[i].answer = value;
+        } else if (name === "correctAnswer") {
+            newQuestions[i].correctAnswer = value;
         }
         setQuestions(newQuestions);
         console.log(newQuestions)
     };
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
+        console.log("the length of the questions",questions.length)
         event.preventDefault();
-        if (questions.length !== 20) {
+        if (questions.length !== 1) {
             alert("Please add 20 questions before submitting the form.");
             return;
         }
-        const formData = new FormData();
-        formData.append('time', time);
-        formData.append('passMark', passMark);
-        formData.append('questions', JSON.stringify(questions));
+        const quizForm = new FormData();
+        quizForm.append('time', time);
+        quizForm.append('passMark', passMark);
+        quizForm.append('questions', JSON.stringify(questions));
+        const addQuestion= await addquizQuestion({quizForm,id});
+        console.log("addQueston",addQuestion)
 
     }
 
@@ -110,8 +114,8 @@ const AddQuiz = () => {
                                     </div>
                                 ))}
                             </div>
-                            {/* Entering for correct Answer */}
-                            <input type="text" placeholder="Enter Your Correct Answer" name="answer"
+                            {/* Entering for correct correctAnswer */}
+                            <input type="text" placeholder="Enter Your Correct Answer" name="correctAnswer"
                                 onChange={(e) => handleInputChange(e, i)}
                                 className=" shadow-lg  border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             />
@@ -119,7 +123,7 @@ const AddQuiz = () => {
                     ))}
                     {/* Button For Add Question */}
                     <button
-                        onClick={handleAddQuestion}
+                    
                         className=" items-center justify-between w-fit text-xl px-6 py-3 font-bold tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                         <span>Submit </span>
                     </button>

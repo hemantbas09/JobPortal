@@ -8,19 +8,19 @@ export const quizApi = createApi({
 
         // Register the User:
         addquizQuestion: builder.mutation({
-            query: ({ quiz, id }) => {
-                console.log("quiz", quiz)
+            query: ({ quizForm, id }) => {
+                console.log("quizform ", quizForm)
+                console.log("quizid", id)
 
                 return {
                     url: `new/${id}`,
                     method: 'POST',
-                    body: quiz,
-                    headers: {
-                        'Content-type': 'application/json; charset=UTF-8'
-                    },
+                    body: quizForm,
+                    // headers: {
+                    //     'Content-type': 'application/json; charset=UTF-8'
+                    // },
                 }
             },
-
         }),
 
         // Access all the job:

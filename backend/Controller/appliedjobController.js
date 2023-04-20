@@ -1,49 +1,63 @@
 import appliedJobModel from "../Models/appliedjobModel.js";
 import catchAsyncErrors from '../Middleware/catchAsyncErrors.js'
+import jobModel from "../Models/jobModel.js";
 import multer from 'multer'
 import path from "path";
 import fs from "fs"
-
+import { v2 as cloudinary } from 'cloudinary';
+import e from "express";
 class appliedjobController {
 
-    static bookmarkjob = async (req, res, next) => {
+    static jobApplied = catchAsyncErrors(async (req, res, next) => {
+        const { resume } = req.body
+        console.log("This",req.body)
+        const userId = "64305d840dae4c4f629eaf21";
+        const jobId = req.params.id;
+        const companyId = "64305d840dae4c4f629eaf21"
+        // Check if the user has already applied for the job
+        const existingApplication = await appliedJobModel.findOne({
+            candidate: userId,
+            job: jobId
+        });
 
-        try {
-            const jobId = req.params.jobId;
-            const userId = req.user.id; // Assuming user authentication is implemented
-            const job = await Job.findById(jobId);
 
-            if (!job) {
-                return res.status(404).json({
-                    success: false,
-                    message: 'Job not found'
-                });
-            }
+        if (existingApplication) {
 
-            // Check if job is already bookmarked
-            if (job.bookmarks.includes(userId)) {
-                return res.status(400).json({
-                    success: false,
-                    message: 'Job already bookmarked'
-                });
-            }
+            return res.status(400).json({
+                success: false,
+                message: 'You have already applied for this job'
+            });
 
-            // Add user to bookmarks array
-            job.bookmarks.push(userId);
-            await job.save();
 
+        } else {
+
+            // upload cv:
+            var myCloud = await cloudinary.uploader.upload(resume, {
+                allowed_formats: ['jpeg', 'jpg', 'png', 'pdf'],
+                folder: "document",
+                width: 150,
+                crop: "scale",
+            });
+            // create a new Application:
+            const newApplication = new appliedJobModel({
+                candidate: userId,
+                job: jobId,
+                company: companyId,
+                resume: {
+                    public_id: myCloud.public_id,
+                    url: myCloud.url,
+                },
+
+            });
+            // for saving the application
+            await newApplication.save();
             res.status(200).json({
                 success: true,
-                message: 'Job bookmarked successfully'
-            });
-        } catch (error) {
-            console.log(error);
-            res.status(500).json({
-                success: false,
-                message: 'Server error'
+                message: 'Job application submitted successfully'
             });
         }
-    };
+
+    });
 
 
 

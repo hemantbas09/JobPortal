@@ -22,6 +22,21 @@ export const jobApi = createApi({
 
         }),
 
+        // Job Apply:
+        jobApply: builder.mutation({
+            query: ({id,jobApplyForm}) => {
+                console.log("ROw Apply", jobApplyForm)
+                return {
+                    url: `/appliedjob/${id}`,
+                    method: 'POST',
+                    body: jobApplyForm,
+                  
+                }
+            },
+
+        }),
+
+
         // Access all the job:
         getAllJob: builder.query({
             query: () => ({
@@ -39,4 +54,4 @@ export const jobApi = createApi({
     }),
 });
 
-export const { useAddJobMutation, useGetAllJobQuery } = jobApi;
+export const { useAddJobMutation, useGetAllJobQuery,useJobApplyMutation } = jobApi;

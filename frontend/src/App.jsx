@@ -2,7 +2,7 @@ import React from 'react'
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { LoginForm, ResetPassword, Navbar, Footer, SendPasswordResetEmail } from './component/index.js'
-import { CandidateInformation, AllUser, AllJobs, AddQuiz, Assestement, JobDetails, Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob, ApplicantsJob, MyJob, Package, ShortlistCandidates } from './pages/index.js'
+import {JobApply, CandidateInformation, AllUser, AllJobs, AddQuiz, Assestement, JobDetails, Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob, ApplicantsJob, MyJob, Package, ShortlistCandidates } from './pages/index.js'
 import MyForm from './component/Authentication/MyForm.jsx'
 import { Link } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
@@ -39,6 +39,7 @@ const App = () => {
           <Route path="/company/shortlist" element={< ShortlistCandidates />} />
           <Route path="/alljobs" element={<  AllJobs />} />
           <Route path="/jobdetails/:id" element={<  JobDetails />} />
+          <Route path="/jobapply/:id" element={<  JobApply />} />
           <Route path="/quiz/:id" element={<      Assestement />} />
           <Route path="/addquiz/:id" element={<      AddQuiz />} />
           <Route path="/alluser" element={<       AllUser />} />
