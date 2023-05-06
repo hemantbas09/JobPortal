@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import { BsBookmark } from "react-icons/bs";
 import { IoIosArrowDropright } from "react-icons/io";
-import image from '../../images/job.jpg'
-import Sidebar from '../../component/Sidebar/Sidebar'
+import image from "../../images/job.jpg";
+import Sidebar from "../../component/Sidebar/Sidebar";
+import { BsFillBookmarkHeartFill, BsHandbag } from "react-icons/bs";
+import { GiMoneyStack } from "react-icons/gi";
+import { HiOutlineLocationMarker } from "react-icons/hi";
 const check = () => {
-
-
-
-    return (
-
-        <>
-
-
-            <div class=" bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4 ">
+  return (
+    <>
+      {/* <div class=" bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4 ">
                 <div className="flex max-w-6xl mx-auto  bg-white shadow-lg px-8">
                     <img src={image} alt="Job Image" class="w-32 h-32  mr-8" />
                     <div className="flex-1">
@@ -42,10 +39,11 @@ const check = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
-        </>
-    )
-}
+     
+    </>
+  );
+};
 
-export default check
+export default check;

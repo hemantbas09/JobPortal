@@ -7,6 +7,9 @@ import fileUpload from 'express-fileupload';
 import bodyParser from 'body-parser';
 import expressformData from 'express-form-data'
 import cloudinary from './config/cloudinary.js';
+
+
+
 // creating a Object of the express:
 const app = express();
 
@@ -17,6 +20,9 @@ app.use(cors());
 // Use JSON:
 app.use(express.json());
 
+
+// app.use(bodyParser.json({ limit: '1000mb' }));
+// app.use(bodyParser.urlencoded({ limit: '1000mb', extended: true }));
 // loads Routes:
 
 app.use("/api/user", userRoute)

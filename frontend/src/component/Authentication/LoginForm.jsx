@@ -98,15 +98,15 @@ const LoginForm = () => {
     return (
         <>
             <div className="bg-white dark:bg-gray-900 mt-28 mb-28 ">
-                <div className="flex justify-center h-full">
-                    <div className=" hidden bg-cover lg:block lg:w-1/2" style={{ backgroundImage: `url(${loginImage})` }}>
+                <div className="flex justify-space-evenly h-full">
+                    <div className=" hidden bg-cover lg:block lg:w-1/3 border-4 ml-32" style={{ backgroundImage: `url(${loginImage})` }}>
 
                         <div className="flex items-center h-full px-20 ">
 
                         </div>
                     </div>
 
-                    <div className="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
+                    <div className="flex items-center w-full max-w-md  mx-auto lg:w-2/6">
                         <div className="flex-1">
                             <div className="text-center">
                                 <p className=" text-xl mt-3 text-gray-500 dark:text-gray-300 font-bold">Sign in to access your account</p>

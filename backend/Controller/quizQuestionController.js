@@ -11,18 +11,18 @@ class quizController {
         req.body.job = req.params.id;
         const { time, passMark, questions, user, job } = req.body
         console.log(passMark)
-        const questionsArray = JSON.parse(questions);
-        console.log("first", questionsArray);
+        // const questionsArray = JSON.parse(questions);
+        // console.log("first", questionsArray);
         // creating a object or instace of the JobModal:
         let quiz = new quizQuestionModel({
-            questions: questionsArray,
+            questions: questions,
             time: time,
             passMark: passMark,
             user: user,
             job: job
 
         });
-        let lengthOfQuizQuestion = questionsArray.length
+        let lengthOfQuizQuestion = questions.length
 
         if (lengthOfQuizQuestion >= 1) {
             // save in the database
@@ -64,18 +64,18 @@ class quizController {
 
         // select job by Id:
         console.log(req.params.id)
-        const quiz = await quizQuestionModel.findById(req.params.id);
-        console.log(quiz)
+        const quiz = await quizQuestionModel.find({ job: req.params.id });
+        console.log(quiz[0].questions)
         // Shuffle the quiz questions array
-        const shuffledQuestions = quiz.questions.sort(() => 0.5 - Math.random());
-
+        const shuffledQuestions = quiz[0].questions.sort(() => 0.5 - Math.random());
+        console.log("This is shuffled Questions", shuffledQuestions);
         // Get the first 10 questions
         const selectedQuestions = shuffledQuestions.slice(0, 10);
-
+        console.log(selectedQuestions)
         // check quiz is found or not:
         if (!quiz) {
             res.status(404).json({
-                success: failed,
+                success: false,
                 message: "quizs is not found"
             });
 

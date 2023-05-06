@@ -22,7 +22,7 @@ const MyForm = () => {
         <>
             <section className=" dark:bg-gray-900  ">
                 <div className="flex justify-evenly min-h-screen mt-4 ">
-                    <div className="mt-40 hidden bg-cover object-contain lg:block lg:w-1/2 lg:h-screen" style={{ backgroundImage: "url('work.jpg')", height: 400 }}>
+                    <div className="mt-40 hidden bg-cover object-contain lg:block lg:w-1/3 ml-40 lg:h-screen" style={{ backgroundImage: "url('work.jpg')", height: 400 }}>
 
                     </div>
 
