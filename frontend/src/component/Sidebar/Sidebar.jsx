@@ -9,7 +9,7 @@ const Sidebar = ({ Menus }) => {
     return (
         <>
 
-            <div class=" fixed overflow-auto flex flex-col top-10 left-0 w-14 hover:w-64 md:w-64 bg-gray-50 dark:bg-gray-800  text-white transition-all duration-300 border-none z-10 sidebar h-5/6 mt-28 ">
+            <div class=" fixed overflow-auto flex flex-col  left-0 w-14 hover:w-64 md:w-64 bg-gray-50 dark:bg-gray-800  text-white transition-all duration-300 border-none z-10 sidebar h-5/6  ">
                 <div class="overflow-y-auto overflow-hidden flex flex-col justify-between flex-grow">
                     <ul class="flex flex-col py-4 space-y-1">
                         <div class="  flex flex-col items-center mt-6 -mx-2 ">

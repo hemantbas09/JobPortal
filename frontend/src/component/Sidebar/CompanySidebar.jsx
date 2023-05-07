@@ -5,8 +5,8 @@ const CompanySidebar = () => {
 
     const Menus = [
         { title: "Dashboard", src: <RiDashboardFill />, link:'/company'},
-        { title: "My Job", src: <RiDashboardFill />, link:'/company/job' },
         { title: "Add Job", src: <RiDashboardFill />, link:'/company/addjob'  },
+        { title: "My Job", src: <RiDashboardFill />, link:'/company/job' },
         { title: "Applicants Job", src: <RiDashboardFill />, link:'/company/Applicant' },
         { title: "Shortlist Candidates", src: <RiDashboardFill />, link:'/company/shortlist' },
         { title: "Package", src: <RiDashboardFill />, link:'/company/package' },

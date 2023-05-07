@@ -150,7 +150,7 @@ const Home = () => {
             </div>
           </div>
           <hr />
-          <div className=" p-4 ml-10 flex flex-col md:flex-row justify-between items-center gap-y-10 ">
+          <div className=" p-4  flex flex-col md:flex-row justify-between items-center gap-y-10 ">
             <div className="flex flex-col items-center gap-y-5">
               <span className="uppercase text-gray-600 text-5xl font-bold  ">
                 4500
@@ -182,7 +182,9 @@ const Home = () => {
         <hr />
 
         {/* --------------------Start Totla COmpany and Job-------------- */}
-        <div class=" w-full border-t-2 border-white-300"></div>
+        <div class=" w-full border-t-2 border-white-300">
+          
+        </div>
 
         {/*----------------Start  Top COmpany-------------- */}
 

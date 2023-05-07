@@ -11,8 +11,8 @@ const Navbar = () => {
   const handleClick = () => setToggle(!toggle);
   return (
     <>
-      <div className="  bg-white fixed -mt-4 z-50  ">
-        <div className="flex justify-end md:gap-x-40 gap-x-4 items-center">
+      <div className="  bg-white fixed -mt-4 z-50 pt-10  ">
+        <div className="flex justify-end md:gap-x-40 gap-x-4 items-center  ">
           <span className="md:px-36 mr-28 md:mr-0">
             <Link to={"/"}>
               <div>
@@ -67,7 +67,7 @@ const Navbar = () => {
           </div>
 
           {/* ---Toogle Button-------- */}
-          <div className="md:hidden md:px-5 ml-4 " onClick={handleClick}>
+          <div className="md:hidden md:px-5 ml-4 pr-5 " onClick={handleClick}>
             <span>
               {toggle ? (
                 <svg

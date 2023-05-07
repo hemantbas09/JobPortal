@@ -14,7 +14,7 @@ const CompanyDashboard = () => {
 
   return (
     <>
-      <div class="mt-32 space-x-16 md:space-x-72 min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
+      <div class="mt-28 space-x-16 md:space-x-72 min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
         <div className="">
           <CompanySidebar />
         </div>
