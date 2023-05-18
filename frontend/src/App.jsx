@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import { BrowserRouter, Route, Switch } from "react-router-dom";
 import {
   LoginForm,
   ResetPassword,
@@ -30,26 +31,37 @@ import MyForm from "./component/Authentication/MyForm.jsx";
 import { Link } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import Check from "./pages/Company/check";
+import Profile from "./component/Comman/Profile";
 const App = () => {
   const Menu = [];
   return (
     <>
       <BrowserRouter>
-        <Navbar  />
+        <Navbar />
 
         <Routes>
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/check" element={<Check />} />
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<MyForm />} />
           {/* <Route path="/login" element={<Login />} /> */}
-          <Route
+          {/* <Route
             path="/admin"
             element={<ProtectedRoute Component={AdminDashboard} />}
-          />
+          /> */}
           <Route
+            path="/admin"
+            element={
+              <ProtectedRoute component={AdminDashboard} requiredRole="admin" />
+            }
+          />
+          {/* <Route
             path="/user"
             element={<ProtectedRoute Component={CandidateDashboard} />}
-          />
+          /> */}
+
+          <Route path="/user" element={<CandidateDashboard />} />
           <Route path="/forgetpassword" element={<SendPasswordResetEmail />} />
           <Route
             path="api/user/reset-password/:id/:token"
@@ -65,18 +77,29 @@ const App = () => {
             path="/admin/companyinformation"
             element={<ProtectedRoute Component={AllUser} />}
           />
-          {/* Company */}
+          {/*------------------------------- Company Route----------------------------- */}
 
           <Route
-            path="/login"
-            element={<ProtectedRoute Component={LoginForm} />}
+            path="/company"
+            element={
+              <ProtectedRoute
+                component={CompanyDashboard}
+                requiredRole="company"
+              />
+            }
           />
+          <Route
+            path="/company/addjob"
+            element={
+              <ProtectedRoute component={AddJob} requiredRole="company" />
+            }
+          />
+
           {/* <Route
             path="/company"
             element={<ProtectedRoute Component={CompanyDashboard} />}
           /> */}
-          <Route path="/company" element={<CompanyDashboard />} />
-          <Route path="/company/addjob" element={<AddJob />} />
+
           <Route path="/company/Applicant" element={<ApplicantsJob />} />
           <Route path="/company/job" element={<MyJob />} />
           <Route path="/company/package" element={<Package />} />

@@ -6,11 +6,13 @@ const AddJob = () => {
   const [addJob, { isLoading }] = useAddJobMutation();
 
   // state variabel for the Image and video:
+  // let id = "6464a66535a735838eb47a4a";
 
   const [job, setJob] = useState({
     jobTitle: "",
     jobDescription: "",
     KeyResponsibilities: "",
+    requiredSkill: "",
     jobCategory: "",
     jobType: "",
     gender: "",
@@ -36,7 +38,7 @@ const AddJob = () => {
     // code to submit form data to server or handle form validation goes here
 
     const res = await addJob(job);
-    console.log(newJob.jobDetails);
+    // console.log(newJob.jobDetails);
     // if (res.data.success === true) {
 
     //   navigate("/home");
@@ -108,6 +110,25 @@ const AddJob = () => {
                   required
                 ></textarea>
               </div>
+
+              {/* Key Responsibilities */}
+              <div className="mb-6">
+                <label
+                  htmlFor="requiredSkill"
+                  className="block mb-2 text-xl font-medium text-gray-900 dark:text-gray-300"
+                >
+                  Required Skill
+                </label>
+                <textarea
+                  onChange={handleInputs}
+                  rows="8"
+                  id="requiredSkill"
+                  name="requiredSkill"
+                  className=" shadow-lg  border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="basnethemant98@gmail.com"
+                  required
+                ></textarea>
+              </div>
               <div className="grid gap-6 mb-6 lg:grid-cols-2">
                 {/* Job Category */}
                 <div className="mb-6">
@@ -124,11 +145,32 @@ const AddJob = () => {
                     class="shadow-lg  border border-gray-300 bg-white text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="basnethemant98@gmail.com"
                   >
-                    <option selected>Choose a Job Category</option>
-                    <option value="Full Time">Full Time</option>
-                    <option value="Internship">Internship</option>
-                    <option value="Part Time">Part Time</option>
-                    <option value="Temporary">Temporary</option>
+                    <option value="Information Technology" selected>
+                      Information Technology
+                    </option>
+                    <option value="Engineering">Engineering </option>
+                    <option
+                      value="Healthcare and
+                    Medical"
+                    >
+                      Healthcare and Medical{" "}
+                    </option>
+
+                    <option value=" Finance and Accounting">
+                      {" "}
+                      Finance and Accounting
+                    </option>
+                    <option value="Sales and Marketing ">
+                      Sales and Marketing{" "}
+                    </option>
+                    <option value="Administrative and Office Support">
+                      Administrative and Office Support
+                    </option>
+                    <option value="  Education and Training ">
+                      {" "}
+                      Education and Training{" "}
+                    </option>
+                    <option value=" Customer Service"> Customer Service</option>
                   </select>
                 </div>
 
@@ -190,10 +232,13 @@ const AddJob = () => {
                     class="shadow-lg  border border-gray-300 bg-white text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="basnethemant98@gmail.com"
                   >
-                    <option selected>Choose a Salary Type</option>
-                    <option value="Full Time">Male</option>
-                    <option value="Internship">Female</option>
-                    <option value="Internship">Both</option>
+                    <option value="Annual" selected>
+                      Annual
+                    </option>
+                    <option value="Monthly">Monthly</option>
+                    <option value="Hourly">Hourly</option>
+                    <option value="Fixed">Fixed</option>
+                    <option value="Commission-based">Commission-based</option>
                   </select>
                 </div>
                 {/* Minimum Salary */}

@@ -11,7 +11,7 @@ const Navbar = () => {
   const handleClick = () => setToggle(!toggle);
   return (
     <>
-      <div className="  bg-white fixed -mt-4 z-50 pt-10  ">
+      <div className="  bg-white fixed -mt-4 z-50 pt-0  ">
         <div className="flex justify-end md:gap-x-40 gap-x-4 items-center  ">
           <span className="md:px-36 mr-28 md:mr-0">
             <Link to={"/"}>

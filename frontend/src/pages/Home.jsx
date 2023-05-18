@@ -44,33 +44,33 @@ const Home = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 border-red-50 gap-y-10 gap-x-48 w-fit ">
-            <div className="bg-gray-100  ">
+            <div className="bg-gray-50  ">
               <Category />
             </div>
-            <div className="bg-gray-100   ">
+            <div className="bg-gray-50   ">
               <Category />
             </div>
-            <div className="bg-gray-100   ">
+            <div className="bg-gray-50   ">
               <Category />
             </div>
 
-            <div className="bg-gray-100   ">
+            <div className="bg-gray-50   ">
               <Category />
             </div>
-            <div className="bg-gray-100   ">
+            <div className="bg-gray-50   ">
               <Category />
             </div>
-            <div className="bg-gray-100   ">
+            <div className="bg-gray-50   ">
               <Category />
             </div>
-            <div className="bg-gray-100   ">
+            <div className="bg-gray-50   ">
               <Category />
             </div>
-            <div className="bg-gray-100   ">
+            <div className="bg-gray-50   ">
               {" "}
               <Category />
             </div>
-            <div className="bg-gray-100   ">
+            <div className="bg-gray-50   ">
               {" "}
               <Category />
             </div>
@@ -81,7 +81,7 @@ const Home = () => {
 
         {/*--------------------- Start Feature Job---------------- */}
         <div className="flex flex-col">
-          <div className="  items-center justify-center text-center mb-10">
+          <div className="  items-center justify-center text-center mb-10 ">
             <h1 className=" py-2 text-3xl text-indigo-500 font-medium">
               Featured Jobs
             </h1>
@@ -89,36 +89,10 @@ const Home = () => {
               Know Your Worth And Find The Job That Quality Your Life
             </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-28  gap-y-10">
-            <div className="bg-gray-100  ">
-              <Job />
-            </div>
-            <div className="bg-gray-100  ">
-              <Job />
-            </div>
-            <div className="bg-gray-100  ">
-              <Job />
-            </div>
-            <div className="bg-gray-100  ">
-              <Job />
-            </div>
-            <div className="bg-gray-100  ">
-              <Job />
-            </div>
-            <div className="bg-gray-100  ">
-              <Job />
-            </div>
-            <div className="bg-gray-100   ">
-              <Job />
-            </div>
-            <div className="bg-gray-100   ">
-              <Job />
-            </div>
-          </div>
+          <Job />
         </div>
         <hr />
-      
+
         {/*--------------------- End Feature Job---------------- */}
 
         {/* --------------------Start Totla COmpany and Job-------------- */}
@@ -155,36 +129,28 @@ const Home = () => {
               <span className="uppercase text-gray-600 text-5xl font-bold  ">
                 4500
               </span>
-              <p className="uppercase text-gray-600 text-3xl  ">
-                job seeker
-              </p>
+              <p className="uppercase text-gray-600 text-3xl  ">job seeker</p>
             </div>
 
             <div className="flex flex-col items-center gap-y-5">
               <span className="uppercase text-gray-600 text-5xl font-bold  ">
                 4M
               </span>
-              <p className="uppercase text-gray-600 text-3xl  ">
-              Job
-              </p>
+              <p className="uppercase text-gray-600 text-3xl  ">Job</p>
             </div>
 
             <div className="flex flex-col items-center gap-y-5">
               <span className="uppercase text-gray-600 text-5xl font-bold  ">
                 1M
               </span>
-              <p className="uppercase text-gray-600 text-3xl ">
-                Company
-              </p>
+              <p className="uppercase text-gray-600 text-3xl ">Company</p>
             </div>
           </div>
         </div>
         <hr />
 
         {/* --------------------Start Totla COmpany and Job-------------- */}
-        <div class=" w-full border-t-2 border-white-300">
-          
-        </div>
+        <div class=" w-full border-t-2 border-white-300"></div>
 
         {/*----------------Start  Top COmpany-------------- */}
 
@@ -225,8 +191,8 @@ const Home = () => {
         {/*----------------End  Top COmpany-------------- */}
         {/* End Top COmpany */}
         <hr />
-       
-        <div className="bg-zinc-100 flex flex-col-reverse md:flex-row justify-between items-center md:w-10/12  ">
+
+        <div className="bg-zinc-50 flex flex-col-reverse md:flex-row justify-between items-center md:w-10/12 rounded-lg shadow-lg border-2 border-zinc-100  ">
           <div className=" md:w-6/12 flex flex-col items-center md:items-start justify-start md:pl-3 ">
             <h1 className="  text-gray-600 mb-2 text-4xl font-bold">
               Recruiting?

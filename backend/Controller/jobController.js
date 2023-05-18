@@ -6,12 +6,13 @@ class jobController {
   // post a new Job
   static jobCreate = catchAsyncErrors(async (req, res, next) => {
     // for store the user information:
-    req.body.user = req.user;
-    console.log("this is waht i said", req.body);
+    // req.body.user = req.user;
+    req.body.user = req.user.id;
+    console.log("This is request user", req.body);
 
     // creating a object or instace of the JobModal:
     const job = new jobModel(req.body);
-    console.log("first", job);
+
     // save in the database
     await job.save();
 
@@ -34,15 +35,36 @@ class jobController {
     });
   });
 
-  // get the job by using id:
+  // get the job by using job id:
   static getjobByID = catchAsyncErrors(async (req, res, next) => {
     // select job by Id:
+    console.log("This is id", req.params.id);
     const job = await jobModel.findById(req.params.id);
+    // check job is found or not:
+    if (!job) {
+      res.status(404).json({
+        success: false,
+        message: "Jobs is not found",
+      });
+    }
+
+    // response the client:
+    res.status(200).json({
+      success: true,
+      job,
+    });
+  });
+
+  // get the job by using Company Id:
+  static getjobByCompanyID = catchAsyncErrors(async (req, res, next) => {
+    // select job by Id:
+    console.log(req.user._id);
+    const job = await jobModel.find({ user: req.user._id });
 
     // check job is found or not:
     if (!job) {
       res.status(404).json({
-        success: failed,
+        success: false,
         message: "Jobs is not found",
       });
     }
