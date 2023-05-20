@@ -11,11 +11,11 @@ const JobDetails = () => {
   const { id } = useParams();
   const jobInfo = useGetJobByJobIdQuery(id);
   let jobDetails;
-  console.log(jobInfo)
+  console.log(jobInfo);
   if (jobInfo.status === "fulfilled") {
     jobDetails = jobInfo.data.jobs;
   }
-  
+
   console.log("This is id", id);
   console.log(jobDetails);
   return (
@@ -131,6 +131,57 @@ const JobDetails = () => {
             <h2 class="text-2xl mb-2">Related Jobs</h2>
           </div>
         </div>
+      </div>
+      <div>
+        {jobDetails &&
+          jobDetails.map((job) => (
+            <div class="bg-zinc-100 w-full rounded-lg" key={job.id}>
+              <div class="flex justify-evenly">
+                <div class="mt-9 flex justify-start my-10">
+                  <img
+                    class="pl-8 p-3 block mx-auto h-24 rounded-full sm:mx-0 sm:shrink-0"
+                    src="image/heroImage.svg"
+                    alt="category Pic"
+                  />
+                  <div class="text-gray-600 ml-10">
+                    <h2 class="text-2xl mb-2">{job.title}</h2>
+
+                    <div class="flex pb-4 gap-x-5 py-2 text-xs text-gray-600">
+                      <div class="flex items-center">
+                        <BsHandbag class="h-6 w-6 mr-2" />
+                        <p class="text-sm">{job.category}</p>
+                      </div>
+                      <div class="flex items-center">
+                        <HiOutlineLocationMarker class="h-6 w-6 mr-2" />
+                        <p class="text-sm">{job.location}</p>
+                      </div>
+                      <div class="flex items-center">
+                        <BiTime class="h-6 w-6 mr-2" />
+                        <p class="text-sm">{job.date}</p>
+                      </div>
+                      <div class="flex items-center">
+                        <GiMoneyStack class="h-6 w-6 mr-2" />
+                        <p class="text-sm">{job.salary}</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-8">
+                      <p className="bg-orange-100 p-1 rounded-lg">{job.type}</p>
+                      <p className="bg-orange-100 p-1 rounded-lg">
+                        {job.urgency}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex items-center">
+                  <Link to={`/quiz/${job.id}`}>
+                    <button class="bg-red-300 ">Apply Job</button>
+                  </Link>
+                  <BsFillBookmarkHeartFill class="h-6 w-6 mr-2 ml-10" />
+                </div>
+              </div>
+            </div>
+          ))}
       </div>
     </>
   );

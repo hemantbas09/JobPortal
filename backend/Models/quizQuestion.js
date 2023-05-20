@@ -25,18 +25,18 @@ const quizQuestionSchema = new mongoose.Schema({
         ref: "job",
         required: true,
     },
-    passMark:{
-        type:Number,
-        required:true
+    passMark: {
+        type: Number,
+        required: true
     },
-    time:{
-        type:Number,
-        required:true
+    time: {
+        type: Number,
+        required: true
     },
     createdAt: {
         type: Date,
         default: Date.now,
-      },
+    },
 
 
     // user: {

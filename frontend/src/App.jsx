@@ -26,6 +26,7 @@ import {
   MyJob,
   Package,
   ShortlistCandidates,
+  QuizResult,
 } from "./pages/index.js";
 import MyForm from "./component/Authentication/MyForm.jsx";
 import { Link } from "react-router-dom";
@@ -94,6 +95,7 @@ const App = () => {
               <ProtectedRoute component={AddJob} requiredRole="company" />
             }
           />
+          <Route path="/quizresult/:id" element={<QuizResult />} />
 
           {/* <Route
             path="/company"
