@@ -39,11 +39,11 @@ const quizQuestionSchema = new mongoose.Schema({
     },
 
 
-    // user: {
-    //     type: mongoose.Schema.ObjectId,
-    //     ref: "user",
-    //     required: true,
-    // },
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: "user",
+        required: true,
+    },
 
 })
 

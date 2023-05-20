@@ -15,8 +15,44 @@ import AllJobs from "./Candidate/AllJobs";
 import CandidateInformation from "./Admin/CandidateInformation";
 import JobApply from "./Candidate/JobApply";
 import QuizResult from "./Candidate/QuizResult";
+import Administrative from "./Candidate/Administrative";
+import Education from "./Candidate/Education";
+import Engineering from "./Candidate/Engineering";
+import Finance from "./Candidate/Finance";
+import Healthcare from "./Candidate/Healthcare";
+import InformationTechnology from "./Candidate/InformationTechnology";
+import Other from "./Candidate/Other";
+import Aboutus from "./Candidate/Aboutus";
+import Contactus from "./Candidate/Contactus";
 // Admin: 
 import AllUser from "./Admin/AllUser";
 
 
-export { QuizResult, JobApply, CandidateInformation, AllUser, AllJobs, AddQuiz, Assestement, JobDetails, Home, AdminDashboard, CandidateDashboard, CompanyDashboard, AddJob, ApplicantsJob, MyJob, Package, ShortlistCandidates }
+export {
+    QuizResult,
+    JobApply,
+    CandidateInformation,
+    AllUser,
+    AllJobs,
+    AddQuiz,
+    Assestement,
+    JobDetails, Home,
+    AdminDashboard,
+    CandidateDashboard,
+    CompanyDashboard,
+    AddJob,
+    ApplicantsJob,
+    MyJob,
+    Package,
+    ShortlistCandidates,
+    Administrative,
+    Education,
+    Engineering,
+    Finance,
+    Healthcare,
+    InformationTechnology,
+    Other,
+    Aboutus,
+    Contactus
+
+}

@@ -7,7 +7,7 @@ import multer from "multer";
 const upload = multer();
 // Route level Middleware - TO Protect Route
 // router.use('/changepassword', checkUserAuth)
-// router.post('/new/:id', checkUserAuth);
+router.use('/new/:id', checkUserAuth);
 router.use('/quizresult/:id', checkUserAuth);
 router.use("/quizattem/:id", checkUserAuth);
 router.use("/quizattem/:id", upload.none());

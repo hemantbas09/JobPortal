@@ -16,9 +16,9 @@ export const quizApi = createApi({
           url: `new/${id}`,
           method: "POST",
           body: quizForm,
-          // headers: {
-          //     'Content-type': 'application/json; charset=UTF-8'
-          // },
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
         };
       },
     }),

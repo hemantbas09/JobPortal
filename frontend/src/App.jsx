@@ -27,6 +27,15 @@ import {
   Package,
   ShortlistCandidates,
   QuizResult,
+  Administrative,
+  Education,
+  Engineering,
+  Finance,
+  Healthcare,
+  InformationTechnology,
+  Other,
+  Aboutus,
+  Contactus,
 } from "./pages/index.js";
 import MyForm from "./component/Authentication/MyForm.jsx";
 import { Link } from "react-router-dom";
@@ -61,14 +70,12 @@ const App = () => {
             path="/user"
             element={<ProtectedRoute Component={CandidateDashboard} />}
           /> */}
-
           <Route path="/user" element={<CandidateDashboard />} />
           <Route path="/forgetpassword" element={<SendPasswordResetEmail />} />
           <Route
             path="api/user/reset-password/:id/:token"
             element={<ResetPassword />}
           />
-
           {/* -------------------------Admin Route-------------------------- */}
           <Route
             path="/admin/candidateinformation"
@@ -79,7 +86,6 @@ const App = () => {
             element={<ProtectedRoute Component={AllUser} />}
           />
           {/*------------------------------- Company Route----------------------------- */}
-
           <Route
             path="/company"
             element={
@@ -95,13 +101,30 @@ const App = () => {
               <ProtectedRoute component={AddJob} requiredRole="company" />
             }
           />
+          <Route
+            path="/addquiz/:id"
+            element={
+              <ProtectedRoute component={AddQuiz} requiredRole="company" />
+            }
+          />
           <Route path="/quizresult/:id" element={<QuizResult />} />
+          <Route path="/administrative" element={<Administrative />} />
+          <Route path="/education" element={<Education />} />
+          <Route path="/engineering" element={<Engineering />} />
+          <Route path="/finance" element={<Finance />} />
+          <Route path="/healthcare" element={<Healthcare />} />
+          <Route
+            path="/informationTechnology"
+            element={<InformationTechnology />}
+          />
+          <Route path="/other" element={<Other />} />
 
+          <Route path="/aboutus" element={<Aboutus />} />
+          <Route path="/contactus" element={<Contactus />} />
           {/* <Route
             path="/company"
             element={<ProtectedRoute Component={CompanyDashboard} />}
           /> */}
-
           <Route path="/company/Applicant" element={<ApplicantsJob />} />
           <Route path="/company/job" element={<MyJob />} />
           <Route path="/company/package" element={<Package />} />
@@ -110,7 +133,6 @@ const App = () => {
           <Route path="/jobdetails/:id" element={<JobDetails />} />
           <Route path="/jobapply/:id" element={<JobApply />} />
           <Route path="/quiz/:id" element={<Assestement />} />
-          <Route path="/addquiz/:id" element={<AddQuiz />} />
           <Route path="/alluser" element={<AllUser />} />
         </Routes>
       </BrowserRouter>

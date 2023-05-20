@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import CompanySidebar from "../../component/Sidebar/CompanySidebar";
 import AdminSidebar from "../../component/Admin/AdminSidebar";
+import { useNavigate } from "react-router-dom";
 import { useAddJobMutation } from "../../Service/jobApi";
 const AddJob = () => {
+  const navigate = useNavigate();
   const [addJob, { isLoading }] = useAddJobMutation();
 
   // state variabel for the Image and video:
@@ -38,16 +40,16 @@ const AddJob = () => {
     // code to submit form data to server or handle form validation goes here
 
     const res = await addJob(job);
-    // console.log(newJob.jobDetails);
-    // if (res.data.success === true) {
-
-    //   navigate("/home");
-    // }
+    console.log("job Details", res.data.job._id);
+    if (res.data.success === true) {
+      navigate(`/addquiz/${res.data.job._id}`);
+    }
   };
 
   return (
     <>
       <div class="mt-28 space-x-16 md:space-x-72 min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
+        {/* Sidebar */}
         <div className="">
           <CompanySidebar />
         </div>
@@ -111,7 +113,7 @@ const AddJob = () => {
                 ></textarea>
               </div>
 
-              {/* Key Responsibilities */}
+              {/* Recqiored Skill */}
               <div className="mb-6">
                 <label
                   htmlFor="requiredSkill"
@@ -142,10 +144,13 @@ const AddJob = () => {
                     id="jobCategory"
                     name="jobCategory"
                     onChange={handleInputs}
+                    required
                     class="shadow-lg  border border-gray-300 bg-white text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="basnethemant98@gmail.com"
                   >
-                    <option value="Information Technology" selected>
+                    <option value="" selected>
+                      Please Select Your Job Category
+                    </option>
+                    <option value="Information Technology">
                       Information Technology
                     </option>
                     <option value="Engineering">Engineering </option>
@@ -174,7 +179,7 @@ const AddJob = () => {
                   </select>
                 </div>
 
-                {/* Job Type */}
+                {/* Job  Type*/}
                 <div className="mb-6">
                   <label
                     htmlFor="jobType"
@@ -186,16 +191,20 @@ const AddJob = () => {
                     id="jobType"
                     name="jobType"
                     onChange={handleInputs}
+                    required
                     class="shadow-lg  border border-gray-300 bg-white text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="basnethemant98@gmail.com"
                   >
-                    <option selected>Choose a Job Type</option>
+                    <option value="" selected>
+                      Please select Job Type
+                    </option>
                     <option value="Full Time">Full Time</option>
                     <option value="Internship">Internship</option>
                     <option value="Part Time">Part Time</option>
                     <option value="Temporary">Temporary</option>
                   </select>
                 </div>
+
                 {/* Gender */}
                 <div className="mb-6">
                   <label
@@ -208,10 +217,13 @@ const AddJob = () => {
                     name="gender"
                     onChange={handleInputs}
                     id="gender"
+                    required
                     class="shadow-lg  border border-gray-300 bg-white text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="basnethemant98@gmail.com"
                   >
-                    <option selected>Choose a Gender</option>
+                    <option value="" selected>
+                      Choose a Gender
+                    </option>
                     <option value="Full Time">Male</option>
                     <option value="Internship">Female</option>
                     <option value="Internship">Both</option>
@@ -229,18 +241,19 @@ const AddJob = () => {
                     name="salaryType"
                     onChange={handleInputs}
                     id="salaryType"
+                    required
                     class="shadow-lg  border border-gray-300 bg-white text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="basnethemant98@gmail.com"
                   >
-                    <option value="Annual" selected>
-                      Annual
+                    <option value="" selected>
+                      Please Select Salary Type
                     </option>
+                    <option value="Annual">Annual</option>
                     <option value="Monthly">Monthly</option>
                     <option value="Hourly">Hourly</option>
-                    <option value="Fixed">Fixed</option>
-                    <option value="Commission-based">Commission-based</option>
                   </select>
                 </div>
+
                 {/* Minimum Salary */}
                 <div className="mb-6">
                   <label
@@ -252,7 +265,7 @@ const AddJob = () => {
                   </label>
                   <input
                     onChange={handleInputs}
-                    type="number"
+                    type="text"
                     id="minSalary"
                     name="minSalary"
                     className=" shadow-lg  border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -271,7 +284,7 @@ const AddJob = () => {
                   </label>
                   <input
                     onChange={handleInputs}
-                    type="number"
+                    type="text"
                     id="maxSalary"
                     name="maxSalary"
                     className=" shadow-lg  border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

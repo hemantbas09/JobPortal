@@ -1,11 +1,12 @@
 import { React, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import { useAddquizQuestionMutation } from "../../Service/QuizApi";
 
 const AddQuiz = () => {
-  // const { id } = useParams();
-  const id = "642e80e1036cbea81fae413e";
+  const { id } = useParams();
+  const navigate = useNavigate();
+  // const id = "642e80e1036cbea81fae413e";
   // console.log(id)
   const [addquizQuestion, { isLoading }] = useAddquizQuestionMutation();
 
@@ -54,7 +55,10 @@ const AddQuiz = () => {
     quizForm.append("passMark", passMark);
     quizForm.append("questions", JSON.stringify(questions));
     const addQuestion = await addquizQuestion({ quizForm, id });
-    console.log("addQueston", addQuestion);
+    if (addQuestion.data.success) {
+      navigate(`/company`);
+    }
+    console.log("addQueston", addQuestion.data.success);
   };
 
   return (
@@ -63,20 +67,22 @@ const AddQuiz = () => {
         <form action="" onSubmit={handleSubmit}>
           <div className="grid gap-6 mb-6 lg:grid-cols-2">
             <input
-              type="text"
+              type="number"
               placeholder="Time in minutes"
               name="time"
               value={time}
               onChange={(e) => setTime(e.target.value)}
+              required
               className=" shadow-lg  border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
 
             <input
-              type="text"
+              type="number"
               placeholder="Pass Mark"
               name="passmark"
               value={passMark}
               onChange={(e) => setPassMark(e.target.value)}
+              required
               className=" shadow-lg  border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
@@ -88,6 +94,7 @@ const AddQuiz = () => {
                 type="text"
                 placeholder="Question"
                 name="question"
+                required
                 onChange={(e) => handleInputChange(e, i)}
                 className=" shadow-lg  border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
@@ -99,6 +106,7 @@ const AddQuiz = () => {
                       placeholder={`Option ${j + 1}`}
                       name="option"
                       value={o}
+                      required
                       onChange={(e) => handleInputChange(e, i, j)}
                       className=" shadow-lg  border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     />
@@ -111,6 +119,7 @@ const AddQuiz = () => {
                 placeholder="Enter Your Correct Answer"
                 name="correctAnswer"
                 onChange={(e) => handleInputChange(e, i)}
+                required
                 className=" shadow-lg  border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
             </div>
