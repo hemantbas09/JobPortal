@@ -18,9 +18,7 @@ const AddJob = () => {
     jobCategory: "",
     jobType: "",
     gender: "",
-    salaryType: "",
     minSalary: "",
-    maxSalary: "",
     qualification: "",
     experience: "",
     location: "",
@@ -150,10 +148,10 @@ const AddJob = () => {
                     <option value="" selected>
                       Please Select Your Job Category
                     </option>
-                    <option value="Information Technology">
-                      Information Technology
+                    <option value="Information Technology and Engineering">
+                      Information Technology and Engineering
                     </option>
-                    <option value="Engineering">Engineering </option>
+
                     <option
                       value="Healthcare and
                     Medical"
@@ -165,17 +163,20 @@ const AddJob = () => {
                       {" "}
                       Finance and Accounting
                     </option>
-                    <option value="Sales and Marketing ">
-                      Sales and Marketing{" "}
-                    </option>
-                    <option value="Administrative and Office Support">
-                      Administrative and Office Support
+
+                    <option value="Administrative and Support">
+                      Administrative and Support
                     </option>
                     <option value="  Education and Training ">
                       {" "}
                       Education and Training{" "}
                     </option>
-                    <option value=" Customer Service"> Customer Service</option>
+
+                    <option value=" Other ">
+                      {" "}
+                      Other{" "}
+                    </option>
+
                   </select>
                 </div>
 
@@ -201,7 +202,6 @@ const AddJob = () => {
                     <option value="Full Time">Full Time</option>
                     <option value="Internship">Internship</option>
                     <option value="Part Time">Part Time</option>
-                    <option value="Temporary">Temporary</option>
                   </select>
                 </div>
 
@@ -229,30 +229,7 @@ const AddJob = () => {
                     <option value="Internship">Both</option>
                   </select>
                 </div>
-                {/* Salary Type */}
-                <div className="mb-6">
-                  <label
-                    htmlFor="salaryType"
-                    className="block mb-2 text-xl font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Salary Type
-                  </label>
-                  <select
-                    name="salaryType"
-                    onChange={handleInputs}
-                    id="salaryType"
-                    required
-                    class="shadow-lg  border border-gray-300 bg-white text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="basnethemant98@gmail.com"
-                  >
-                    <option value="" selected>
-                      Please Select Salary Type
-                    </option>
-                    <option value="Annual">Annual</option>
-                    <option value="Monthly">Monthly</option>
-                    <option value="Hourly">Hourly</option>
-                  </select>
-                </div>
+
 
                 {/* Minimum Salary */}
                 <div className="mb-6">
@@ -261,7 +238,7 @@ const AddJob = () => {
                     className="block mb-2 text-xl font-medium text-gray-900 dark:text-gray-300"
                   >
                     {" "}
-                    Minimum Salary
+                    Annual Salary
                   </label>
                   <input
                     onChange={handleInputs}
@@ -274,24 +251,7 @@ const AddJob = () => {
                   />
                 </div>
 
-                {/* Maximum Salary */}
-                <div className="mb-6">
-                  <label
-                    htmlFor="maxSalary"
-                    className="block mb-2 text-xl font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Maximum Salary
-                  </label>
-                  <input
-                    onChange={handleInputs}
-                    type="text"
-                    id="maxSalary"
-                    name="maxSalary"
-                    className=" shadow-lg  border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="basnethemant98@gmail.com"
-                    required
-                  />
-                </div>
+
 
                 {/* qualification */}
                 <div className="mb-6">

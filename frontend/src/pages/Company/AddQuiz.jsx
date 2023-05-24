@@ -46,7 +46,7 @@ const AddQuiz = () => {
   const handleSubmit = async (event) => {
     console.log("the length of the questions", questions.length);
     event.preventDefault();
-    if (questions.length !== 1) {
+    if (questions.length <= 20) {
       alert("Please add 20 questions before submitting the form.");
       return;
     }

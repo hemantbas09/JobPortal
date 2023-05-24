@@ -26,7 +26,7 @@ import Aboutus from "./Candidate/Aboutus";
 import Contactus from "./Candidate/Contactus";
 // Admin: 
 import AllUser from "./Admin/AllUser";
-
+import Search from "./Candidate/Search";
 
 export {
     QuizResult,
@@ -53,6 +53,6 @@ export {
     InformationTechnology,
     Other,
     Aboutus,
-    Contactus
-
+    Contactus,
+    Search
 }

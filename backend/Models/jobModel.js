@@ -26,14 +26,7 @@ const jobSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please Enter Job Type"],
   },
-  salaryType: {
-    type: String,
-    required: [true, "Please Enter Salary Type"],
-  },
-  maxSalary: {
-    type: String,
-    required: [true, "Please Enter Product Price"],
-  },
+
   minSalary: {
     type: String,
     required: [true, "Please Enter Product Price"],
@@ -54,9 +47,9 @@ const jobSchema = new mongoose.Schema({
   },
   user: {
     type: mongoose.Schema.ObjectId,
-    ref:"user",
+    ref: "user",
     required: true,
-},
+  },
   createDate: {
     type: Date,
     default: Date.now,

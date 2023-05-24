@@ -21,6 +21,7 @@ const QuizResult = () => {
     passMark = quizResult["passMark"];
     score = quizResult["score"];
     console.log(passMark);
+    console.log(score);
   }
   return (
     <>

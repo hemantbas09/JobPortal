@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import { Link } from "react-router-dom";
 import Hero from "../component/Hero/Hero";
 import { Category, Job } from "../component/index";
 // import {workImage} from '../images/download.png'
@@ -33,7 +33,7 @@ const Home = () => {
         <hr />
 
         {/* -------------------Start Job Category:---------------------  */}
-        <div className="flex flex-col overflow-hidden ">
+        <div className="flex flex-col">
           <div className="  items-center justify-center text-center mb-10">
             <h1 className=" py-2 text-3xl text-indigo-500 font-medium">
               Job Categories
@@ -43,38 +43,7 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 border-red-50 gap-y-10 gap-x-48 w-fit ">
-            <div className="bg-gray-50  ">
-              <Category />
-            </div>
-            <div className="bg-gray-50   ">
-              <Category />
-            </div>
-            <div className="bg-gray-50   ">
-              <Category />
-            </div>
-
-            <div className="bg-gray-50   ">
-              <Category />
-            </div>
-            <div className="bg-gray-50   ">
-              <Category />
-            </div>
-            <div className="bg-gray-50   ">
-              <Category />
-            </div>
-            <div className="bg-gray-50   ">
-              <Category />
-            </div>
-            <div className="bg-gray-50   ">
-              {" "}
-              <Category />
-            </div>
-            <div className="bg-gray-50   ">
-              {" "}
-              <Category />
-            </div>
-          </div>
+          <Category />
         </div>
         <hr />
         {/* -------------------End Job Category:---------------------  */}
@@ -101,7 +70,7 @@ const Home = () => {
             <div className="w-1/2">
               <img
                 className=" w-full   rounded-lg sm:mx-0 sm:shrink-0"
-                src="image/download.png"
+                src="https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1684954139/DefaultImage/TrulyHired_Career_Blog_-_11_Steps_to_a_Successful_Job_Search_hflu14.jpg"
                 alt=""
               />
             </div>
@@ -118,9 +87,11 @@ const Home = () => {
                 <br /> <li> Capitalize on low hanging fruit to identify</li>
                 <br /> <li> But I must explain to you how all this </li>
               </p>
-              <button className="uppercase mx-2.5 px-5 rounded-lg py-4 text-white bg-[rgb(65,88,208)] font-bold w-fit">
-                Get Started
-              </button>
+              <Link to={"/search"}>
+                <button className="uppercase mx-2.5 px-5 rounded-lg py-4 text-white bg-[rgb(65,88,208)] font-bold w-fit">
+                  Get Started
+                </button>
+              </Link>
             </div>
           </div>
           <hr />
@@ -155,24 +126,22 @@ const Home = () => {
         {/*----------------Start  Top COmpany-------------- */}
 
         <div className=" flex flex-col items-center md:flex-row gap-y-16 gap-x-36 justify-evenly">
+
           <img
-            className={`w-32 h-32 rounded-lg ${
-              currentIdx === 0 ? "active" : ""
-            }`}
+            className={`w-32 h-32 rounded-lg ${currentIdx === 0 ? "active" : ""
+              }`}
             src="image/brand.png"
             alt=""
           />
           <img
-            className={`w-32 h-32 rounded-lg ${
-              currentIdx === 1 ? "active" : ""
-            }`}
+            className={`w-32 h-32 rounded-lg ${currentIdx === 1 ? "active" : ""
+              }`}
             src="image/brand3.jpeg"
             alt=""
           />
           <img
-            className={`w-32 h-32 rounded-lg ${
-              currentIdx === 2 ? "active" : ""
-            }`}
+            className={`w-32 h-32 rounded-lg ${currentIdx === 2 ? "active" : ""
+              }`}
             src="image/brand4.jpeg"
             alt=""
           />
@@ -186,6 +155,7 @@ const Home = () => {
             src="image/brand1.png"
             alt=""
           />
+
         </div>
 
         {/*----------------End  Top COmpany-------------- */}
@@ -202,9 +172,11 @@ const Home = () => {
               million CVs in our database.
             </p>
             <div className="">
-              <button className="max-[780px]:w-full my-4 px-5 py-3 rounded-md bg-indigo-700 text-white font-bold text-xl">
-                Start Recruting Now
-              </button>
+              <Link to={"/login"}>
+                <button className="max-[780px]:w-full my-4 px-5 py-3 rounded-md bg-indigo-700 text-white font-bold text-xl">
+                  Start Recruting Now
+                </button>
+              </Link>
             </div>
           </div>
           <div className="mb-3 pt-3 pr-6  ">
@@ -218,7 +190,7 @@ const Home = () => {
         <hr />
         <div className="mt-7"></div>
         <hr />
-      </div>
+      </div >
     </>
   );
 };

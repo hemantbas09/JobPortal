@@ -1,15 +1,29 @@
-import React from "react";
+import { React, useEffect, useState } from "react";
 import { BsFillBookmarkHeartFill, BsHandbag } from "react-icons/bs";
 import { GiMoneyStack } from "react-icons/gi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { useGetAllJobQuery } from "../../Service/jobApi";
 import { Link } from "react-router-dom";
 const Job = () => {
-  let jobs;
+  const [jobs, setJobs] = useState([]);
+
   const jobInfo = useGetAllJobQuery();
-  if (jobInfo.status === "fulfilled") {
-    jobs = jobInfo.data.jobs;
-  }
+  useEffect(() => {
+    if (jobInfo.status === "fulfilled") {
+      const fetchedJobs = jobInfo.data.jobs;
+      const shuffledJobs = shuffleJobs(fetchedJobs).slice(0, 8);
+      setJobs(shuffledJobs);
+    }
+  }, [jobInfo]);
+
+  const shuffleJobs = (array) => {
+    const shuffledArray = array.slice();
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    }
+    return shuffledArray;
+  };
 
   return (
     <>
@@ -19,7 +33,8 @@ const Job = () => {
           jobs.map((job, index) => (
             <Link to={`/jobdetails/${job._id}`}>
               <div key={index} className="flex flex-col  items-center my-4  ">
-                <div className="bg-zinc-50 flex flex-col items-center md:flex-row justify-center  p-2 overflow-hidden rounded-lg shadow-lg border-2 border-zinc-100">
+                <div className="bg-zinc-50 w-full flex flex-col items-center md:flex-row justify-center  p-2 overflow-hidden rounded-lg shadow-lg border-2 border-zinc-100">
+
                   <img
                     className="pl-8 p-3 block mx-auto h-36 rounded-lg sm:mx-0 sm:shrink-0"
                     src="image/heroImage.svg"
@@ -41,17 +56,11 @@ const Job = () => {
                         <HiOutlineLocationMarker /> <p>{job.location}</p>
                       </div>
                       <div className="flex gap-x-3 items-center">
-                        <GiMoneyStack /> <p>Rs.25000</p>
+                        <GiMoneyStack /> <p>Rs.{job.minSalary}</p>
                       </div>
-                    </div>
 
-                    <div className="flex gap-10">
-                      <p className="bg-white px-3 py-1 rounded-full">Java</p>
-                      <p className="bg-white px-3 py-1 rounded-full">Html</p>
-                      <p className="bg-white px-3 py-1 rounded-full">
-                        JavaScript
-                      </p>
                     </div>
+                    <h1 className="bg-blue-300 p-2 rounded-lg mt-4">Feature Job</h1>
                   </div>
                 </div>
               </div>

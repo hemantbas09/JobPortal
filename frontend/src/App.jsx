@@ -36,6 +36,7 @@ import {
   Other,
   Aboutus,
   Contactus,
+  Search
 } from "./pages/index.js";
 import MyForm from "./component/Authentication/MyForm.jsx";
 import { Link } from "react-router-dom";
@@ -134,6 +135,7 @@ const App = () => {
           <Route path="/jobapply/:id" element={<JobApply />} />
           <Route path="/quiz/:id" element={<Assestement />} />
           <Route path="/alluser" element={<AllUser />} />
+          <Route path="/search" element={<Search />} />
         </Routes>
       </BrowserRouter>
 
