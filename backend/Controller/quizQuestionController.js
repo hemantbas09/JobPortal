@@ -13,10 +13,10 @@ class quizController {
     console.log(req.body.job)
     const { time, passMark, questions } = req.body;
     // console.log(job);
-    // const questionsArray = JSON.parse(questions);
+    const questionsArray = JSON.parse(questions);
 
     let quiz = new quizQuestionModel({
-      questions: questions,
+      questions: questionsArray,
       time: time,
       passMark: passMark,
       user: req.user.id,

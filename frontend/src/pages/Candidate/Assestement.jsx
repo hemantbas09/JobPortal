@@ -66,7 +66,7 @@ const Assestement = () => {
     formData.append("quizId", quizId);
     const quizAttempt = await quizAttemtQuestion({ id, formData });
     if (quizAttempt.data) {
-      navigate(`/quizresult/6465e9395e2aa774f88e956b`);
+      navigate(`/quizresult/${id}`);
     }
   };
 
@@ -76,15 +76,16 @@ const Assestement = () => {
         <h1 className="text-4xl font-bold mb-10">Quiz Questions</h1>
 
         <form className="space-y-10" method="POST" onSubmit={handleFormSubmit}>
-          <div className="bg-white rounded-lg shadow-md p-10">
+          <div className="bg-white rounded-lg shadow-md p-10 text-left ">
             {questions.map((question, index) => (
               <div key={index}>
-                <h2 className="text-xl font-bold mb-4">Question {index + 1}</h2>
+                <h2 className="text-xl font-bold mb-2 mt-6">Question {index + 1}</h2>
                 <p className="mb-4">{question.question}</p>
 
                 {question.options.map((option, optionIndex) => (
                   <div key={optionIndex}>
                     <input
+                  
                       type="radio"
                       id={`question${index}-option${optionIndex}`}
                       name={`question${index}`}

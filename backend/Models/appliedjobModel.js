@@ -20,26 +20,22 @@ const appliedJobSchema = mongoose.Schema(
         resume: {
             public_id: {
                 type: String,
-                required:true
+                required: true
 
             },
             url: {
                 type: String,
-                required:true
+                required: true
 
             },
         },
-    
+
         applyDate: {
             type: Date,
             default: Date.now
         }
     },
-
-
-    {
-        timestamps: true
-    })
+)
 
 
 

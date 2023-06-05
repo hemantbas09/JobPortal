@@ -4,13 +4,13 @@ import Sidebar from '../Sidebar/Sidebar';
 const CompanySidebar = () => {
 
     const Menus = [
-        { title: "Dashboard", src: <RiDashboardFill />, link:'/company'},
-        { title: "Add Job", src: <RiDashboardFill />, link:'/company/addjob'  },
-        { title: "My Job", src: <RiDashboardFill />, link:'/company/job' },
-        { title: "Applicants Job", src: <RiDashboardFill />, link:'/company/Applicant' },
-        { title: "Shortlist Candidates", src: <RiDashboardFill />, link:'/company/shortlist' },
-        { title: "Package", src: <RiDashboardFill />, link:'/company/package' },
-      ];
+        { title: "Dashboard", src: <RiDashboardFill />, link: '/company' },
+        { title: "Add Job", src: <RiDashboardFill />, link: '/company/addjob' },
+        { title: "My Job", src: <RiDashboardFill />, link: '/company/job' },
+        { title: "Applicants Job", src: <RiDashboardFill />, link: '/company/applicant' },
+        // { title: "Shortlist Candidates", src: <RiDashboardFill />, link:'/company/shortlist' },
+        // { title: "Package", src: <RiDashboardFill />, link:'/company/package' },
+    ];
     return (
         <>
             <div className='flex relative '>

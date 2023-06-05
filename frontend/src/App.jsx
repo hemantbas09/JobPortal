@@ -36,7 +36,9 @@ import {
   Other,
   Aboutus,
   Contactus,
-  Search
+  Search,
+  EditJob,
+  JobQuiz
 } from "./pages/index.js";
 import MyForm from "./component/Authentication/MyForm.jsx";
 import { Link } from "react-router-dom";
@@ -103,9 +105,21 @@ const App = () => {
             }
           />
           <Route
+            path="/updatejob/:id"
+            element={
+              <ProtectedRoute component={EditJob} requiredRole="company" />
+            }
+          />
+          <Route
             path="/addquiz/:id"
             element={
               <ProtectedRoute component={AddQuiz} requiredRole="company" />
+            }
+          />
+          <Route
+            path="/jobquiz/:id"
+            element={
+              <ProtectedRoute component={JobQuiz} requiredRole="company" />
             }
           />
           <Route path="/quizresult/:id" element={<QuizResult />} />
@@ -126,7 +140,7 @@ const App = () => {
             path="/company"
             element={<ProtectedRoute Component={CompanyDashboard} />}
           /> */}
-          <Route path="/company/Applicant" element={<ApplicantsJob />} />
+          <Route path="/company/applicant" element={<ApplicantsJob />} />
           <Route path="/company/job" element={<MyJob />} />
           <Route path="/company/package" element={<Package />} />
           <Route path="/company/shortlist" element={<ShortlistCandidates />} />

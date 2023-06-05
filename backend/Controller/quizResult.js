@@ -82,7 +82,9 @@ class quizAtemptController {
   static quizResultById = catchAsyncErrors(async (req, res, next) => {
     const jobId = req.params.id;
     const userId = req.user.id;
-    // console.log(first)
+    console.log(jobId)
+    // console.log()
+
     const quizResultById = await quizResultModel.find({ job: jobId, user: userId });
     console.log("FInd THe quiz",quizResultById)
     if (quizResultById) {

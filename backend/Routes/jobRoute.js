@@ -10,11 +10,12 @@ const upload = multer({
 
 // Route level Middleware - TO Protect Route
 // router.use('/changepassword', checkUserAuth)
-router.post("/new", checkUserAuth);
+router.use("/new", checkUserAuth);
 router.use("/new", upload.none());
 router.use("/jobbycompanyid", checkUserAuth);
 router.use("/update/:id", checkUserAuth);
-router.use("/appliedjob/:id", upload.none());
+router.use("/appliedjob/:id", checkUserAuth);
+router.use("/applied/job", checkUserAuth);
 
 //public Routes:
 router.post("/new", jobController.jobCreate);
@@ -24,6 +25,7 @@ router.get("/:id", jobController.getjobByID);
 router.put("/update/:id", jobController.updateJob);
 router.delete("/:id", jobController.deleteJob);
 router.post("/appliedjob/:id", appliedjobController.jobApplied);
+router.get("/applied/job", appliedjobController.getAppliedJobByCompany);
 
 //Private Routes:
 

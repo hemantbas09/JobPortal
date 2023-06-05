@@ -27,7 +27,8 @@ import Contactus from "./Candidate/Contactus";
 // Admin: 
 import AllUser from "./Admin/AllUser";
 import Search from "./Candidate/Search";
-
+import EditJob from "./Company/EditJob";
+import JobQuiz from "./Company/JobQuiz";
 export {
     QuizResult,
     JobApply,
@@ -54,5 +55,7 @@ export {
     Other,
     Aboutus,
     Contactus,
-    Search
+    Search,
+    EditJob,
+    JobQuiz
 }

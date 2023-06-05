@@ -1,5 +1,6 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import { useGetquizResultbyIdQuery } from "../../Service/QuizApi";
+import { useApplyJobMutation } from "../../Service/jobApi";
 import { useParams } from "react-router-dom";
 // import congratulation.jpg as congratulation from "images"
 const QuizResult = () => {
@@ -20,13 +21,48 @@ const QuizResult = () => {
     quizResult = quizQuestion.data.quizResultById[0];
     passMark = quizResult["passMark"];
     score = quizResult["score"];
-    console.log(passMark);
-    console.log(score);
+    // console.log(score);
   }
+  //--------------Upload the resume--------------
+  const [image, setimage] = useState("");
+  const [resume, setResume] = useState("");
+  const [applyJob, { isLoading }] = useApplyJobMutation();
+
+  // Thi function is used read the file and change into base64 formate to file:
+  function previewFiles(resume) {
+    const reader = new FileReader();
+    reader.readAsDataURL(resume)
+    reader.onloadend = () => {
+      setResume(reader.result)
+
+    }
+  }
+  // This function is used to handle the input:
+  const handleFileInput = (e) => {
+    const image = e.target.files[0];
+    setimage(image);
+    previewFiles(image)
+
+  }
+  // This function is used to hanlde the form submission:
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Check whether all Fields are complete or not:
+    if (resume) {
+      const res = await applyJob({resume,id});
+      console.log("this is job",res)
+
+    }else{
+      console.log("Heant basnet")
+    }
+  }
+  // console.log("this is job",resume)
+
+
   return (
     <>
       <div className="bg-zinc-50 h-1/2 m-auto mt-32 md:mt-56 flex flex-col justify-center md:w-7/12  p-8 text-justify shadow-lg border-2 border-zinc-100 ">
-        {passMark < score ? (
+        {passMark > score ? (
           <>
             <div className="md:flex gap-16">
               <div className="mb-10  ">
@@ -57,7 +93,7 @@ const QuizResult = () => {
                   other job opportunities on our website too. Your impressive
                   score opens up new doors for you!
                 </p>
-                <form action="" className=" mt-8 w-full flex flex-col  ">
+                <form action="" className=" mt-8 w-full flex flex-col  " onSubmit={handleSubmit}>
                   <label
                     htmlFor="document"
                     className="flex flex-col items-center w-full max-w-lg p-5 mx-auto mt-2 text-center bg-white border-2 border-gray-300 border-dashed cursor-pointer dark:bg-gray-900 dark:border-gray-700 rounded-xl"
@@ -78,7 +114,7 @@ const QuizResult = () => {
                     </svg>
 
                     <h2 className="mt-1 text-xl font-medium tracking-wide text-gray-700 dark:text-gray-200">
-                      Upload Resume
+                      Upload resume
                     </h2>
 
                     <p className="mt-2  tracking-wide text-xl text-gray-500 dark:text-gray-400">
@@ -90,16 +126,16 @@ const QuizResult = () => {
                       type="file"
                       className="hidden"
                       name="document"
-                      // onChange={handleFileInput}
+                      onChange={handleFileInput}
                       required
                     />
                   </label>
-                  <a
+                  <button
                     className=" self-center  w-fit text-xl px-6 py-3 font-bold tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50 mt-10"
-                    href="#"
+                    
                   >
                     Apply Job
-                  </a>
+                  </button>
                 </form>
               </div>
             </div>
