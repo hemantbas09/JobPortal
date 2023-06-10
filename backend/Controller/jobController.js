@@ -39,7 +39,7 @@ class jobController {
   // get the job by using job id:
   static getjobByID = catchAsyncErrors(async (req, res, next) => {
     // select job by Id:
-    console.log("What happen to this",req.params.id);
+    console.log("What happen to this", req.params.id);
     const job = await jobModel.findById(req.params.id);
     // check job is found or not:
     if (!job) {
@@ -122,10 +122,61 @@ class jobController {
     });
   });
 
-  // Manage the Job status status:
 
   // Delete Job:
   static deleteJob = catchAsyncErrors(async (req, res, next) => {
+    // find job in database
+    let job = await jobModel.findById(req.params.id);
+
+    // check job is found or not
+    if (!job) {
+      res.status(401).json({
+        success: true,
+        message: "Job  not found",
+      });
+    } else {
+      // Delete the Job
+      job = await jobModel.findByIdAndDelete(req.params.id);
+    }
+    // response
+    res.status(200).json({
+      success: true,
+      message: "Successfually Deleted",
+    });
+  });
+
+
+  // Search a Job:
+  static searchJob = catchAsyncErrors(async (req, res, next) => {
+
+    let jobs = await jobModel.find();
+
+    const { jobTitle, location } = req.query;
+
+    if (!jobTitle && !location) {
+      return res.status(400).json({
+        message: 'Job Not Found'
+      });
+    }
+
+    const searchTerm = jobTitle ? jobTitle.toLowerCase() : '';
+    const searchLocation = location ? location.toLowerCase() : '';
+    const searchdJobs = jobs.filter(job => {
+      const titleMatch = job.jobTitle.toLowerCase().indexOf(searchTerm) !== -1;
+      const locationMatch = job.location.toLowerCase().indexOf(searchLocation) !== -1;
+      return titleMatch && locationMatch;
+    });
+
+    res.status(200).json({
+      success: true,
+      searchdJobs,
+      message: "Job  Successfully Found",
+    });
+    
+  });
+
+  // Filter a Job:
+  static filterJob = catchAsyncErrors(async (req, res, next) => {
     // find job in database
     let job = await jobModel.findById(req.params.id);
 

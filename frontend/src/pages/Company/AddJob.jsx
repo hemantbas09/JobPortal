@@ -224,9 +224,9 @@ const AddJob = () => {
                     <option value="" selected>
                       Choose a Gender
                     </option>
-                    <option value="Full Time">Male</option>
-                    <option value="Internship">Female</option>
-                    <option value="Internship">Both</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="both">Both</option>
                   </select>
                 </div>
 

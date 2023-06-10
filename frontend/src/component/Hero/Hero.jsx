@@ -1,7 +1,11 @@
-import React from "react";
-
+import { React, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
+import { Link } from "react-router-dom";
 const Hero = () => {
+  const [keyword, setKeyword] = useState('');
+  const [location, setLocation] = useState('');
+  console.log(keyword)
+  console.log(location)
   return (
     <>
       <div className="w-full bg-white py-20 ">
@@ -28,19 +32,21 @@ const Hero = () => {
                 className="bg-zinc-100 p-3 focus:bg-white"
                 type="text"
                 placeholder="keyword or job Title"
+                onChange={(e) => setKeyword(e.target.value)}
               />
               <input
                 className="bg-zinc-100 p-3 focus:bg-white"
                 type="text"
                 placeholder="Location"
+                onChange={(e) => setLocation(e.target.value)}
               />
-              <button className=" ">
+              <Link to={`/search?jobTitle=${keyword}&location=${location}`}>
                 <AiOutlineSearch
                   size={30}
                   className="icon"
                   style={{ color: "indigo", hover: "green" }}
                 />
-              </button>
+              </Link>
             </form>
           </div>
 

@@ -116,6 +116,13 @@ export const jobApi = createApi({
       }),
     }),
 
+
+    searchJob: builder.query({
+      query: ({ jobTitle, location }) => ({
+        url: `/search/job?jobTitle=${jobTitle}&location=${location}`,
+        method: "Get",
+      }),
+    }),
   }),
 });
 
@@ -128,5 +135,6 @@ export const {
   useApplyJobMutation,
   useUpdateJobMutation,
   useDeleteJobMutation,
-  useGetAppliedJobQuery
+  useGetAppliedJobQuery,
+  useSearchJobQuery
 } = jobApi;

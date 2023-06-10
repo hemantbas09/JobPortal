@@ -36,7 +36,7 @@ const Navbar = () => {
     <>
       {loginToken ?
 
-        <div className="  bg-white fixed -mt-4 z-50 ">
+        <div className="  bg-white fixed -mt-4 z-50  pr-72 ">
           <div className="flex justify-end md:gap-x-40 gap-x-4 items-center  ">
             <span className="md:px-36 mr-28 md:mr-0">
               <Link to={"/"}>
@@ -313,7 +313,7 @@ const Navbar = () => {
 
         :
 
-        <div className="  bg-white fixed -mt-4 z-50 ">
+        <div className="  bg-white fixed -mt-4 z-50  ">
           <div className="flex justify-end md:gap-x-40 gap-x-4 items-center  ">
             <span className="md:px-36 mr-28 md:mr-0">
               <Link to={"/"}>

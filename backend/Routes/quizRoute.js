@@ -23,6 +23,8 @@ router.delete("/:id", quizController.deletequiz);
 router.post("/quizattem/:id", quizAttemptController.quizAttempt);
 router.get("/quizresult/all", quizAttemptController.quizAllResult);
 router.get("/quizresult/:id", quizAttemptController.quizResultById);
+
+//Private Routes:
 //Private Routes:
 
 export default router;

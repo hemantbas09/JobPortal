@@ -26,7 +26,8 @@ router.put("/update/:id", jobController.updateJob);
 router.delete("/:id", jobController.deleteJob);
 router.post("/appliedjob/:id", appliedjobController.jobApplied);
 router.get("/applied/job", appliedjobController.getAppliedJobByCompany);
-
+router.get("/search/job", jobController.searchJob);
+router.get("/filter/job", jobController.filterJob);
 //Private Routes:
 
 export default router;
