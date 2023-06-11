@@ -1,6 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import CompanySidebar from "../Sidebar/CompanySidebar";
 const Profile = () => {
+  const [skillFields, setSkillFields] = useState([""]);
+
+  const addSkillField = () => {
+    setSkillFields([...skillFields, ""]);
+  };
+
+  const handleSkillChange = (index, value) => {
+    const updatedFields = [...skillFields];
+    updatedFields[index] = value;
+    setSkillFields(updatedFields);
+  };
+
+  const [workExperienceFields, setWorkExperienceFields] = useState([
+    {
+      company: "",
+      jobTitle: "",
+      joinDate: "",
+      endDate: ""
+    }
+  ]);
+
+  const addWorkExperienceField = () => {
+    setWorkExperienceFields([...workExperienceFields, {
+      company: "",
+      jobTitle: "",
+      joinDate: "",
+      endDate: ""
+    }]);
+  };
+
+  const handleInputChange = (index, field, value) => {
+    const updatedFields = [...workExperienceFields];
+    updatedFields[index][field] = value;
+    setWorkExperienceFields(updatedFields);
+  };
+
+
   return (
     <>
       <div class=" mt-28 space-x-16 md:space-x-72 min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
@@ -191,71 +228,100 @@ const Profile = () => {
                   </div>
                 </div>
               </fieldset>
-              <fieldset className="mt-20">
-                <legend className=" mb-2 text-xl font-medium text-gray-900 dark:text-gray-300">
-                  Work Experience
-                </legend>
-                <div className="grid gap-6 mb-6 lg:grid-cols-2">
-                  <div>
-                    <label
-                      className="block mb-2 text-xl font-medium text-gray-900 dark:text-gray-300"
-                      htmlFor=""
-                    >
-                      Company:
-                    </label>
-                    <input
-                      className=" shadow-lg  border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      type="text"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      className="block mb-2 text-xl font-medium text-gray-900 dark:text-gray-300"
-                      htmlFor=""
-                    >
-                      Job Title:
-                    </label>
-                    <input
-                      className=" shadow-lg  border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      type="text"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      className="block mb-2 text-xl font-medium text-gray-900 dark:text-gray-300"
-                      htmlFor=""
-                    >
-                      Join Date:
-                    </label>
-                    <input
-                      className=" shadow-lg  border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      type="text"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      className="block mb-2 text-xl font-medium text-gray-900 dark:text-gray-300"
-                      htmlFor=""
-                    >
-                      End Date:
-                    </label>
-                    <input
-                      className=" shadow-lg  border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      type="text"
-                    />
-                  </div>
-                </div>
-              </fieldset>
+              <div>
+                {workExperienceFields.map((experience, index) => (
+                  <fieldset key={index} className="mt-20">
+                    <legend className="mb-2 text-xl font-medium text-gray-900 dark:text-gray-300">
+                      Work Experience {index + 1}
+                    </legend>
+                    <div className="grid gap-6 mb-6 lg:grid-cols-2">
+                      <div>
+                        <label
+                          className="block mb-2 text-xl font-medium text-gray-900 dark:text-gray-300"
+                          htmlFor={`company-${index}`}
+                        >
+                          Company:
+                        </label>
+                        <input
+                          id={`company-${index}`}
+                          className="shadow-lg border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          type="text"
+                          value={experience.company}
+                          onChange={(e) => handleInputChange(index, 'company', e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <label
+                          className="block mb-2 text-xl font-medium text-gray-900 dark:text-gray-300"
+                          htmlFor={`jobTitle-${index}`}
+                        >
+                          Job Title:
+                        </label>
+                        <input
+                          id={`jobTitle-${index}`}
+                          className="shadow-lg border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          type="text"
+                          value={experience.jobTitle}
+                          onChange={(e) => handleInputChange(index, 'jobTitle', e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <label
+                          className="block mb-2 text-xl font-medium text-gray-900 dark:text-gray-300"
+                          htmlFor={`joinDate-${index}`}
+                        >
+                          Join Date:
+                        </label>
+                        <input
+                          id={`joinDate-${index}`}
+                          className="shadow-lg border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          type="text"
+                          value={experience.joinDate}
+                          onChange={(e) => handleInputChange(index, 'joinDate', e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <label
+                          className="block mb-2 text-xl font-medium text-gray-900 dark:text-gray-300"
+                          htmlFor={`endDate-${index}`}
+                        >
+                          End Date:
+                        </label>
+                        <input
+                          id={`endDate-${index}`}
+                          className="shadow-lg border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          type="text"
+                          value={experience.endDate}
+                          onChange={(e) => handleInputChange(index, 'endDate', e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  </fieldset>
+                ))}
+                <button type="button" onClick={addWorkExperienceField}>
+                  Add Work Experience
+                </button>
+              </div>
               <label
                 className="block mb-2 text-xl font-medium text-gray-900 dark:text-gray-300"
                 htmlFor=""
               >
                 Skill:
               </label>
-              <input
-                className=" shadow-lg  border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                type="text"
-              />
+              <div className="mt-5">
+                {skillFields.map((field, index) => (
+                  <input
+                    key={index}
+                    value={field}
+                    onChange={(e) => handleSkillChange(index, e.target.value)}
+                    className="mt-5 shadow-lg border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    type="text"
+                  />
+                ))}
+                <button type="button" onClick={addSkillField}>
+                  Add Skill
+                </button>
+              </div>
               <fieldset className="mt-20">
                 <legend className=" mb-2 text-xl font-medium text-gray-900 dark:text-gray-300 mt-4">
                   Other Information
@@ -293,6 +359,7 @@ const Profile = () => {
           {/* <Home /> */}
         </div>
       </div>
+
     </>
   );
 };
