@@ -164,12 +164,8 @@ const LoginForm = () => {
                   </div>
 
                   {/* Sign In Button */}
-                  <button className="flex items-center mt-6 mb-5 justify-between w-full px-6 py-3 text-xl tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-                    <span>Sign In </span>
-                    <IoIosArrowDropright
-                      className="w-5 h-5 rtl:-scale-x-100"
-                      size={20}
-                    />
+                  <button className="text-center font-bold text-xl mt-6 mb-5  w-full px-6 py-3 text-xl tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                    Sign In
                   </button>
                 </form>
                 <a

@@ -36,25 +36,20 @@ const Category = () => {
     {
       title: "Other",
       link: "/other",
-      imageSrc: "https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1684660717/DefaultImage/undraw_crypto_portfolio_2jy5_kln9iv.svg",
+      imageSrc:
+        "https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1684660717/DefaultImage/undraw_crypto_portfolio_2jy5_kln9iv.svg",
     },
   ];
 
   return (
     <>
-   
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 border-red-50 gap-y-10 gap-x-48  ">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 border-red-50 gap-y-10 gap-x-20  ">
         {data.map((item, index) => (
           <Link key={index} to={item.link}>
             <div className="flex flex-col md:flex-row  items-center justify-center md:justify-between p-3 gap-y-10 rounded-lg shadow-lg border-2 border-zinc-100 pr-10">
-              <img
-              className="h-36"
-              src={item.imageSrc}
-                alt="category Pic" />
+              <img className="h-36" src={item.imageSrc} alt="category Pic" />
               <h2>{item.title}</h2>
             </div>
-
           </Link>
         ))}
       </div>

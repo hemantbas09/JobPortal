@@ -1,11 +1,11 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 #root {
   max-width: 1900px;
-  /* display: flex; */
-  margin: auto auto;
-  padding: 1rem;
-  /* text-align: center; */
-
-  /* background: papayawhip; */
+  margin: 0rem 1rem;
 }
 
 .logo {
@@ -29,43 +29,11 @@
   animation: my-toast-animation 0.5s ease-out;
 }
 
-@keyframes my-toast-animation {
-  0% {
-    transform: translate(-0%, -0%) rotate(-1deg);
-  }
-  25% {
-    transform: translate(-0%, -0%) rotate(1deg);
-  }
-  0% {
-    transform: translate(-0%, -0%) rotate(-1deg);
-  }
-  75% {
-    transform: translate(-0%, -0%) rotate(1deg);
-  }
-  100% {
-    transform: translate(-0%, -0%) rotate(0deg);
+/* Styles for screens larger than 1024px (laptop) */
+@media (min-width: 1840px) {
+  #root {
+    margin: 0 5rem;
   }
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
