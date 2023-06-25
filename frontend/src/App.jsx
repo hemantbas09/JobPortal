@@ -8,6 +8,7 @@ import {
   Navbar,
   Footer,
   SendPasswordResetEmail,
+  CandidateSignUpForm,
 } from "./component/index.js";
 import {
   JobApply,
@@ -38,7 +39,7 @@ import {
   Contactus,
   Search,
   EditJob,
-  JobQuiz
+  JobQuiz,
 } from "./pages/index.js";
 import MyForm from "./component/Authentication/MyForm.jsx";
 import { Link } from "react-router-dom";
@@ -53,11 +54,14 @@ const App = () => {
         <Navbar />
 
         <Routes>
+          {/* Authentication Route */}
+          <Route path="/signup" element={<CandidateSignUpForm />} />
           <Route path="/login" element={<LoginForm />} />
+          <Route path="/forgetpassword" element={<SendPasswordResetEmail />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/check" element={<Check />} />
+          <Route path="/newpassword/:id/:token" element={<ResetPassword />} />
           <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<MyForm />} />
+          <Route path="/verify" element={<Home />} />
           {/* <Route path="/login" element={<Login />} /> */}
           {/* <Route
             path="/admin"
@@ -133,7 +137,6 @@ const App = () => {
             element={<InformationTechnology />}
           />
           <Route path="/other" element={<Other />} />
-
           <Route path="/aboutus" element={<Aboutus />} />
           <Route path="/contactus" element={<Contactus />} />
           {/* <Route

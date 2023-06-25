@@ -9,7 +9,7 @@ class jobController {
     // for store the user information:
     // req.body.user = req.user;
     req.body.user = req.user.id;
-    console.log("This is request user", req.body);
+  
 
     // creating a object or instace of the JobModal:
     const job = new jobModel(req.body);
@@ -28,7 +28,7 @@ class jobController {
   static getAllJob = catchAsyncErrors(async (req, res, next) => {
     // select all job:
     const jobs = await jobModel.find();
-    console.log(jobs);
+
     // response the client:
     res.status(201).json({
       success: true,
@@ -39,7 +39,7 @@ class jobController {
   // get the job by using job id:
   static getjobByID = catchAsyncErrors(async (req, res, next) => {
     // select job by Id:
-    console.log("What happen to this", req.params.id);
+
     const job = await jobModel.findById(req.params.id);
     // check job is found or not:
     if (!job) {
@@ -99,7 +99,7 @@ class jobController {
   static updateJob = catchAsyncErrors(async (req, res, next) => {
     // Select the job by if:
     let job = await jobModel.findById(req.params.id);
-    console.log(job)
+
     // check the job is find or not
     if (!job) {
       res.status(200).json({

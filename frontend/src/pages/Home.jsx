@@ -1,8 +1,21 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Hero from "../component/Hero/Hero";
 import { Category, Job } from "../component/index";
-
+import { useVerifyUserMutation } from "../Service/userAuth";
+import { useLocation } from "react-router-dom";
 const Home = () => {
+  const location = useLocation();
+  const [verifyUser, { isLoading, error }] = useVerifyUserMutation();
+
+  useEffect(() => {
+    const verifyToken = new URLSearchParams(location.search).get("token");
+    if (location.pathname === "/verify" && verifyToken) {
+      const response = verifyUser(verifyToken);
+      console.log(response);
+    }
+  }, [location, verifyUser]);
+
   return (
     <div className="flex flex-col items-center gap-y-10 mt-40">
       <Hero />

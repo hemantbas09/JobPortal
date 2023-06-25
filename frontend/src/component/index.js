@@ -7,6 +7,7 @@ import Home from "./Admin/Home";
 import SendPasswordResetEmail from "./Authentication/SendPasswordResetEmail";
 import ResetPassword from "./Authentication/ResetPassword";
 import LoginForm from "./Authentication/LoginForm";
+import CandidateSignUpForm from "./Authentication/CandidateSignUpForm";
 export {
   LoginForm,
   ResetPassword,
@@ -16,4 +17,5 @@ export {
   Job,
   Category,
   Home,
+  CandidateSignUpForm
 };
