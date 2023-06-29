@@ -25,7 +25,6 @@ import {
   AddJob,
   ApplicantsJob,
   MyJob,
-  Package,
   ShortlistCandidates,
   QuizResult,
   Administrative,
@@ -40,12 +39,15 @@ import {
   Search,
   EditJob,
   JobQuiz,
+  RejectedApplicant,
+  AcceptApplicant,
 } from "./pages/index.js";
 import MyForm from "./component/Authentication/MyForm.jsx";
 import { Link } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
-import Check from "./pages/Company/check";
+
 import Profile from "./component/Comman/Profile";
+import ConfirmBox from "./component/ConfirmBox";
 const App = () => {
   const Menu = [];
   return (
@@ -62,17 +64,22 @@ const App = () => {
           <Route path="/newpassword/:id/:token" element={<ResetPassword />} />
           <Route path="/" element={<Home />} />
           <Route path="/verify" element={<Home />} />
+          <Route path="/confirm" element={<ConfirmBox />} />
+
           {/* <Route path="/login" element={<Login />} /> */}
           {/* <Route
             path="/admin"
             element={<ProtectedRoute Component={AdminDashboard} />}
           /> */}
-          <Route
+          {/* <Route
             path="/admin"
             element={
               <ProtectedRoute component={AdminDashboard} requiredRole="admin" />
             }
-          />
+            
+          /> */}
+          <Route path="/admin" element={<AdminDashboard />} />
+
           {/* <Route
             path="/user"
             element={<ProtectedRoute Component={CandidateDashboard} />}
@@ -84,14 +91,34 @@ const App = () => {
             element={<ResetPassword />}
           />
           {/* -------------------------Admin Route-------------------------- */}
+          {/* <Route
+            path="/admin/candidateinformation"
+            element={
+              <ProtectedRoute
+                Component={CandidateInformation}
+                requiredRole="admin"
+              />
+            }
+          /> */}
           <Route
             path="/admin/candidateinformation"
-            element={<ProtectedRoute Component={CandidateInformation} />}
+            element={<CandidateInformation />}
           />
-          <Route
+
+          {/* <Route
             path="/admin/companyinformation"
-            element={<ProtectedRoute Component={AllUser} />}
-          />
+            element={
+              <ProtectedRoute Component={AllUser} requiredRole="admin" />
+            }
+          /> */}
+          {/* <Route
+            path="/admin/companyinformation"
+            element={
+              <ProtectedRoute Component={AllUser} requiredRole="admin" />
+            }
+          /> */}
+          <Route path="/admin/companyinformation" element={<AllUser />} />
+
           {/*------------------------------- Company Route----------------------------- */}
           <Route
             path="/company"
@@ -126,6 +153,10 @@ const App = () => {
               <ProtectedRoute component={JobQuiz} requiredRole="company" />
             }
           />
+          <Route path="company/rejected" element={<RejectedApplicant />} />
+
+          <Route path="company/shortlist" element={<AcceptApplicant />} />
+
           <Route path="/quizresult/:id" element={<QuizResult />} />
           <Route path="/administrative" element={<Administrative />} />
           <Route path="/education" element={<Education />} />
@@ -145,7 +176,6 @@ const App = () => {
           /> */}
           <Route path="/company/applicant" element={<ApplicantsJob />} />
           <Route path="/company/job" element={<MyJob />} />
-          <Route path="/company/package" element={<Package />} />
           <Route path="/company/shortlist" element={<ShortlistCandidates />} />
           <Route path="/alljobs" element={<AllJobs />} />
           <Route path="/jobdetails/:id" element={<JobDetails />} />
@@ -156,7 +186,7 @@ const App = () => {
         </Routes>
       </BrowserRouter>
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

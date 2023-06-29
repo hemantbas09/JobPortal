@@ -24,7 +24,6 @@ export const jobApi = createApi({
     }),
 
     updateJob: builder.mutation({
-
       query: ({ id, job }) => {
         console.log("ROw", id);
         return {
@@ -33,7 +32,6 @@ export const jobApi = createApi({
           body: job,
           headers: {
             authorization: `Bearer ${token}`,
-
           },
         };
       },
@@ -42,13 +40,12 @@ export const jobApi = createApi({
     deleteJob: builder.mutation({
       query: (id) => ({
         url: `/${id}`,
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
           authorization: `Bearer ${token}`,
         },
       }),
     }),
-
 
     // Job Apply:
     jobApply: builder.mutation({
@@ -116,12 +113,52 @@ export const jobApi = createApi({
       }),
     }),
 
-
     searchJob: builder.query({
       query: ({ jobTitle, location }) => ({
         url: `/search/job?jobTitle=${jobTitle}&location=${location}`,
         method: "Get",
       }),
+    }),
+
+    acceptJob: builder.mutation({
+      query: ({ id }) => {
+        return {
+          url: "accept/job",
+          method: "POST",
+          body: JSON.stringify({ id }),
+          headers: {
+            "Content-type": "application/json",
+          },
+        };
+      },
+    }),
+
+    rejectJob: builder.mutation({
+      query: ({ id }) => {
+        console.log("this is ", id);
+        return {
+          url: "reject/job",
+          method: "POST",
+          body: JSON.stringify({ id }),
+          headers: {
+            "Content-type": "application/json",
+          },
+        };
+      },
+    }),
+
+    deleteApplicantJob: builder.mutation({
+      query: ({ id }) => {
+        console.log("this is ", id);
+        return {
+          url: "delete/job",
+          method: "POST",
+          body: JSON.stringify({ id }),
+          headers: {
+            "Content-type": "application/json",
+          },
+        };
+      },
     }),
   }),
 });
@@ -136,5 +173,8 @@ export const {
   useUpdateJobMutation,
   useDeleteJobMutation,
   useGetAppliedJobQuery,
-  useSearchJobQuery
+  useSearchJobQuery,
+  useAcceptJobMutation,
+  useRejectJobMutation,
+  useDeleteApplicantJobMutation,
 } = jobApi;

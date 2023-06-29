@@ -6,22 +6,17 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "react-toastify";
-import { Auth0Provider } from '@auth0/auth0-react';
 const queryClient = new QueryClient();
+import { GoogleOAuthProvider } from "@react-oauth/google";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <Auth0Provider
-    domain="dev-nqiviftpqe37b0k3.us.auth0.com"
-    clientId="obJESHou4ZvMrjsBc26qG2Eol7cJ1UJ3"
-    authorizationParams={{
-      redirect_uri: window.location.origin,
-    }}
-  >
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <ToastContainer />
+  <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
+      <ToastContainer />
+      <GoogleOAuthProvider clientId="791986903839-ug3nvl2kgb9rbiqjnegki973cqfr8v3q.apps.googleusercontent.com">
         <App />
-      </QueryClientProvider>
-      ,
-    </Provider>
-  </Auth0Provider>
+      </GoogleOAuthProvider>
+    </QueryClientProvider>
+    ,
+  </Provider>
 );

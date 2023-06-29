@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import CompanySidebar from "../../component/Sidebar/CompanySidebar";
-import AdminSidebar from "../../component/Admin/AdminSidebar";
 import { useNavigate } from "react-router-dom";
 import { useAddJobMutation } from "../../Service/jobApi";
 const AddJob = () => {
   const navigate = useNavigate();
   const [addJob, { isLoading }] = useAddJobMutation();
-
-  // state variabel for the Image and video:
-  // let id = "6464a66535a735838eb47a4a";
 
   const [job, setJob] = useState({
     jobTitle: "",
@@ -38,7 +34,6 @@ const AddJob = () => {
     // code to submit form data to server or handle form validation goes here
 
     const res = await addJob(job);
-    console.log("job Details", res.data.job._id);
     if (res.data.success === true) {
       navigate(`/addquiz/${res.data.job._id}`);
     }
@@ -172,11 +167,7 @@ const AddJob = () => {
                       Education and Training{" "}
                     </option>
 
-                    <option value=" Other ">
-                      {" "}
-                      Other{" "}
-                    </option>
-
+                    <option value=" Other "> Other </option>
                   </select>
                 </div>
 
@@ -230,7 +221,6 @@ const AddJob = () => {
                   </select>
                 </div>
 
-
                 {/* Minimum Salary */}
                 <div className="mb-6">
                   <label
@@ -250,8 +240,6 @@ const AddJob = () => {
                     required
                   />
                 </div>
-
-
 
                 {/* qualification */}
                 <div className="mb-6">

@@ -1,12 +1,11 @@
 import Home from "./Home";
-import AdminDashboard from './Admin/AdminDashboard'
-import CandidateDashboard from './Candidate/CandidateDashboard'
+import AdminDashboard from "./Admin/AdminDashboard";
+import CandidateDashboard from "./Candidate/CandidateDashboard";
 // all Company page export :
-import CompanyDashboard from './Company/CompanyDashboard'
+import CompanyDashboard from "./Company/CompanyDashboard";
 import AddJob from "./Company/AddJob";
 import ApplicantsJob from "./Company/ApplicantsJob";
 import MyJob from "./Company/MyJob";
-import Package from "./Company/Package";
 import ShortlistCandidates from "./Company/ShortlistCandidates";
 import JobDetails from "./Candidate/JobDetails";
 import Assestement from "./Candidate/Assestement";
@@ -24,38 +23,42 @@ import InformationTechnology from "./Candidate/InformationTechnology";
 import Other from "./Candidate/Other";
 import Aboutus from "./Candidate/Aboutus";
 import Contactus from "./Candidate/Contactus";
-// Admin: 
+// Admin:
 import AllUser from "./Admin/AllUser";
 import Search from "./Candidate/Search";
 import EditJob from "./Company/EditJob";
 import JobQuiz from "./Company/JobQuiz";
+import AcceptApplicant from "./Company/AcceptApplicant";
+import RejectedApplicant from "./Company/RejectedApplicant";
 export {
-    QuizResult,
-    JobApply,
-    CandidateInformation,
-    AllUser,
-    AllJobs,
-    AddQuiz,
-    Assestement,
-    JobDetails, Home,
-    AdminDashboard,
-    CandidateDashboard,
-    CompanyDashboard,
-    AddJob,
-    ApplicantsJob,
-    MyJob,
-    Package,
-    ShortlistCandidates,
-    Administrative,
-    Education,
-    Engineering,
-    Finance,
-    Healthcare,
-    InformationTechnology,
-    Other,
-    Aboutus,
-    Contactus,
-    Search,
-    EditJob,
-    JobQuiz
-}
+  QuizResult,
+  JobApply,
+  CandidateInformation,
+  AllUser,
+  AllJobs,
+  AddQuiz,
+  Assestement,
+  JobDetails,
+  Home,
+  AdminDashboard,
+  CandidateDashboard,
+  CompanyDashboard,
+  AddJob,
+  ApplicantsJob,
+  MyJob,
+  ShortlistCandidates,
+  Administrative,
+  Education,
+  Engineering,
+  Finance,
+  Healthcare,
+  InformationTechnology,
+  Other,
+  Aboutus,
+  Contactus,
+  Search,
+  EditJob,
+  JobQuiz,
+  AcceptApplicant,
+  RejectedApplicant,
+};

@@ -1,60 +1,98 @@
 import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import {
-  useGetallUserQuery,
-  useAcceptRejectMutation,
-  useDeleteUserMutation,
-} from "../../Service/userAuth";
+  useGetAppliedJobQuery,
+  useAcceptJobMutation,
+  useRejectJobMutation,
+  useDeleteApplicantJobMutation,
+} from "../../Service/jobApi";
 import { Link } from "react-router-dom";
+import CompanySidebar from "../../component/Sidebar/CompanySidebar";
 import SweetAlert from "react-bootstrap-sweetalert";
-import AdminSidebar from "../../component/Sidebar/AdminSidebar";
 
-const CandidateInformation = () => {
+const AcceptApplicant = () => {
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [filterValue, setFilterValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [alertConfig, setAlertConfig] = useState(null);
   const itemsPerPage = 2;
-  const jobInfo = useGetallUserQuery();
-  const [acceptReject] = useAcceptRejectMutation();
-  const [deleteUser] = useDeleteUserMutation();
 
-  const handleApprove = async (companyId, status) => {
-    setAlertConfig({
-      title: "Confirmation",
-      message: `Are you sure you want to ${status} this user?`,
-      confirmText: "Confirm",
-      confirmAction: async () => {
-        const formData = new FormData();
-        formData.append("companyId", companyId);
-        formData.append("status", status);
-        const res = await acceptReject({ formData, companyId });
-        console.log(res);
-        await jobInfo.refetch();
-        setAlertConfig(null);
-      },
-    });
-  };
+  const jobInfo = useGetAppliedJobQuery();
+  const [acceptJob] = useAcceptJobMutation();
+  const [rejectJob] = useRejectJobMutation();
+  const [deleteJob] = useDeleteApplicantJobMutation();
+  const [selectedJobId, setSelectedJobId] = useState(null);
+  const [rejectJobId, setRejectJobId] = useState(null);
+  const [deleteJobId, setDeleteJobId] = useState(null);
 
   useEffect(() => {
     if (jobInfo.data) {
-      setJobs(jobInfo.data.user);
-      setFilteredJobs(jobInfo.data.user);
+      setJobs(jobInfo.data.appliedapplicants);
+      setFilteredJobs(jobInfo.data.appliedapplicants);
     }
   }, [jobInfo.data]);
 
-  const handleDeleteConfirmation = (jobId) => {
-    setAlertConfig({
-      title: "Confirmation",
-      message: "Are you sure you want to delete this user?",
-      confirmText: "Confirm",
-      confirmAction: () => handleDeleteUser(jobId),
+  const showAlert = (config) => {
+    setAlertConfig(config);
+  };
+
+  const handleConfirmation = async () => {
+    if (alertConfig) {
+      await alertConfig.onConfirm();
+      await jobInfo.refetch();
+      setAlertConfig(null);
+    }
+  };
+
+  const handleCancelConfirmation = () => {
+    setAlertConfig(null);
+  };
+
+  const isJobAccept = async (id) => {
+    setSelectedJobId(id);
+    showAlert({
+      title: "Are you sure?",
+      message: "Are you sure you want to Accept this job?",
+      confirmBtnText: "Yes, accept it!",
+      onConfirm: handleAcceptConfirmation,
     });
   };
 
-  const handleDeleteUser = async (userId) => {
-    await deleteUser(userId);
+  const handleAcceptConfirmation = async () => {
+    await acceptJob({ id: selectedJobId });
+    await jobInfo.refetch();
+    setAlertConfig(null);
+  };
+
+  const isJobReject = async (id) => {
+    setRejectJobId(id);
+    showAlert({
+      title: "Are you sure?",
+      message: "Are you sure you want to Reject this job?",
+      onConfirm: handleRejectConfirmation,
+    });
+  };
+
+  const handleRejectConfirmation = async () => {
+    await rejectJob({ id: rejectJobId });
+    await jobInfo.refetch();
+    setAlertConfig(null);
+  };
+
+  const isJobApplicantDelete = async (id) => {
+    setDeleteJobId(id);
+    showAlert({
+      title: "Are you sure?",
+      message:
+        "You are about to delete this job application. This action cannot be undone.",
+      confirmBtnText: "Delete",
+      onConfirm: handleDeleteConfirmation,
+    });
+  };
+
+  const handleDeleteConfirmation = async () => {
+    await deleteJob({ id: deleteJobId });
     await jobInfo.refetch();
     setAlertConfig(null);
   };
@@ -92,59 +130,55 @@ const CandidateInformation = () => {
   const columns = [
     {
       name: "Job Title",
-      selector: "fullName",
+      selector: "job.jobTitle",
       sortable: true,
       cell: (row) => (
-        <Link to={`http://localhost:5173/jobdetails/${row._id}`}>
-          <div className="truncate pr-96">{row.fullName}</div>
+        <Link to={`http://localhost:5173/jobdetails/${row.job._id}`}>
+          <div className="truncate   pr-96">{row.job.jobTitle}</div>
         </Link>
       ),
     },
     {
-      name: "Email",
-      selector: "email",
+      name: "Applicant",
+      selector: "candidate.fullName",
       sortable: true,
+      cell: (row) => <div className="w-11/12  ">{row.candidate.fullName}</div>,
     },
     {
-      name: "Role",
-      selector: "role",
-      sortable: true,
+      name: "Resume",
+      cell: (row) => (
+        <div className="">
+          <button onClick={() => handleImageDownload(row.resume.url)}>
+            <div className="w-8 h-8">
+              <img
+                src="https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1685965601/icon/1200px-Circle-icons-download.svg_siifg2.png"
+                className=" w-full h-full object-cover"
+                alt=""
+              />
+            </div>
+          </button>
+        </div>
+      ),
     },
     {
-      name: "Status",
-      selector: "status",
+      name: "Apply Date",
+      selector: "applyDate",
       sortable: true,
-      cell: (row) => {
-        let statusClass = "";
-
-        switch (row.status) {
-          case "active":
-            statusClass = "bg-green-600";
-            break;
-          case "pending":
-            statusClass = "bg-yellow-600";
-            break;
-          case "blocked":
-            statusClass = "bg-red-600";
-            break;
-          default:
-            break;
-        }
-
-        return (
-          <span
-            className={`px-6 py-3 rounded-lg text-lg font-medium text-gray-500 ${statusClass} text-white`}
-          >
-            {row.status}
-          </span>
-        );
+      format: (row) => {
+        const applyDate = new Date(row.applyDate);
+        const formattedDate = applyDate.toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        });
+        return formattedDate;
       },
     },
     {
       name: "Actions",
       cell: (row) => (
         <div className="flex gap-5 items-center">
-          <button size={30} onClick={() => handleApprove(row._id, "active")}>
+          <button size={30} onClick={() => isJobAccept(row._id)}>
             <div className="w-8 h-8">
               <img
                 src="https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1685964710/icon/accept-check-good-mark-ok-tick_nhmkxe.svg"
@@ -153,7 +187,7 @@ const CandidateInformation = () => {
               />
             </div>
           </button>
-          <button size={30} onClick={() => handleApprove(row._id, "blocked")}>
+          <button size={30} onClick={() => isJobReject(row._id)}>
             <div className="w-10 h-10">
               <img
                 src="https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1685965162/icon/1200px-Antu_task-reject.svg_wystlz.png"
@@ -162,7 +196,7 @@ const CandidateInformation = () => {
               />
             </div>
           </button>
-          <button size={30} onClick={() => handleDeleteConfirmation(row._id)}>
+          <button size={30} onClick={() => isJobApplicantDelete(row._id)}>
             <div className="w-10 h-10">
               <img
                 src="https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1685965342/icon/51-512_wlgrsz.png"
@@ -176,13 +210,30 @@ const CandidateInformation = () => {
     },
   ];
 
-  const activeRows = jobs.filter((row) => row.role === "company");
+  const handleImageDownload = (imageUrl) => {
+    const fileName = "resume.png";
 
+    fetch(imageUrl)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const blobUrl = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = blobUrl;
+        link.download = fileName;
+        link.click();
+        URL.revokeObjectURL(blobUrl);
+      })
+      .catch((error) => {
+        console.error("Error downloading image:", error);
+      });
+  };
+  const activeRows = jobs.filter((row) => row.status === "accepted");
   const handleFilter = (event) => {
     const { value } = event.target;
     setFilterValue(value);
+
     const filteredData = activeRows.filter((job) =>
-      job.fullName.toLowerCase().includes(value.toLowerCase())
+      job.job.jobTitle.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredJobs(filteredData);
     setCurrentPage(1);
@@ -190,6 +241,8 @@ const CandidateInformation = () => {
 
   const totalPages = Math.ceil(activeRows.length / itemsPerPage);
 
+  const start = (currentPage - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
   const paginatedData = activeRows.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
@@ -202,7 +255,7 @@ const CandidateInformation = () => {
   return (
     <>
       <div className="mt-32">
-        <AdminSidebar />
+        <CompanySidebar />
       </div>
       <div className="md:ml-64 mr-8">
         <div className="relative ">
@@ -264,13 +317,13 @@ const CandidateInformation = () => {
       {alertConfig && (
         <SweetAlert
           warning
-          title={alertConfig.title}
-          onConfirm={alertConfig.confirmAction}
-          onCancel={() => setAlertConfig(null)}
-          confirmBtnText={alertConfig.confirmText}
-          confirmBtnBsStyle="warning p-3 bg-red-500 text-white text-lg ml-5"
-          cancelBtnBsStyle="default"
           showCancel
+          confirmBtnText="Yes, I'm sure"
+          confirmBtnBsStyle="warning p-3 bg-red-500 text-white text-lg ml-5"
+          title={alertConfig.title}
+          onConfirm={handleConfirmation}
+          onCancel={handleCancelConfirmation}
+          focusCancelBtn
         >
           <span className="text-xl font-normal"> {alertConfig.message} </span>
         </SweetAlert>
@@ -279,4 +332,4 @@ const CandidateInformation = () => {
   );
 };
 
-export default CandidateInformation;
+export default AcceptApplicant;

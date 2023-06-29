@@ -117,13 +117,8 @@ export const userAuthApi = createApi({
       }),
     }),
 
-    googleAuth: builder.query({
-      query: () => ({
-        url: "/google",
-        method: "Get",
-      }),
-    }),
-    
+
+
   }),
 });
 

@@ -47,9 +47,8 @@ class userController {
   }
 
   static userRegistration = catchAsyncErrors(async (req, res, next) => {
-    const { fullName, email, password, confirmPassword, role } = req.body;
-
-    if (password !== confirmPassword) {
+    const { fullName, email, password, passwordConfirmation, role } = req.body;
+    if (password !== passwordConfirmation) {
       return res.status(400).json({
         success: false,
         message: "Password and confirm password do not match.",
@@ -149,43 +148,14 @@ class userController {
   });
 
   // End of the Regestration:
-  // Signup and login with the help of google:
-
-  static loginSuccess(req, res) {
-    if (req.user) {
-      res.status(200).json({
-        error: false,
-        message: "Successfully Logged In",
-        user: req.user,
-      });
-    } else {
-      res.status(403).json({ error: true, message: "Not Authorized" });
-    }
-  }
-
-  static loginFailed(req, res) {
-    res.status(401).json({
-      error: true,
-      message: "Login failure",
-    });
-  }
 
   static googleAuth = catchAsyncErrors(async (req, res, next) => {
-    console.log("hemantbasnet");
-    passport.authenticate("google", ["profile", "email"])(req, res);
+    passport.authenticate("google", { scope: ["profile", "email"] })(
+      req,
+      res,
+      next
+    );
   });
-
-  static googleCallback(req, res) {
-    passport.authenticate("google", {
-      successRedirect: process.env.CLIENT_URL,
-      failureRedirect: "/login/failed",
-    })(req, res);
-  }
-
-  static logout(req, res) {
-    req.logout();
-    res.redirect(process.env.CLIENT_URL);
-  }
 
   // Get all the User:
   static getAllUser = catchAsyncErrors(async (req, res, next) => {
@@ -211,16 +181,10 @@ class userController {
       { status },
       { new: true }
     );
-    if (status === "1") {
-      updatedCompany.status = "approved";
-    } else if (status === "0") {
-      updatedCompany.status = "rejected";
-    } else if (status === "3") {
+    if (status === "0") {
       updatedCompany.status = "active";
-    } else if (status === "4") {
+    } else if (status === "1") {
       updatedCompany.status = "blocked";
-    } else {
-      updatedCompany.status = "pending";
     }
 
     await updatedCompany.save();
@@ -233,23 +197,19 @@ class userController {
   });
 
   static userLogin = catchAsyncErrors(async (req, res, next) => {
-    // take input from the user login form:
     const { email, password } = req.body;
 
-    // conform email and password is not empety:
     if (email && password) {
-      // check the email in the database
       const user = await userModel.findOne({ email: email });
-      // console.log("this is user", user.role);
+
       if (user != null) {
         const isMatch = await bcrypt.compare(password, user.password);
         console.log(isMatch);
+
         if (user.email === email && isMatch) {
-          // use JWT Token:
-          const saved_user = await userModel.findOne({ email: email });
-
-          // Generate JWT Token:
-          if (user.role === "admin" || user.role === "user") {
+          // Check if the user is activated
+          if (user.status === "active") {
+            // Generate JWT Token
             const token = jwt.sign(
               { userID: user._id },
               process.env.JWT_SECRET_KEY,
@@ -261,37 +221,16 @@ class userController {
               token,
               role: user.role,
               message: "Login Success",
-            });
-          } else if (user.role === "company" && user.status === "approved") {
-            const token = jwt.sign(
-              { userID: user._id },
-              process.env.JWT_SECRET_KEY,
-              { expiresIn: "5d" }
-            );
-
-            res.status(201).json({
-              success: true,
-              token,
-              role: user.role,
-              message: "Login Success",
-            });
-          } else if (user.role === "company" && user.status === "rejected") {
-            res.status(401).json({
-              success: false,
-              message:
-                "Your Request is Rejected or Blocked please concern in hemantbasnet61@gmail.com",
             });
           } else {
             res.status(401).json({
               success: false,
-              message:
-                "Your Request is Pending please Concern in hemantbasnet61@gmail.com",
+              message: "Your account is not Verified. Please Check your Email:",
             });
           }
         } else {
           res.status(401).json({
             success: false,
-
             message: "Email or Password are not valid",
           });
         }
@@ -452,21 +391,23 @@ class userController {
 
   // Delete the User:
   static deleteUser = catchAsyncErrors(async (req, res, next) => {
-    const user = await userModel.findById(req.params.id);
+    const userId = req.params.id; // Extract the user ID from the request parameters
+    const user = await userModel.findById(userId); // Use the extracted user ID
     console.log("This is User", user);
-    res.status("Ok");
+    console.log(userId);
     if (!user) {
-      res.status(401).json({
+      return res.status(404).json({
         success: false,
-        message: "User is not found",
-      });
-    } else {
-      await user.deleteOne();
-      res.status(200).json({
-        success: true,
-        message: "User Deleted Successfully",
+        message: "User not found",
       });
     }
+
+    await user.deleteOne();
+
+    res.status(200).json({
+      success: true,
+      message: "User deleted successfully",
+    });
   });
 }
 

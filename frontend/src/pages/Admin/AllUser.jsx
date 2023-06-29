@@ -1,217 +1,282 @@
-import { React, useState } from 'react'
-import { useGetallUserQuery, useAcceptRejectMutation, useDeleteUserMutation } from '../../Service/userAuth'
-import { GrDocumentPdf } from "react-icons/gr";
-import download from 'downloadjs';
+import React, { useState, useEffect } from "react";
+import DataTable from "react-data-table-component";
+import {
+  useGetallUserQuery,
+  useAcceptRejectMutation,
+  useDeleteUserMutation,
+} from "../../Service/userAuth";
+import { Link } from "react-router-dom";
+import AdminDashboard from "./AdminDashboard";
+import SweetAlert from "react-bootstrap-sweetalert";
+import AdminSidebar from "../../component/Sidebar/AdminSidebar";
 const AllUser = () => {
+  const [jobs, setJobs] = useState([]);
+  const [filteredJobs, setFilteredJobs] = useState([]);
+  const [filterValue, setFilterValue] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [alertConfig, setAlertConfig] = useState(null);
+  const itemsPerPage = 2;
+  const jobInfo = useGetallUserQuery();
+  const [acceptReject] = useAcceptRejectMutation();
+  const [deleteUser] = useDeleteUserMutation();
 
-    const [acceptReject, { isLoading, error }] = useAcceptRejectMutation();
-    const [deleteUser, response] = useDeleteUserMutation();
-    console.log("isloading", isLoading)
-    const handleApprove = async (companyId, status) => {
+  const handleApprove = async (companyId, status) => {
+    setAlertConfig({
+      title: "Confirmation",
+      message: `Are you sure you want to ${status} this user?`,
+      confirmText: "Confirm",
+      confirmAction: async () => {
         const formData = new FormData();
-        formData.append('companyId', companyId);
-        formData.append('status', status);
+        formData.append("companyId", companyId);
+        formData.append("status", status);
         const res = await acceptReject({ formData, companyId });
-        console.log(res)
-        // if (res.data.success) {
-        //     window.location.reload();
-        // }
-        console.log("This is companyId", companyId)
-        console.log("This is companyId", status)
-    };
+        console.log(res);
+        await jobInfo.refetch();
+        setAlertConfig(null);
+      },
+    });
+  };
 
-
-
-
-    const getAllUser = useGetallUserQuery();
-    let userData
-    if (getAllUser.data) {
-        userData = getAllUser.data.user
-        console.log("This is the data i got")
-    } else {
-        console.log("The Data are not found")
+  useEffect(() => {
+    if (jobInfo.data) {
+      setJobs(jobInfo.data.user);
+      setFilteredJobs(jobInfo.data.user);
     }
-    // console.log(getAllUser.data.user)
+  }, [jobInfo.data]);
 
-    console.log(userData)
-    const handleDownload = (url, filename) => {
-        console.log(url)
-        download(url, filename);
+  const handleDeleteConfirmation = (jobId) => {
+    setAlertConfig({
+      title: "Confirmation",
+      message: "Are you sure you want to delete this user?",
+      confirmText: "Confirm",
+      confirmAction: () => handleDeleteUser(jobId),
+    });
+  };
 
-    };
+  const handleDeleteUser = async (userId) => {
+    await deleteUser(userId);
+    await jobInfo.refetch();
+    setAlertConfig(null);
+  };
 
+  const customStyles = {
+    table: {
+      style: {
+        width: "100%",
+        height: "100%",
+        border: "2px solid #667085",
+        borderRadius: "0.5rem",
+      },
+    },
+    headRow: {
+      style: {
+        fontSize: "24px",
+        fontWeight: "600",
+        lineHeight: "24px",
+        color: "#667085",
+        padding: "24px",
+        background: "#f7f7fb",
+      },
+    },
+    cells: {
+      style: {
+        fontSize: "20px",
+        fontWeight: "400",
+        lineHeight: "24px",
+        color: "#667085",
+        padding: "20px",
+      },
+    },
+  };
 
-    return (
+  const columns = [
+    {
+      name: "Job Title",
+      selector: "fullName",
+      sortable: true,
+      cell: (row) => (
+        <Link to={`http://localhost:5173/jobdetails/${row._id}`}>
+          <div className="truncate pr-96">{row.fullName}</div>
+        </Link>
+      ),
+    },
+    {
+      name: "Email",
+      selector: "email",
+      sortable: true,
+    },
+    {
+      name: "Status",
+      selector: "status",
+      sortable: true,
+      cell: (row) => {
+        let statusClass = "";
 
-        <>
+        switch (row.status) {
+          case "active":
+            statusClass = "bg-green-500";
+            break;
+          case "pending":
+            statusClass = "bg-yellow-500";
+            break;
+          case "blocked":
+            statusClass = "bg-red-500";
+            break;
+          default:
+            break;
+        }
 
-            <section class="container px-4 mx-auto">
-                <div class="flex items-center gap-x-3">
-                    <h2 class="text-lg font-medium text-gray-800 dark:text-white">Team members</h2>
+        return (
+          <span
+            className={`px-6 py-3 rounded-lg text-lg font-medium text-gray-500 ${statusClass} text-white`}
+          >
+            {row.status}
+          </span>
+        );
+      },
+    },
+    {
+      name: "Role",
+      selector: "role",
+      sortable: true,
+    },
+    {
+      name: "Actions",
+      cell: (row) => (
+        <div className="flex gap-5 items-center">
+          <button size={30} onClick={() => handleApprove(row._id, "active")}>
+            <div className="w-8 h-8">
+              <img
+                src="https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1685964710/icon/accept-check-good-mark-ok-tick_nhmkxe.svg"
+                className=" w-full h-full object-cover"
+                alt=""
+              />
+            </div>
+          </button>
+          <button size={30} onClick={() => handleApprove(row._id, "blocked")}>
+            <div className="w-10 h-10">
+              <img
+                src="https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1685965162/icon/1200px-Antu_task-reject.svg_wystlz.png"
+                className=" w-full h-full object-cover"
+                alt=""
+              />
+            </div>
+          </button>
+          <button size={30} onClick={() => handleDeleteConfirmation(row._id)}>
+            <div className="w-10 h-10">
+              <img
+                src="https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1685965342/icon/51-512_wlgrsz.png"
+                className=" w-full h-full object-cover"
+                alt=""
+              />
+            </div>
+          </button>
+        </div>
+      ),
+    },
+  ];
 
-                    <span class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">100 users</span>
-                </div>
+  const activeRows = jobs.filter((row) => row.role === "candidate");
 
-                <div class="flex flex-col mt-6">
-                    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                            <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                    <thead class="bg-gray-50 dark:bg-gray-800">
-                                        <tr className=''>
-                                            <th scope="col" class="  px-20 py-3.5 text-xl font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Company Name</th>
-                                            <th scope="col" class=" px-20 py-3.5 text-xl font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Company Email</th>
+  const handleFilter = (event) => {
+    const { value } = event.target;
+    setFilterValue(value);
+    const filteredData = activeRows.filter((job) =>
+      job.fullName.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredJobs(filteredData);
+    setCurrentPage(1);
+  };
 
-                                            <th scope="col" class=" px-20 py-3.5 text-xl font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Document</th>
+  const totalPages = Math.ceil(activeRows.length / itemsPerPage);
 
-                                            <th scope="col" class=" px-20 py-3.5 text-xl font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Status</th>
-                                            <th scope="col" class=" px-20 py-3.5 text-xl font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                Action
-                                            </th>
+  const paginatedData = activeRows.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
-                                        </tr>
-                                    </thead>
-                                    <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                        {
-                                            userData && userData.map(company => {
-                                                // console.log("This is the company", company)
-                                                if (company.role === 'company') {
-                                                    return (
-                                                        <>
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
+  return (
+    <>
+      <div className="mt-32">
+        <AdminSidebar />
+      </div>
+      <div className="md:ml-64 mr-8">
+        <div className="relative ">
+          <img
+            className="w-6 h-6 absolute ml-5 mt-5"
+            src="https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1687503132/search_ecvsl7.svg"
+            alt=""
+          />
+          <input
+            className="p-4 border-2 border-black w-1/2 rounded-lg mb-2 pl-16 "
+            type="text"
+            placeholder="Search by job title"
+            value={filterValue}
+            onChange={handleFilter}
+          />
+        </div>
+        <div className="">
+          {filterValue ? (
+            <DataTable
+              columns={columns}
+              data={filteredJobs}
+              customStyles={customStyles}
+              noHeader
+            />
+          ) : (
+            <DataTable
+              columns={columns}
+              data={paginatedData}
+              customStyles={customStyles}
+              noHeader
+            />
+          )}
+          <div className="flex justify-between items-center px-4 py-3  dark:bg-gray-800">
+            <div>
+              <button
+                className="px-3 font-semibold text-base leading-6 text-[#344054] py-3 border border-gray-300 dark:border-gray-500 rounded-md mr-2"
+                disabled={currentPage === 1}
+                onClick={() => handlePageChange(currentPage - 1)}
+              >
+                Previous
+              </button>
+              <button
+                className="px-6 font-semibold text-base leading-6 py-3 text-[#344054] border border-gray-300 dark:border-gray-500 rounded-md"
+                disabled={currentPage === totalPages}
+                onClick={() => handlePageChange(currentPage + 1)}
+              >
+                Next
+              </button>
+            </div>
+            <div>
+              <span className="font-semibold text-base leading-6 text-[#344054]">
+                {" "}
+                Page {currentPage} of {totalPages}{" "}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      {alertConfig && (
+        <SweetAlert
+          warning
+          title={alertConfig.title}
+          onConfirm={alertConfig.confirmAction}
+          onCancel={() => setAlertConfig(null)}
+          confirmBtnText={alertConfig.confirmText}
+          confirmBtnBsStyle="warning p-3 bg-red-500 text-white text-lg ml-5"
+          cancelBtnBsStyle="default"
+          showCancel
+        >
+          <span className="text-xl font-normal"> {alertConfig.message} </span>
+        </SweetAlert>
+      )}
+    </>
+  );
+};
 
-                                                            <tr>
-                                                                <td class="px-4 py-4 text-xl font-medium text-gray-700 whitespace-nowrap">
-                                                                    <div class="inline-flex items-center gap-x-3">
-
-
-                                                                        <div class="flex items-center gap-x-2">
-
-                                                                            <div>
-                                                                                <h2 class="font-medium text-gray-800 dark:text-white ">{company.fullName}</h2>
-
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="px-4 py-4 text-xl text-gray-500 dark:text-gray-300 whitespace-nowrap">{company.email}</td>
-                                                                <td class="pl-24 py-4 text-xl hover:text-green-500 dark:text-gray-300 whitespace-nowrap">
-                                                                    <button onClick={() => {
-                                                                        handleDownload(
-                                                                            company.document.url,
-                                                                            console.log("first", company.document.public_id)
-
-                                                                            // company.document.public_id.pdf,
-                                                                        );
-                                                                    }}>
-
-
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-text" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00abfb" fill="none" stroke-linecap="round" stroke-linejoin="round" className='text-blue-600 hover:bg-blue-50'>
-                                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                            <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                                                                            <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
-                                                                            <line x1="9" y1="9" x2="10" y2="9" />
-                                                                            <line x1="9" y1="13" x2="15" y2="13" />
-                                                                            <line x1="9" y1="17" x2="15" y2="17" />
-                                                                        </svg>
-                                                                    </button>
-                                                                </td>
-                                                                <td class="px-12 py-4 text-xl font-medium text-gray-700 whitespace-nowrap">
-                                                                    <div class={`inline-flex items-center px-3 py-1 rounded-full gap-x-2  dark:bg-gray-800 ${company.status === "approved" ? "bg-green-100" : company.status === "rejected" ? "bg-red-300" : "bg-yellow-200"}`}>
-                                                                        <span class={`h-1.5 w-1.5 rounded-full bg-emerald-500`}></span>
-
-                                                                        {/* <h2 class={`text - sm font-normal  `}>{company.status}</h2> */}
-                                                                        <h2 class={`text-xl font-normal `}>
-                                                                            {company.status}
-                                                                        </h2>
-
-                                                                    </div>
-                                                                </td>
-                                                                <td class="px-4 pl-16 py-4 text-xl whitespace-nowrap">
-                                                                    <div class="flex items-center gap-x-6">
-
-                                                                        <button onClick={() => handleApprove(company._id, 1)} disabled={isLoading} class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="#1cae40" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                                <polyline points="9 11 12 14 20 6" />
-                                                                                <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
-                                                                            </svg>
-                                                                        </button>
-
-
-                                                                        <button onClick={() => handleApprove(company._id, 0)} className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-ban" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="#d65e3d" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                                <circle cx="12" cy="12" r="9" />
-                                                                                <line x1="5.7" y1="5.7" x2="18.3" y2="18.3" />
-                                                                            </svg>
-                                                                        </button>
-
-
-
-
-                                                                        <button  onClick={() => deleteUser(company._id)} className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fb2600" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                                <line x1="4" y1="7" x2="20" y2="7" />
-                                                                                <line x1="10" y1="11" x2="10" y2="17" />
-                                                                                <line x1="14" y1="11" x2="14" y2="17" />
-                                                                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                                                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                                                            </svg>
-                                                                        </button>
-                                                                    </div>
-                                                                </td>
-                                                            </tr >
-
-                                                        </>
-                                                    )
-                                                }
-
-                                            })
-                                        }
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex items-center justify-between mt-6">
-                    <a href="#" class="flex items-center px-5 py-2 text-xl text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
-                        </svg>
-
-                        <span>
-                            previous
-                        </span>
-                    </a>
-
-                    <div class="items-center hidden lg:flex gap-x-3">
-                        <a href="#" class="px-2 py-1 text-xl text-blue-500 rounded-md dark:bg-gray-800 bg-blue-100/60">1</a>
-                        <a href="#" class="px-2 py-1 text-xl text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">2</a>
-                        <a href="#" class="px-2 py-1 text-xl text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">3</a>
-                        <a href="#" class="px-2 py-1 text-xl text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">...</a>
-                        <a href="#" class="px-2 py-1 text-xl text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">12</a>
-                        <a href="#" class="px-2 py-1 text-xl text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">13</a>
-                        <a href="#" class="px-2 py-1 text-xl text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">14</a>
-                    </div>
-
-                    <a href="#" class="flex items-center px-5 py-2 text-xl text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
-                        <span>
-                            Next
-                        </span>
-
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-                        </svg>
-                    </a>
-                </div>
-            </section >
-        </>
-    )
-}
-
-export default AllUser
+export default AllUser;

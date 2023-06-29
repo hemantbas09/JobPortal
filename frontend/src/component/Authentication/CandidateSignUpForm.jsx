@@ -2,20 +2,12 @@ import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useNavigate, Link } from "react-router-dom";
 import { storeToken } from "../../Service/localStorageService";
-
-import {
-  useRegisterUserMutation,
-  useGoogleAuthQuery,
-} from "../../Service/userAuth";
+import { useRegisterUserMutation } from "../../Service/userAuth";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../App.css";
 
 const CandidateSignUpForm = () => {
-  const googleAuthQuery = useGoogleAuthQuery();
-  const googleSignup = () => {
-    console.log(googleAuthQuery);
-  };
   const [isUserType, setIsUserType] = useState(false);
   const openCompany = () => {
     setIsUserType(true);
@@ -42,7 +34,7 @@ const CandidateSignUpForm = () => {
     passwordConfirmation: "",
     role: "candidate",
   });
-
+console.log(user);
   const navigate = useNavigate();
   const [registerUser, { isLoading }] = useRegisterUserMutation();
 
@@ -306,7 +298,7 @@ const CandidateSignUpForm = () => {
                   Sign Up
                 </button>
               </form>
-              <p className="mt-4 text-xl text-center text-gray-600 dark:text-gray-400">
+              {/* <p className="mt-4 text-xl text-center text-gray-600 dark:text-gray-400">
                 or sign up with Google
               </p>
               <button
@@ -333,7 +325,7 @@ const CandidateSignUpForm = () => {
                 </svg>
 
                 <span className="mx-2 text-xl">Sign up with Google</span>
-              </button>
+              </button> */}
               <div className="mt-6 text-center text-xl  ">
                 Already Account ?
                 <div

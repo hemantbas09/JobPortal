@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "../Sidebar/Sidebar";
-const CompanySidebar = () => {
+const CandidateSidebar = () => {
   const Menus = [
     {
       title: "Dashboard",
@@ -8,29 +8,9 @@ const CompanySidebar = () => {
       link: "/company",
     },
     {
-      title: "Add Job",
-      src: "https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1687779209/icon/blue-add-button-12025_wzps0d.svg",
-      link: "/company/addjob",
-    },
-    {
-      title: "My Job",
+      title: "Applied Job",
       src: "https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1687779209/icon/briefcase-1965_ik29a2.svg",
       link: "/company/job",
-    },
-    {
-      title: "Applicants Job",
-      src: "https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1687779209/icon/resume-9874_epoftf.svg",
-      link: "/company/applicant",
-    },
-    {
-      title: " Shortlisted Applicant",
-      src: "https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1687779209/icon/blue-check-mark-circular-approval-16214_jhwnm9.svg",
-      link: "/company/shortlist",
-    },
-    {
-      title: "Rejected Applicants",
-      src: "https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1687779209/icon/multiplication-13235_lhuca2.svg",
-      link: "/company/rejected",
     },
     {
       title: "Profile",
@@ -59,4 +39,4 @@ const CompanySidebar = () => {
   );
 };
 
-export default CompanySidebar;
+export default CandidateSidebar;

@@ -28,6 +28,10 @@ router.post("/appliedjob/:id", appliedjobController.jobApplied);
 router.get("/applied/job", appliedjobController.getAppliedJobByCompany);
 router.get("/search/job", jobController.searchJob);
 router.get("/filter/job", jobController.filterJob);
+router.post("/reject/job", appliedjobController.rejectJob);
+router.post("/accept/job", appliedjobController.acceptJob);
+router.post("/delete/job", appliedjobController.deleteJob);
+
 //Private Routes:
 
 export default router;

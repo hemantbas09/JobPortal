@@ -34,7 +34,7 @@ router.delete("/:id", userController.deleteUser);
 // Google login:
 // router.get("/login/success", userController.loginSuccess);
 // router.get("/login/failed", userController.loginFailed);
-router.get("/google", userController.googleAuth);
+router.get("/auth/google", userController.googleAuth);
 // router.get("/google/callback", userController.googleCallback);
 // router.get("/logout", userController.logout);
 

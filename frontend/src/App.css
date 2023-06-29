@@ -28,6 +28,14 @@
 .my-toast-animation {
   animation: my-toast-animation 0.5s ease-out;
 }
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e7e5ec;
+  border-radius: 10px;
+}
 
 /* Styles for screens larger than 1024px (laptop) */
 @media (min-width: 1840px) {
@@ -35,5 +43,3 @@
     margin: 0 5rem;
   }
 }
-
-
