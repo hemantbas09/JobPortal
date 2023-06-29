@@ -31,6 +31,8 @@ router.get("/filter/job", jobController.filterJob);
 router.post("/reject/job", appliedjobController.rejectJob);
 router.post("/accept/job", appliedjobController.acceptJob);
 router.post("/delete/job", appliedjobController.deleteJob);
+router.get("/allapplied/job", appliedjobController.getAllAppliedJobs);
+
 
 //Private Routes:
 

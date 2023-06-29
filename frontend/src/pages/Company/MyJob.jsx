@@ -134,7 +134,6 @@ const MyJob = () => {
   const start = (currentPage - 1) * itemsPerPage;
   const end = start + itemsPerPage;
   const displayedJobs = filteredJobs.slice(start, end);
-
   return (
     <>
       <div className="mt-28 space-x-16 md:space-x-72 min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">

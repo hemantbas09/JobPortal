@@ -142,7 +142,7 @@ const ApplicantsJob = () => {
       name: "Applicant",
       selector: "candidate.fullName",
       sortable: true,
-      cell: (row) => <div className="w-11/12  ">{row.candidate.fullName}</div>,
+      cell: (row) => <div className="w-11/12 ">{row.candidate.fullName}</div>,
     },
     {
       name: "Resume",
@@ -209,7 +209,7 @@ const ApplicantsJob = () => {
       ),
     },
   ];
-
+  console.log(jobs);
   const handleImageDownload = (imageUrl) => {
     const fileName = "resume.png";
 

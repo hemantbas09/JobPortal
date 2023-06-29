@@ -41,6 +41,7 @@ import {
   JobQuiz,
   RejectedApplicant,
   AcceptApplicant,
+  Appliedjob,
 } from "./pages/index.js";
 import MyForm from "./component/Authentication/MyForm.jsx";
 import { Link } from "react-router-dom";
@@ -183,6 +184,7 @@ const App = () => {
           <Route path="/quiz/:id" element={<Assestement />} />
           <Route path="/alluser" element={<AllUser />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/myappliedjob" element={<Appliedjob />} />
         </Routes>
       </BrowserRouter>
 

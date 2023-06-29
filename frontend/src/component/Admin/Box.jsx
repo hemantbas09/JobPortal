@@ -3,7 +3,7 @@ import React from "react";
 const Box = ({ title, number }) => {
   return (
     <>
-      <div class="bg-gray-50  dark:bg-gray-800 shadow-lg rounded-md flex items-center justify-between p-8 border-b-4 border-blue-600 dark:border-gray-600  font-medium group">
+      <div class="bg-gray-50 w-full  dark:bg-gray-800 shadow-lg rounded-md flex items-center justify-between p-8 border-b-4 border-blue-600 dark:border-gray-600  font-medium group">
         <div class="flex justify-center items-center w-25 h-25 bg-white p-6 rounded-full transition-all duration-300 transform group-hover:rotate-12">
           <svg
             width="30"

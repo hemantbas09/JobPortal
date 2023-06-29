@@ -160,6 +160,15 @@ export const jobApi = createApi({
         };
       },
     }),
+    allAppliedJob: builder.query({
+      query: () => ({
+        url: `allapplied/job`,
+        method: "Get",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
   }),
 });
 
@@ -177,4 +186,5 @@ export const {
   useAcceptJobMutation,
   useRejectJobMutation,
   useDeleteApplicantJobMutation,
+  useAllAppliedJobQuery,
 } = jobApi;

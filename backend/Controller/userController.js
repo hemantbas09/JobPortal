@@ -97,7 +97,7 @@ class userController {
       email,
       password: hashPassword,
       role,
-      status: "inactive",
+      status: "pending",
       verificationToken,
       verificationTokenExpires,
     });

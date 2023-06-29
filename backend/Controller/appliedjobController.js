@@ -37,7 +37,7 @@ class appliedjobController {
           url: myCloud.url,
         },
       });
-     
+
       // for saving the application
       await newApplication.save();
       res.status(200).json({
@@ -129,6 +129,37 @@ class appliedjobController {
     res.status(200).json({
       success: true,
       message: "Job deleted successfully",
+    });
+  });
+
+  static getAllAppliedJobs = catchAsyncErrors(async (req, res, next) => {
+    const appliedapplicants = await appliedJobModel
+      .find()
+      .populate({
+        path: "company",
+        model: "user",
+        select: "fullName",
+      })
+      .populate({
+        path: "job",
+        model: "job",
+        select: "jobTitle",
+      });
+
+    console.log(appliedapplicants);
+
+    // Check if appliedapplicants are found
+    if (!appliedapplicants || appliedapplicants.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No applicants found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      appliedapplicants,
+      message: "Successfully found the applied applicants",
     });
   });
 }
