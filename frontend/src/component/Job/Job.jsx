@@ -28,7 +28,7 @@ const Job = () => {
   return (
     <>
       {/* bg-zinc-100 p-6   w-fit rounded-lg shadow items-center  flex justify-center */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-28 gap-y-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 border-red-50 gap-y-10 gap-x-20">
         {jobs &&
           jobs.map((job, index) => (
             <Link to={`/jobdetails/${job._id}`}>

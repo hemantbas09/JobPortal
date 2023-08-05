@@ -4,6 +4,8 @@ import Hero from "../component/Hero/Hero";
 import { Category, Job } from "../component/index";
 import { useVerifyUserMutation } from "../Service/userAuth";
 import { useLocation } from "react-router-dom";
+import { useGetallUserQuery } from "../Service/userAuth";
+import { useGetAllJobQuery } from "../Service/jobApi";
 const Home = () => {
   const location = useLocation();
   const [verifyUser, { isLoading, error }] = useVerifyUserMutation();
@@ -15,7 +17,29 @@ const Home = () => {
       console.log(response);
     }
   }, [location, verifyUser]);
+  const allUser = useGetallUserQuery({ enabled: false });
+  const allJob = useGetAllJobQuery({ enabled: false });
 
+  let totalCandidates;
+  let totalCompanies;
+  if (!allUser.isLoading && !allUser.error) {
+    const candidates =
+      allUser.data?.user?.filter((user) => user.role === "candidate") || [];
+    totalCandidates = candidates.length;
+
+    const companies =
+      allUser.data?.user?.filter((user) => user.role === "company") || [];
+    totalCompanies = companies.length;
+  } else if (allUser.error) {
+    console.log("Error:", allUser.error.message);
+  } else {
+    console.log("Loading...");
+  }
+
+  let totalJobPost;
+  if (!allJob.isLoading) {
+    totalJobPost = allJob?.data?.jobs?.length ?? 0;
+  }
   return (
     <div className="flex flex-col items-center gap-y-10 mt-40">
       <Hero />
@@ -79,21 +103,21 @@ const Home = () => {
         <div className="p-4 flex flex-col md:flex-row justify-between items-center gap-y-10">
           <div className="flex flex-col items-center gap-y-5">
             <span className="uppercase text-gray-600 text-5xl font-bold">
-              4500
+              {totalCandidates}
             </span>
             <p className="uppercase text-gray-600 text-3xl">job seeker</p>
           </div>
 
           <div className="flex flex-col items-center gap-y-5">
             <span className="uppercase text-gray-600 text-5xl font-bold">
-              4M
+              {totalJobPost}
             </span>
             <p className="uppercase text-gray-600 text-3xl">Job</p>
           </div>
 
           <div className="flex flex-col items-center gap-y-5">
             <span className="uppercase text-gray-600 text-5xl font-bold">
-              1M
+              {totalCompanies}
             </span>
             <p className="uppercase text-gray-600 text-3xl">Company</p>
           </div>

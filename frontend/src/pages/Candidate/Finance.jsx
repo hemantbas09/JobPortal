@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { BsFillBookmarkHeartFill, BsHandbag } from "react-icons/bs";
 import { GiMoneyStack } from "react-icons/gi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
@@ -11,11 +11,9 @@ const Finance = () => {
     jobs = jobInfo.data.jobs;
   }
   return (
-
     <div className="mt-32">
-
-      <h1 className=" py-2 text-3xl text-indigo-500 font-medium">
-        Featured Jobs
+      <h1 className=" text-center py-2 text-3xl text-indigo-500 font-medium">
+        Finance and Accounting
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 ">
         {jobs &&
@@ -56,7 +54,7 @@ const Finance = () => {
             ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Finance
+export default Finance;

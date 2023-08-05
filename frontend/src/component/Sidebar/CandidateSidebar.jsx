@@ -20,7 +20,7 @@ const CandidateSidebar = () => {
     {
       title: "Reset Password",
       src: "https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1687886209/icon/car-key-5803_h8bmh7.svg",
-      link: "/company/rejected",
+      link: "/reset/password",
     },
     {
       title: "Logout",

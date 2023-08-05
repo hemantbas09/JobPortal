@@ -31,6 +31,10 @@ const LoginForm = () => {
         storeToken([res.data.token, res.data.role]);
         if (res.data.role === "company") {
           navigate("/company");
+        } else if (res.data.role === "admin") {
+          navigate("/admin");
+        } else if (res.data.role === "candidate") {
+          navigate("/candidate");
         }
         toast.success(res.data.message, {
           position: "top-center",
@@ -43,7 +47,6 @@ const LoginForm = () => {
           theme: "colored",
           className: "my-toast-body mt-28 lg:ml-72 -ml-44 text-xl",
         });
-        console.log("Hemant", res.data.token);
       } else {
         toast.error(res.error.data.message, {
           position: "top-center",

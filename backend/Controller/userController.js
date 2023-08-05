@@ -409,6 +409,51 @@ class userController {
       message: "User deleted successfully",
     });
   });
+
+  static resetPassword = catchAsyncErrors(async (req, res, next) => {
+    const { password, passwordConfirmation, oldpassword } = req.body;
+
+    console.log("object", req.body);
+    // Validate request
+    if (!password || !oldpassword) {
+      res.status(400).json({
+        success: false,
+        message: "Both old password and new password are required.",
+      });
+    }
+
+    // Find the user based on user ID
+
+    const { id } = req.params;
+    const user = await userModel.findById(id);
+
+    // Compare old password with stored password
+    const isPasswordValid = await bcrypt.compare(oldpassword, user.password);
+    console.log(isPasswordValid);
+    if (!isPasswordValid) {
+      res.status(400).json({
+        success: false,
+        message: "Invalid old password.",
+      });
+    }
+
+    // Hash the new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedNewPassword = await bcrypt.hash(password, salt);
+
+    // Update the user's password
+    user.password = hashedNewPassword;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Password reset successful.",
+    });
+  });
+
+  static userProfile = catchAsyncErrors(async (req, res, next) => {
+    console.log("userProfile");
+  });
 }
 
 export default userController;

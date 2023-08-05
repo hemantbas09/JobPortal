@@ -30,6 +30,7 @@ router.get("/getalluser", userController.getAllUser);
 router.post("/approvedReject", userController.companyRejectApproved);
 
 router.delete("/:id", userController.deleteUser);
+router.post("/resetpassword/:id", userController.resetPassword);
 
 // Google login:
 // router.get("/login/success", userController.loginSuccess);
@@ -37,5 +38,6 @@ router.delete("/:id", userController.deleteUser);
 router.get("/auth/google", userController.googleAuth);
 // router.get("/google/callback", userController.googleCallback);
 // router.get("/logout", userController.logout);
+router.post("user/profile", userController.userProfile);
 
 export default router;

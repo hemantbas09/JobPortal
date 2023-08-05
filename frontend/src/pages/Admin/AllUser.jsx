@@ -6,7 +6,6 @@ import {
   useDeleteUserMutation,
 } from "../../Service/userAuth";
 import { Link } from "react-router-dom";
-import AdminDashboard from "./AdminDashboard";
 import SweetAlert from "react-bootstrap-sweetalert";
 import AdminSidebar from "../../component/Sidebar/AdminSidebar";
 const AllUser = () => {
@@ -64,8 +63,6 @@ const AllUser = () => {
       style: {
         width: "100%",
         height: "100%",
-        border: "2px solid #667085",
-        borderRadius: "0.5rem",
       },
     },
     headRow: {
@@ -103,12 +100,11 @@ const AllUser = () => {
     {
       name: "Email",
       selector: "email",
-      sortable: true,
     },
     {
       name: "Status",
       selector: "status",
-      sortable: true,
+
       cell: (row) => {
         let statusClass = "";
 
@@ -135,11 +131,7 @@ const AllUser = () => {
         );
       },
     },
-    {
-      name: "Role",
-      selector: "role",
-      sortable: true,
-    },
+
     {
       name: "Actions",
       cell: (row) => (
@@ -204,7 +196,7 @@ const AllUser = () => {
       <div className="mt-32">
         <AdminSidebar />
       </div>
-      <div className="md:ml-64 mr-8">
+      <div className="md:ml-64 mr-8 ml-14 border border-black p-2">
         <div className="relative ">
           <img
             className="w-6 h-6 absolute ml-5 mt-5"
@@ -212,7 +204,7 @@ const AllUser = () => {
             alt=""
           />
           <input
-            className="p-4 border-2 border-black w-1/2 rounded-lg mb-2 pl-16 "
+            className="p-4 border-none  w-1/2 rounded-lg mb-2 pl-16 "
             type="text"
             placeholder="Search by job title"
             value={filterValue}

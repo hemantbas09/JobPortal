@@ -9,6 +9,7 @@ import {
   Footer,
   SendPasswordResetEmail,
   CandidateSignUpForm,
+  Reset,
 } from "./component/index.js";
 import {
   JobApply,
@@ -42,6 +43,7 @@ import {
   RejectedApplicant,
   AcceptApplicant,
   Appliedjob,
+  AllJob,
 } from "./pages/index.js";
 import MyForm from "./component/Authentication/MyForm.jsx";
 import { Link } from "react-router-dom";
@@ -125,15 +127,27 @@ const App = () => {
             path="/company"
             element={
               <ProtectedRoute
-                component={CompanyDashboard}
+                Component={CompanyDashboard}
                 requiredRole="company"
               />
             }
           />
+
+          {/* <Route
+            path="/reset/password"
+            element={
+              <ProtectedRoute
+                Component={Reset}
+                requiredRole={["candidate", "admin", "company"]}
+              />
+            }
+          /> */}
+          <Route path="/reset/password" element={<Reset />} />
+
           <Route
             path="/company/addjob"
             element={
-              <ProtectedRoute component={AddJob} requiredRole="company" />
+              <ProtectedRoute Component={AddJob} requiredRole="company" />
             }
           />
           <Route
@@ -171,20 +185,27 @@ const App = () => {
           <Route path="/other" element={<Other />} />
           <Route path="/aboutus" element={<Aboutus />} />
           <Route path="/contactus" element={<Contactus />} />
-          {/* <Route
-            path="/company"
-            element={<ProtectedRoute Component={CompanyDashboard} />}
-          /> */}
+
+          <Route path="/jobdetails/:id" element={<JobDetails />} />
+          <Route
+            path="/quiz/:id"
+            element={
+              <ProtectedRoute
+                Component={Assestement}
+                requiredRole="candidate"
+              />
+            }
+          />
           <Route path="/company/applicant" element={<ApplicantsJob />} />
           <Route path="/company/job" element={<MyJob />} />
           <Route path="/company/shortlist" element={<ShortlistCandidates />} />
           <Route path="/alljobs" element={<AllJobs />} />
-          <Route path="/jobdetails/:id" element={<JobDetails />} />
           <Route path="/jobapply/:id" element={<JobApply />} />
-          <Route path="/quiz/:id" element={<Assestement />} />
+
           <Route path="/alluser" element={<AllUser />} />
           <Route path="/search" element={<Search />} />
           <Route path="/myappliedjob" element={<Appliedjob />} />
+          <Route path="/admin/job/:id" element={<AllJob />} />
         </Routes>
       </BrowserRouter>
 

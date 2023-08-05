@@ -11,16 +11,17 @@ const InformationTechnology = () => {
     jobs = jobInfo.data.jobs;
   }
   return (
-
     <div className="mt-32">
-
-      <h1 className=" py-2 text-3xl text-indigo-500 font-medium">
-        Featured Jobs
+      <h1 className="text-center tex py-2 text-3xl text-indigo-500 font-medium">
+        Information Technology and Engineering
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 ">
         {jobs &&
           jobs
-            .filter((job) => job.jobCategory === "Information Technology and Engineering")
+            .filter(
+              (job) =>
+                job.jobCategory === "Information Technology and Engineering"
+            )
             .map((job, index) => (
               <Link to={`/jobdetails/${job._id}`}>
                 <div key={index} className="flex flex-col  items-center my-7">
@@ -56,7 +57,7 @@ const InformationTechnology = () => {
             ))}
       </div>
     </div>
-  )
+  );
 };
 
 export default InformationTechnology;

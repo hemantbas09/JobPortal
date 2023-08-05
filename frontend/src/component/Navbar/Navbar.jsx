@@ -5,6 +5,7 @@ import { getToken } from "../../Service/localStorageService";
 
 const Navbar = () => {
   const token = getToken("token");
+  const role = getToken("role");
   const [dropdownOpen, setDropdownOpen] = useState({});
   const dropdownRef = useRef(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -56,8 +57,12 @@ const Navbar = () => {
     }));
   };
 
+  if (role === "admin" || role === "company") {
+    return null; // Render nothing for admin or company role
+  }
+
   return (
-    <div className="bg-white fixed top-0 w-full xl:max-w-[1750px]">
+    <div className="z-50 bg-white fixed top-0 w-full xl:max-w-[1750px]">
       <div className="flex justify-between items-center">
         <Link to="/">
           <img className="w-52" src="image/logo.svg" alt="logo" />
@@ -83,6 +88,7 @@ const Navbar = () => {
                         <span className="active:text-blue-600 text-2xl">
                           {item.label}
                         </span>
+
                         {dropdownOpen[index] ? (
                           <IoMdArrowDropdown />
                         ) : (
@@ -121,17 +127,27 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="flex items-center gap-4 relative mr-4 md:mr-14">
-            <Link to="/login">
-              <button className="text-center font-bold text-xl mt-6 mb-5 w-full  px-8 py-3 text-xl tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50 hidden xl:flex">
-                Sign In
-              </button>
-            </Link>
-            <button className=" w-6 md:w-8">
+            <div>
+              {!token ? (
+                <Link to="/login">
+                  <button className="text-center font-bold text-xl mt-6 mb-5 px-8 py-3 text-xl tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50 hidden xl:flex">
+                    Sign In
+                  </button>
+                </Link>
+              ) : (
+                <Link to="/logout">
+                  <button className="text-center font-bold text-xl mt-6 mb-5 px-8 py-3 text-xl tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50 hidden xl:flex">
+                    Dashboard
+                  </button>
+                </Link>
+              )}
+            </div>
+            {/* <button className=" w-6 md:w-8">
               <img
                 src="https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1687549087/11859183171606260004_wma3em.svg"
                 alt="notification"
               />
-            </button>
+            </button> */}
             <button className="w-8 xl:hidden" onClick={toggleMobileMenu}>
               <img
                 src="https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1687503134/hamburgerIcon_bxy35q.svg"
@@ -165,7 +181,6 @@ const Navbar = () => {
                         <IoMdArrowDropup />
                       )}
                     </button>
-
                     {dropdownOpen[index] && (
                       <div className="bg-white w-full z-20 border-none">
                         <ul className="flex flex-col gap-8 py-2">
@@ -177,7 +192,7 @@ const Navbar = () => {
                                   setMobileMenuOpen(false);
                                   setDropdownOpen({});
                                 }}
-                                className="hover:text-blue-600/100 text-2xl text-left"
+                                className="hover:text-blue-600/100 text-2xl"
                               >
                                 <Link to={dropdownItem.path}>
                                   {dropdownItem.label}
@@ -190,9 +205,7 @@ const Navbar = () => {
                     )}
                   </div>
                 ) : (
-                  <Link to={item.path} onClick={() => toggleMobileMenu()}>
-                    {item.label}
-                  </Link>
+                  <Link to={item.path}>{item.label}</Link>
                 )}
               </li>
             ))}

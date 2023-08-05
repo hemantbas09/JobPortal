@@ -34,8 +34,8 @@ const AdminDashboard = () => {
       <div className="mt-32">
         <AdminSidebar />
       </div>
-      <div className="md:ml-64 mr-8">
-        <div class="grid grid-cols-1 gap-10   md:grid-cols-2  ">
+      <div className="md:ml-64 ml-14">
+        <div class="grid grid-cols-1 gap-10   md:grid-cols-3  ">
           <h1 className="text-2xl font-semibold md:col-start-1 md:col-end-7 text-first ">
             Company Statistics
           </h1>

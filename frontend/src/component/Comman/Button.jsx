@@ -1,18 +1,16 @@
-import React from 'react'
+import React from "react";
 
-const Button = (buttonName) => {
-    return (
-        <>
+const Button = ({ onClick, buttonName }) => {
+  return (
+    <>
+      <button
+        className="text-center font-bold text-xl mt-6 mb-5 px-8 py-3 text-xl tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50 hidden xl:flex"
+        onClick={onClick}
+      >
+        {buttonName}
+      </button>
+    </>
+  );
+};
 
-            <button type="submit" className="px-6 py-2 border-2 border-indigo-700 bg-indigo-700 text-white  w-fit rounded-md hover:bg-transparent hover:text-indigo-700 font-semibold leading-10">Login</button>
-
-
-            <button class="px-6 py-2 font-medium border-2 border-indigo-600 tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-white hover:text-indigo-600 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
-                Nepal
-            </button>
-            
-        </>
-    )
-}
-
-export default Button
+export default Button;

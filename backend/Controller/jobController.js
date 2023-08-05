@@ -2,6 +2,7 @@ import jobModel from "../Models/jobModel.js";
 import quizQuestionModel from "../Models/quizQuestion.js";
 import * as cron from "node-cron";
 import catchAsyncErrors from "../Middleware/catchAsyncErrors.js";
+import { trusted } from "mongoose";
 
 class jobController {
   // post a new Job
@@ -9,7 +10,6 @@ class jobController {
     // for store the user information:
     // req.body.user = req.user;
     req.body.user = req.user.id;
-  
 
     // creating a object or instace of the JobModal:
     const job = new jobModel(req.body);
@@ -73,12 +73,16 @@ class jobController {
     const jobIds = jobs.map((job) => job._id);
 
     // Find quiz questions based on job IDs
-    const quizQuestions = await quizQuestionModel.find({ job: { $in: jobIds } });
+    const quizQuestions = await quizQuestionModel.find({
+      job: { $in: jobIds },
+    });
 
     // Update jobs with quiz IDs
     const jobData = jobs.map((job) => {
-      const matchingQuiz = quizQuestions.find((question) => question.job.toString() === job._id.toString());
-      const quizId = matchingQuiz ? matchingQuiz._id.toString() : '';
+      const matchingQuiz = quizQuestions.find(
+        (question) => question.job.toString() === job._id.toString()
+      );
+      const quizId = matchingQuiz ? matchingQuiz._id.toString() : "";
 
       return {
         ...job._doc,
@@ -93,7 +97,6 @@ class jobController {
       quizQuestions,
     });
   });
-
 
   //Update Job:
   static updateJob = catchAsyncErrors(async (req, res, next) => {
@@ -122,12 +125,11 @@ class jobController {
     });
   });
 
-
   // Delete Job:
   static deleteJob = catchAsyncErrors(async (req, res, next) => {
     // find job in database
     let job = await jobModel.findById(req.params.id);
-
+    console.log("This is Job", job);
     // check job is found or not
     if (!job) {
       res.status(401).json({
@@ -145,25 +147,24 @@ class jobController {
     });
   });
 
-
   // Search a Job:
   static searchJob = catchAsyncErrors(async (req, res, next) => {
-
     let jobs = await jobModel.find();
 
     const { jobTitle, location } = req.query;
 
     if (!jobTitle && !location) {
       return res.status(400).json({
-        message: 'Job Not Found'
+        message: "Job Not Found",
       });
     }
 
-    const searchTerm = jobTitle ? jobTitle.toLowerCase() : '';
-    const searchLocation = location ? location.toLowerCase() : '';
-    const searchdJobs = jobs.filter(job => {
+    const searchTerm = jobTitle ? jobTitle.toLowerCase() : "";
+    const searchLocation = location ? location.toLowerCase() : "";
+    const searchdJobs = jobs.filter((job) => {
       const titleMatch = job.jobTitle.toLowerCase().indexOf(searchTerm) !== -1;
-      const locationMatch = job.location.toLowerCase().indexOf(searchLocation) !== -1;
+      const locationMatch =
+        job.location.toLowerCase().indexOf(searchLocation) !== -1;
       return titleMatch && locationMatch;
     });
 
@@ -172,7 +173,6 @@ class jobController {
       searchdJobs,
       message: "Job  Successfully Found",
     });
-    
   });
 
   // Filter a Job:
@@ -196,7 +196,41 @@ class jobController {
       message: "Successfually Deleted",
     });
   });
-}
 
+  // Accept Reject Job:
+  static jobRejectApproved = catchAsyncErrors(async (req, res, next) => {
+    const jobID = req.body.companyId;
+    const status = req.body.status;
+    // Check if the Job exists in the database:
+    const job = await jobModel.findById(jobID);
+    if (!job) {
+      return res.status(404).json({
+        success: false,
+        message: "Job not found",
+      });
+    }
+
+    // Update the job status based on the provided status value:
+    if (status === "Active") {
+      job.active = true;
+    } else if (status === "Blocked") {
+      job.active = false;
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid status value",
+      });
+    }
+
+    // Save the updated job:
+    const updatedJob = await job.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Job status updated successfully",
+      job: updatedJob,
+    });
+  });
+}
 
 export default jobController;

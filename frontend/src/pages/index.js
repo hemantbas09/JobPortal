@@ -31,6 +31,7 @@ import JobQuiz from "./Company/JobQuiz";
 import AcceptApplicant from "./Company/AcceptApplicant";
 import RejectedApplicant from "./Company/RejectedApplicant";
 import Appliedjob from "./Candidate/Appliedjob";
+import AllJob from "./Admin/AllJob";
 export {
   QuizResult,
   JobApply,
@@ -63,4 +64,5 @@ export {
   AcceptApplicant,
   RejectedApplicant,
   Appliedjob,
+  AllJob
 };

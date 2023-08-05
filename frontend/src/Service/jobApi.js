@@ -160,6 +160,7 @@ export const jobApi = createApi({
         };
       },
     }),
+
     allAppliedJob: builder.query({
       query: () => ({
         url: `allapplied/job`,
@@ -168,6 +169,33 @@ export const jobApi = createApi({
           authorization: `Bearer ${token}`,
         },
       }),
+    }),
+
+    jobAcceptReject: builder.mutation({
+      query: ({ formData, companyId }) => ({
+        url: "/acceptreject/job",
+        method: "POST",
+        body: formData,
+      }),
+      // async onQueryStarted(args, { queryFulfilled, dispatch }) {
+      //   try {
+      //     const { data: jobAcceptReject } = await queryFulfilled;
+      //     dispatch(
+      //       userAuthApi.util.updateQueryData(
+      //         "getallUser",
+      //         undefined,
+      //         (draft) => {
+      //           const project = draft.user?.find(
+      //             (item) => item?._id === args?.jobId
+      //           );
+      //           project.status = jobAcceptReject.company.active;
+      //         }
+      //       )
+      //     );
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
+      // },
     }),
   }),
 });
@@ -187,4 +215,5 @@ export const {
   useRejectJobMutation,
   useDeleteApplicantJobMutation,
   useAllAppliedJobQuery,
+  useJobAcceptRejectMutation,
 } = jobApi;

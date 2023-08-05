@@ -8,6 +8,7 @@ import SendPasswordResetEmail from "./Authentication/SendPasswordResetEmail";
 import ResetPassword from "./Authentication/ResetPassword";
 import LoginForm from "./Authentication/LoginForm";
 import CandidateSignUpForm from "./Authentication/CandidateSignUpForm";
+import Reset from "./Comman/Reset";
 export {
   LoginForm,
   ResetPassword,
@@ -17,5 +18,6 @@ export {
   Job,
   Category,
   Home,
-  CandidateSignUpForm
+  CandidateSignUpForm,
+  Reset
 };

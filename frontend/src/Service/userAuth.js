@@ -117,8 +117,32 @@ export const userAuthApi = createApi({
       }),
     }),
 
+    passwordReset: builder.mutation({
+      query: ({ id, user }) => {
+        console.log("ROw", id);
+        return {
+          url: `/resetpassword/${id}`,
+          method: "POST",
+          body: user,
+          headers: {
+            "Content-type": "application/json",
+          },
+        };
+      },
+    }),
 
-
+    userProfile: builder.mutation({
+      query: () => {
+        return {
+          url: "user/profile",
+          method: "POST",
+          // body: formData,
+          // headers: {
+          //     'Content-Type': 'multipart/form-data'
+          // },
+        };
+      },
+    }),
   }),
 });
 
@@ -132,4 +156,6 @@ export const {
   useDeleteUserMutation,
   useVerifyUserMutation,
   useGoogleAuthQuery,
+  usePasswordResetMutation,
+  useUserProfileMutation
 } = userAuthApi;

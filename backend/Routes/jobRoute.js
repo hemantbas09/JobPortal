@@ -16,6 +16,7 @@ router.use("/jobbycompanyid", checkUserAuth);
 router.use("/update/:id", checkUserAuth);
 router.use("/appliedjob/:id", checkUserAuth);
 router.use("/applied/job", checkUserAuth);
+router.use("/acceptreject/job", upload.none());
 
 //public Routes:
 router.post("/new", jobController.jobCreate);
@@ -32,7 +33,7 @@ router.post("/reject/job", appliedjobController.rejectJob);
 router.post("/accept/job", appliedjobController.acceptJob);
 router.post("/delete/job", appliedjobController.deleteJob);
 router.get("/allapplied/job", appliedjobController.getAllAppliedJobs);
-
+router.post("/acceptreject/job", jobController.jobRejectApproved);
 
 //Private Routes:
 

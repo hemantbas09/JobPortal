@@ -11,11 +11,9 @@ const Other = () => {
     jobs = jobInfo.data.jobs;
   }
   return (
-
     <div className="mt-32">
-
-      <h1 className=" py-2 text-3xl text-indigo-500 font-medium">
-        Featured Jobs
+      <h1 className=" text-center py-2 text-3xl text-indigo-500 font-medium">
+        Other
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 ">
         {jobs &&
@@ -56,7 +54,7 @@ const Other = () => {
             ))}
       </div>
     </div>
-  )
+  );
 };
 
 export default Other;

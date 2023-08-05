@@ -10,17 +10,17 @@ const AdminSidebar = () => {
     {
       title: "Company",
       src: "https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1687779209/icon/briefcase-1965_ik29a2.svg",
-      link: "/admin/companyinformation",
+      link: "/admin/candidateinformation",
     },
     {
       title: "Candidate",
       src: "https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1687886208/icon/user-3297_eupj2v.svg",
-      link: "/admin/candidateinformation",
+      link: "/admin/companyinformation",
     },
     {
       title: "Reset Password",
       src: "https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1687886209/icon/car-key-5803_h8bmh7.svg",
-      link: "/admin",
+      link: "/reset/password",
     },
     {
       title: "Logout",
