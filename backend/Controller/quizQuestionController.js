@@ -6,56 +6,39 @@ import jobModel from "../Models/jobModel.js";
 class quizController {
   // Create a new Quiz:
   static quizCreate = catchAsyncErrors(async (req, res, next) => {
-    // for store the user information:
-
-    // let job = req.params.id;
-    console.log(req.body.user);
-    console.log(req.body.job);
     const { time, passMark, questions } = req.body;
-    // console.log(job);
-    const questionsArray = JSON.parse(questions);
-
-    let quiz = new quizQuestionModel({
-      questions: questionsArray,
-      time: time,
-      passMark: passMark,
+    console.log(questions);
+    const quiz = new quizQuestionModel({
+      questions: questions,
+      time,
+      passMark,
       user: req.user.id,
       job: req.params.id,
     });
-    // const quiz = new quizQuestionModel(req.body);
-
-    let lengthOfQuizQuestion = questions.length;
-
-    // FInd the job is found or not:
 
     const isJobExisting = await jobModel.findById(req.params.id);
 
-    if (isJobExisting) {
-      if (lengthOfQuizQuestion >= 1) {
-        // save in the database
-        await quiz.save();
-
-        // for the response:
-        res.status(201).json({
-          success: true,
-          quiz,
-        });
-      } else {
-        console.log("Please Enter more the 6 Question");
-        // for the response:
-        res.status(400).json({
-          success: false,
-          message: "Please Enter the Question more than 6",
-        });
-      }
-    } else {
-      res.status(400).json({
+    if (!isJobExisting) {
+      return res.status(400).json({
         success: false,
         message: "Please Enter the Job First for Adding Quiz",
       });
     }
-  });
 
+    if (questions.length >= 1) {
+      await quiz.save();
+
+      return res.status(201).json({
+        success: true,
+        quiz,
+      });
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: "Please Enter more than 6 Questions",
+      });
+    }
+  });
   //  get all the quiz:
   static getAllQuize = catchAsyncErrors(async (req, res, next) => {
     // select all job:
@@ -163,6 +146,8 @@ class quizController {
       message: "Successfually Deleted",
     });
   });
+
+ 
 }
 
 export default quizController;

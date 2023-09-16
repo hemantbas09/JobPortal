@@ -8,11 +8,16 @@ import {
 import { Link } from "react-router-dom";
 import AdminSidebar from "../../component/Sidebar/AdminSidebar";
 import SweetAlert from "react-bootstrap-sweetalert";
+import AdminNavbar from "../../component/Navbar/AdminNavbar";
+import { useParams } from "react-router-dom";
 const AllJob = () => {
+  const { id } = useParams();
   const [acceptReject] = useJobAcceptRejectMutation();
   const [deleteJob, { isLoading }] = useDeleteJobMutation();
   const [alertConfig, setAlertConfig] = useState(null);
   const [jobs, setJobs] = useState([]);
+  const [userFilterjobs, setUserFilterJobs] = useState([]);
+
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [filterValue, setFilterValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,10 +43,15 @@ const AllJob = () => {
 
   useEffect(() => {
     if (jobInfo.data) {
-      setJobs(jobInfo.data.jobs);
-      setFilteredJobs(jobInfo.data.jobs);
+      const allJobs = jobInfo.data.jobs;
+
+      // Filter jobs based on the id parameter
+      const filteredData = allJobs.filter((job) => job.user === id);
+
+      setJobs(allJobs);
+      setFilteredJobs(filteredData);
     }
-  }, [jobInfo.data]);
+  }, [jobInfo.data, id]);
 
   const handleDeleteConfirmation = (jobId) => {
     setAlertConfig({
@@ -64,8 +74,10 @@ const AllJob = () => {
       name: "Job Title",
       selector: "jobTitle",
       sortable: true,
+      cell: (row) => <Link to={`/jobdetails/${row._id}`}>{row.jobTitle}</Link>,
       width: "25%",
     },
+
     {
       name: "Job Category",
       selector: "jobCategory",
@@ -112,7 +124,7 @@ const AllJob = () => {
           </span>
         );
       },
-      width:"15%"
+      width: "15%",
     },
     {
       name: "Actions",
@@ -184,10 +196,11 @@ const AllJob = () => {
     const filteredData = jobs.filter((job) =>
       job.jobTitle.toLowerCase().includes(value.toLowerCase())
     );
+
     setFilteredJobs(filteredData);
     setCurrentPage(1);
   };
-
+  console.log(filteredJobs);
   const totalPages = Math.ceil(filteredJobs.length / itemsPerPage);
 
   const handlePageChange = (page) => {
@@ -203,6 +216,7 @@ const AllJob = () => {
   return (
     <>
       <div className="mt-32">
+        <AdminNavbar />
         <AdminSidebar />
       </div>
 

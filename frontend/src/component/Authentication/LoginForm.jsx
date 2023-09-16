@@ -34,7 +34,7 @@ const LoginForm = () => {
         } else if (res.data.role === "admin") {
           navigate("/admin");
         } else if (res.data.role === "candidate") {
-          navigate("/candidate");
+          navigate("/");
         }
         toast.success(res.data.message, {
           position: "top-center",

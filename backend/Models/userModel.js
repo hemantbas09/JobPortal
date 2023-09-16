@@ -27,6 +27,9 @@ const userSchema = new mongoose.Schema({
     enum: ["blocked", "active", "pending"],
     default: "pending",
   },
+  DateOfBirth: {
+    type: String,
+  },
   verificationToken: String,
   verificationTokenExpires: Date,
   isVerified: {

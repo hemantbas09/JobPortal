@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import CompanySidebar from "../../component/Sidebar/CompanySidebar";
 import { useNavigate } from "react-router-dom";
 import { useAddJobMutation } from "../../Service/jobApi";
+import { toast } from "react-toastify";
+import CompanyNavbar from "../../component/Navbar/CompanyNavbar";
+
 const AddJob = () => {
   const navigate = useNavigate();
   const [addJob, { isLoading }] = useAddJobMutation();
-
   const [job, setJob] = useState({
     jobTitle: "",
     jobDescription: "",
@@ -35,7 +37,30 @@ const AddJob = () => {
 
     const res = await addJob(job);
     if (res.data.success === true) {
+      toast.success("Job Add Successfully", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        className: " text-xl",
+      });
       navigate(`/addquiz/${res.data.job._id}`);
+    } else {
+      toast.error("Job is Not Add", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        className: " text-xl",
+      });
     }
   };
 
@@ -44,6 +69,8 @@ const AddJob = () => {
       <div class="mt-28 space-x-16 md:space-x-72 min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
         {/* Sidebar */}
         <div className="">
+          <CompanyNavbar />
+
           <CompanySidebar />
         </div>
 

@@ -10,6 +10,7 @@ import CompanySidebar from "../../component/Sidebar/CompanySidebar";
 import { AiOutlineDelete } from "react-icons/ai";
 import { RiEditBoxLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import CompanyNavbar from "../../component/Navbar/CompanyNavbar";
 
 const JobQuiz = () => {
     const [deleteJob, { isLoading }] = useDeleteJobMutation();
@@ -121,6 +122,8 @@ const JobQuiz = () => {
             <>
                 <div class="mt-28 space-x-16 md:space-x-72 min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
                     <div className="">
+        <CompanyNavbar />
+
                         <CompanySidebar />
                     </div>
 

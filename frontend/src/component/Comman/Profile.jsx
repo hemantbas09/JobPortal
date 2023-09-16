@@ -1,7 +1,18 @@
 import React, { useState } from "react";
 import CompanySidebar from "../Sidebar/CompanySidebar";
 import { useUserProfileMutation } from "../../Service/userAuth";
+import { useGetUserProfileQuery } from "../../Service/userAuth";
+import CandidateSidebar from "../Sidebar/CandidateSidebar";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 const Profile = () => {
+  const navigate = useNavigate();
+
+  const { data, isLoading, isError } = useGetUserProfileQuery();
+  let ProfileData;
+  if (data) {
+    ProfileData = data.userProfile[0];
+  }
   const [userProfile] = useUserProfileMutation();
   const [skillFields, setSkillFields] = useState([""]);
   const addSkillField = () => {
@@ -19,71 +30,25 @@ const Profile = () => {
     });
   };
 
-  const [workExperienceFields, setWorkExperienceFields] = useState([
-    {
-      company: "",
-      jobTitle: "",
-      joinDate: "",
-      endDate: "",
-    },
-  ]);
-
-  const addWorkExperienceField = () => {
-    setWorkExperienceFields([
-      ...workExperienceFields,
-      {
-        company: "",
-        jobTitle: "",
-        joinDate: "",
-        endDate: "",
-      },
-    ]);
-  };
-
-  const handleInputChange = (index, field, value) => {
-    const updatedFields = [...workExperienceFields];
-    updatedFields[index][field] = value;
-    setWorkExperienceFields(updatedFields);
-
-    setFormData({
-      ...formData,
-      workExperience: updatedFields,
-    });
-  };
-
   const [formData, setFormData] = useState({
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    email: "",
-    phoneNumber: "",
-    dateOfBirth: "",
-    details: "",
+    firstName: ProfileData?.firstName || "",
+    lastName: ProfileData?.lastName || "",
+    email: ProfileData?.email || "",
+    phoneNumber: ProfileData?.phoneNumber || "",
+    dateOfBirth: ProfileData?.dateOfBirth || "",
+    details: ProfileData?.details || "",
+    role: ProfileData?.role || "",
     address: {
-      country: "",
-      state: "",
-      city: "",
-      postalCode: "",
+      country: ProfileData?.address?.city || "",
+      state: ProfileData?.address?.state || "",
+      city: ProfileData?.address?.country || "",
+      postalCode: ProfileData?.address?.postalCode || "",
     },
-    workExperience: [
-      {
-        company: "",
-        jobTitle: "",
-        joinDate: "",
-        endDate: "",
-      },
-    ],
-    skills: [""],
-    github: "",
-    profilePicture: null,
-    coverPicture: null, // Added coverPicture field
+    skills: [ProfileData?.skill || ""],
+    github: ProfileData?.github || "",
+    profilePicture: "",
+    coverPicture: "",
   });
-
-  const handleExperienceChange = (index, field, value) => {
-    const updatedWorkExperience = [...formData.workExperience];
-    updatedWorkExperience[index][field] = value;
-    setFormData({ ...formData, workExperience: updatedWorkExperience });
-  };
 
   const handleAddressChange = (field, value) => {
     setFormData({
@@ -123,11 +88,10 @@ const Profile = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Create a new FormData object
     const formDataToSend = new FormData();
-    console.log("this",userProfile);
 
     // Append the text data to the FormData object
     formDataToSend.append("firstName", formData.firstName);
@@ -142,35 +106,44 @@ const Profile = () => {
     formDataToSend.append("address.city", formData.address.city);
     formDataToSend.append("address.postalCode", formData.address.postalCode);
     formDataToSend.append("github", formData.github);
-
+    formDataToSend.append("role", formData.role);
     // Append the profile picture and cover picture files to the FormData object
     formDataToSend.append("profilePicture", formData.profilePicture);
     formDataToSend.append("coverPicture", formData.coverPicture);
-
-    // Append the work experience data to the FormData object
-    formData.workExperience.forEach((experience, index) => {
-      formDataToSend.append(
-        `workExperience[${index}].company`,
-        experience.company
-      );
-      formDataToSend.append(
-        `workExperience[${index}].jobTitle`,
-        experience.jobTitle
-      );
-      formDataToSend.append(
-        `workExperience[${index}].joinDate`,
-        experience.joinDate
-      );
-      formDataToSend.append(
-        `workExperience[${index}].endDate`,
-        experience.endDate
-      );
-    });
 
     // Append the skills data to the FormData object
     formData.skills.forEach((skill, index) => {
       formDataToSend.append(`skills[${index}]`, skill);
     });
+
+    const res = await userProfile(formDataToSend);
+    if (res.data) {
+      toast.success("Profile Update Successfully", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        className: " text-xl",
+      });
+      navigate("/user/profile");
+    }
+    if (res.error) {
+      toast.error("Profile is Not Update", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        className: " text-xl",
+      });
+    }
   };
 
   console.log(formData);
@@ -178,37 +151,45 @@ const Profile = () => {
     <>
       <div className="mt-28 space-x-16 md:space-x-72 min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
         <div className="">
-          <CompanySidebar />
+          <CandidateSidebar />
         </div>
         <div className="p-7 flex-1 dark:bg-gray-800 h-screen left-30">
           {/* Profile Picture and Cover Photo */}
           <div>
             <form onSubmit={handleSubmit}>
               <div>
-                <div class=" mx-auto h-96  ">
-                  <img
-                    src={formData.coverPicture}
-                    alt="Cover Photo"
-                    class="w-full h-full object-cover"
-                  />
+                <div class=" mx-auto h-96 relative  ">
                   <input
-                    className="ml-96"
+                    className="mb-3"
                     type="file"
                     onChange={handleCoverPictureChange}
                   />
+                  <img
+                    src={
+                      formData.coverPicture ||
+                      "https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1680327700/cld-sample-2.jpg"
+                    }
+                    alt="Cover Photo"
+                    class="w-full h-full object-cover mb-12"
+                  />
                 </div>
 
-                <div class=" mx-auto mt-4 ">
+                <div class=" mx-auto mt-20 ">
                   <div class="flex items-end justify-between mb-4">
-                    <div class="flex justify-between">
+                    <div class="flex justify-between ">
                       <img
-                        src={formData.profilePicture}
+                        src={
+                          formData.profilePicture ||
+                          "https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1680980170/document/n2kvpkxuvsnw3faxn4mx.jpg"
+                        }
                         alt="Profile Picture"
-                        class="rounded-full w-24 h-24 border-4 border-white shadow-md"
+                        className="rounded-full w-24 h-24 border-4 border-white shadow-md"
                       />
+
                       <input
                         type="file"
                         onChange={handleProfilePictureChange}
+                        className="mt-6 ml-3"
                       />
                     </div>
                   </div>
@@ -257,6 +238,20 @@ const Profile = () => {
                           setFormData({
                             ...formData,
                             email: e.target.value,
+                          })
+                        }
+                        className="w-full px-4 py-2 mt-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-lg">Profession</label>
+                      <input
+                        type="text"
+                        value={formData.role}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            role: e.target.value,
                           })
                         }
                         className="w-full px-4 py-2 mt-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
@@ -333,62 +328,21 @@ const Profile = () => {
                 </div>
 
                 <div className="mb-6">
-                  <h3 className="text-2xl font-semibold">Work Experience</h3>
-                  {workExperienceFields.map((field, index) => (
-                    <div key={index} className="mt-4">
-                      <div>
-                        <label className="text-lg">Company</label>
-                        <input
-                          type="text"
-                          value={field.company}
-                          onChange={(e) =>
-                            handleInputChange(index, "company", e.target.value)
-                          }
-                          className="w-full px-4 py-2 mt-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-lg">Job Title</label>
-                        <input
-                          type="text"
-                          value={field.jobTitle}
-                          onChange={(e) =>
-                            handleInputChange(index, "jobTitle", e.target.value)
-                          }
-                          className="w-full px-4 py-2 mt-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-lg">Join Date</label>
-                        <input
-                          type="date"
-                          value={field.joinDate}
-                          onChange={(e) =>
-                            handleInputChange(index, "joinDate", e.target.value)
-                          }
-                          className="w-full px-4 py-2 mt-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-lg">End Date</label>
-                        <input
-                          type="date"
-                          value={field.endDate}
-                          onChange={(e) =>
-                            handleInputChange(index, "endDate", e.target.value)
-                          }
-                          className="w-full px-4 py-2 mt-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-                        />
-                      </div>
-                    </div>
-                  ))}
-                  <button
-                    type="button"
-                    onClick={addWorkExperienceField}
-                    className="px-4 py-2 mt-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                  <h3 className="text-2xl font-semibold">About Me</h3>
+                  <textarea
+                    name=""
+                    id=""
+                    cols="30"
+                    rows="10"
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        details: e.target.value,
+                      })
+                    }
                   >
-                    Add Work Experience
-                  </button>
+                    {formData.address.postalCode}
+                  </textarea>
                 </div>
 
                 <div className="mb-6">
@@ -416,7 +370,7 @@ const Profile = () => {
                 </div>
 
                 <div className="mb-6">
-                  <h3 className="text-2xl font-semibold">Github</h3>
+                  <h3 className="text-2xl font-semibold">Social Media Link</h3>
                   <input
                     type="text"
                     value={formData.github}
@@ -430,7 +384,6 @@ const Profile = () => {
               </div>
               <button
                 type="submit"
-            
                 className="text-center px-4 py-2 mt-4 bg-green-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600 ml-96"
               >
                 Submit

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { usePasswordResetMutation } from "../../Service/userAuth";
+import { toast } from "react-toastify";
+const role = localStorage.getItem("role");
 
 const Reset = () => {
   const [passwordReset] = usePasswordResetMutation();
@@ -23,16 +25,41 @@ const Reset = () => {
     e.preventDefault();
     if (user.password && user.passwordConfirmation && user.oldpassword) {
       const res = await passwordReset({ id, user });
-      console.log(res.error.data.success);
-      if (res.error.data.success === false) {
-        alert(res.error.data.message);
-      } else {
-        alert(res.error.data.message);
 
-        navigate("/");
+      if (res.error) {
+        toast.error(res.error.data.message, {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          className: " text-xl",
+        });
       }
-    } else {
-      console.log("Please add all inputs");
+
+      if (res.data) {
+        toast.success(res.data.message, {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          className: " text-xl",
+        });
+        if (role === "company") {
+          navigate("/company");
+        } else if (role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/user");
+        }
+      }
     }
   };
 

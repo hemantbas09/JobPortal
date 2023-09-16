@@ -3,16 +3,15 @@ import React from "react";
 const Contactus = () => {
   return (
     <>
-      <section class="flex items-center bg-stone-100 lg:h-screen font-poppins dark:bg-gray-800 ">
+      <section class="flex items-center  lg:h-screen font-poppins dark:bg-gray-800 mt-32">
         <div class="justify-center flex-1 max-w-6xl px-4 py-4 mx-auto lg:py-11 md:px-6">
           <div class="mb-10 text-left">
             <h2 class="pb-2 mb-2 text-xl font-bold text-gray-800 md:text-3xl dark:text-gray-300">
               Let's Stay Connected
             </h2>
-     
           </div>
           <div class="flex flex-wrap ">
-            <div class="w-full px-4 lg:w-1/2 mb-11 lg:mb-0">
+            <div class="w-full px-4  mb-11 g:mb-0l">
               <div class="flex flex-wrap">
                 <div class="w-full px-4 mb-10 sm:w-1/2">
                   <div class="max-w-xs mx-auto">
@@ -60,7 +59,7 @@ const Contactus = () => {
                       href="#"
                       class="text-base font-medium text-gray-500 md:text-lg dark:text-gray-400"
                     >
-                      +9841119090
+                      9841119090
                     </a>
                   </div>
                 </div>
@@ -155,55 +154,6 @@ const Contactus = () => {
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="w-full px-4 lg:w-1/2">
-              <form action="" class="p-6 bg-gray-50 dark:bg-gray-900">
-                <div class="mb-6 ">
-                  <label
-                    for="firstname"
-                    class="block mb-2 font-bold text-gray-700 uppercase dark:text-gray-400"
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="abc@gmail.com"
-                    required=""
-                    class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-100 border border-gray-200 rounded dark:placeholder-gray-500 dark:text-gray-400 dark:border-gray-800 dark:bg-gray-800 "
-                  />
-                </div>
-                <div class="mb-6 ">
-                  <label
-                    for="firstname"
-                    class="block mb-2 font-bold text-gray-700 uppercase dark:text-gray-400"
-                  >
-                    Subject
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="I'm asking information for..."
-                    required=""
-                    class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-100 border border-gray-200 rounded dark:text-gray-400 dark:placeholder-gray-500 dark:border-gray-800 dark:bg-gray-800 "
-                  />
-                </div>
-                <div class="mb-6 ">
-                  <label
-                    for="firstname"
-                    class="block mb-2 font-bold text-gray-700 uppercase dark:text-gray-400"
-                  >
-                    Message
-                  </label>
-                  <textarea
-                    type="message"
-                    placeholder="Describe your problem"
-                    required=""
-                    class="block w-full px-4 leading-tight text-gray-700 bg-gray-100 border border-gray-200 rounded dark:placeholder-gray-500 py-7 dark:text-gray-400 dark:border-gray-800 dark:bg-gray-800 "
-                  ></textarea>
-                </div>
-                <button class="px-4 py-2 font-medium text-gray-100 bg-blue-600 rounded shadow hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-700">
-                  Send
-                </button>
-              </form>
             </div>
           </div>
         </div>

@@ -1,6 +1,14 @@
 import React from "react";
 import Sidebar from "./Sidebar";
 const AdminSidebar = () => {
+  // Inside your logout function
+  const handleLogout = () => {
+    // Clear the token from localStorage
+    localStorage.removeItem("token");
+
+    // Redirect the user to the login page
+    window.location.href = "/"; // Replace with your desired redirect URL
+  };
   const Menus = [
     {
       title: "Dashboard",
@@ -10,24 +18,21 @@ const AdminSidebar = () => {
     {
       title: "Company",
       src: "https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1687779209/icon/briefcase-1965_ik29a2.svg",
-      link: "/admin/candidateinformation",
+
+      link: "/admin/companyinformation",
     },
     {
       title: "Candidate",
       src: "https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1687886208/icon/user-3297_eupj2v.svg",
-      link: "/admin/companyinformation",
+      link: "/admin/candidateinformation",
     },
     {
       title: "Reset Password",
       src: "https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1687886209/icon/car-key-5803_h8bmh7.svg",
       link: "/reset/password",
     },
-    {
-      title: "Logout",
-      src: "https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1687886209/icon/exit-2860_fxthud.svg",
-      link: "/admin",
-    },
   ];
+
   return (
     <>
       <div className="flex relative ">

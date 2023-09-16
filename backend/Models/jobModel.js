@@ -31,6 +31,9 @@ const jobSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please Enter Product Price"],
   },
+  qualification: {
+    type: String,
+  },
   gender: {
     type: String,
     required: [true, "Please Enter Your Gender"],

@@ -8,7 +8,9 @@ import {
 import { Link } from "react-router-dom";
 import SweetAlert from "react-bootstrap-sweetalert";
 import AdminSidebar from "../../component/Sidebar/AdminSidebar";
-const AllUser = () => {
+import AdminNavbar from "../../component/Navbar/AdminNavbar";
+
+const CandidateInformation = () => {
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [filterValue, setFilterValue] = useState("");
@@ -88,7 +90,7 @@ const AllUser = () => {
 
   const columns = [
     {
-      name: "Job Title",
+      name: "Company Name",
       selector: "fullName",
       sortable: true,
       cell: (row) => (
@@ -100,23 +102,24 @@ const AllUser = () => {
     {
       name: "Email",
       selector: "email",
+      sortable: true,
     },
     {
       name: "Status",
       selector: "status",
-
+      sortable: true,
       cell: (row) => {
         let statusClass = "";
 
         switch (row.status) {
           case "active":
-            statusClass = "bg-green-500";
+            statusClass = "bg-green-600";
             break;
           case "pending":
-            statusClass = "bg-yellow-500";
+            statusClass = "bg-yellow-600";
             break;
           case "blocked":
-            statusClass = "bg-red-500";
+            statusClass = "bg-red-600";
             break;
           default:
             break;
@@ -128,6 +131,21 @@ const AllUser = () => {
           >
             {row.status}
           </span>
+        );
+      },
+    },
+
+    {
+      name: "Job",
+      selector: "role",
+      cell: (row) => {
+        return (
+          <Link to={`/admin/job/${row._id}`}>
+            <img
+              src="https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1691217488/icons8-eye-40_tpd1p1.png"
+              alt=""
+            />
+          </Link>
         );
       },
     },
@@ -168,7 +186,7 @@ const AllUser = () => {
     },
   ];
 
-  const activeRows = jobs.filter((row) => row.role === "candidate");
+  const activeRows = jobs.filter((row) => row.role === "company");
 
   const handleFilter = (event) => {
     const { value } = event.target;
@@ -194,9 +212,14 @@ const AllUser = () => {
   return (
     <>
       <div className="mt-32">
+        <AdminNavbar />
+
         <AdminSidebar />
       </div>
       <div className="md:ml-64 mr-8 ml-14 border border-black p-2">
+        <h1 className="text-2xl font-semibold md:col-start-1 md:col-end-7 text-first mb-4 ">
+          Company Details
+        </h1>
         <div className="relative ">
           <img
             className="w-6 h-6 absolute ml-5 mt-5"
@@ -204,7 +227,7 @@ const AllUser = () => {
             alt=""
           />
           <input
-            className="p-4 border-none  w-1/2 rounded-lg mb-2 pl-16 "
+            className="p-4 border-none w-1/2 rounded-lg mb-2 pl-16 "
             type="text"
             placeholder="Search by job title"
             value={filterValue}
@@ -271,4 +294,4 @@ const AllUser = () => {
   );
 };
 
-export default AllUser;
+export default CandidateInformation;

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const ProtectedRoute = ({ Component: Component, requiredRole }) => {
+const ProtectedRoute = ({ Component, requiredRole }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,7 +13,9 @@ const ProtectedRoute = ({ Component: Component, requiredRole }) => {
     }
   }, [navigate, requiredRole]);
 
-  return <Component />;
+  const isLoggedIn = localStorage.getItem("token") && localStorage.getItem("role") === requiredRole;
+
+  return isLoggedIn ? <Component /> : null; // Or render a fallback UI if needed
 };
 
 export default ProtectedRoute;

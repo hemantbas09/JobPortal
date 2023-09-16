@@ -9,7 +9,7 @@ import {
 import { Link } from "react-router-dom";
 import CompanySidebar from "../../component/Sidebar/CompanySidebar";
 import SweetAlert from "react-bootstrap-sweetalert";
-
+import CompanyNavbar from "../../component/Navbar/CompanyNavbar";
 const AcceptApplicant = () => {
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
@@ -49,50 +49,47 @@ const AcceptApplicant = () => {
     setAlertConfig(null);
   };
 
-  const isJobAccept = async (id) => {
-    setSelectedJobId(id);
+  const isJobAccept = (id) => {
     showAlert({
       title: "Are you sure?",
       message: "Are you sure you want to Accept this job?",
       confirmBtnText: "Yes, accept it!",
-      onConfirm: handleAcceptConfirmation,
+      onConfirm: () => handleAcceptConfirmation(id),
     });
   };
 
-  const handleAcceptConfirmation = async () => {
-    await acceptJob({ id: selectedJobId });
+  const handleAcceptConfirmation = async (id) => {
+    await acceptJob({ id });
     await jobInfo.refetch();
     setAlertConfig(null);
   };
 
-  const isJobReject = async (id) => {
-    setRejectJobId(id);
+  const isJobReject = (id) => {
     showAlert({
       title: "Are you sure?",
       message: "Are you sure you want to Reject this job?",
-      onConfirm: handleRejectConfirmation,
+      onConfirm: () => handleRejectConfirmation(id),
     });
   };
 
-  const handleRejectConfirmation = async () => {
-    await rejectJob({ id: rejectJobId });
+  const handleRejectConfirmation = async (id) => {
+    await rejectJob({ id });
     await jobInfo.refetch();
     setAlertConfig(null);
   };
 
-  const isJobApplicantDelete = async (id) => {
-    setDeleteJobId(id);
+  const isJobApplicantDelete = (id) => {
     showAlert({
       title: "Are you sure?",
       message:
         "You are about to delete this job application. This action cannot be undone.",
       confirmBtnText: "Delete",
-      onConfirm: handleDeleteConfirmation,
+      onConfirm: () => handleDeleteConfirmation(id),
     });
   };
-
-  const handleDeleteConfirmation = async () => {
-    await deleteJob({ id: deleteJobId });
+  
+  const handleDeleteConfirmation = async (id) => {
+    await deleteJob({ id });
     await jobInfo.refetch();
     setAlertConfig(null);
   };
@@ -255,6 +252,7 @@ const AcceptApplicant = () => {
   return (
     <>
       <div className="mt-32">
+        <CompanyNavbar/>
         <CompanySidebar />
       </div>
       <div className="md:ml-64 mr-8">

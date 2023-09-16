@@ -13,7 +13,7 @@ class jobController {
 
     // creating a object or instace of the JobModal:
     const job = new jobModel(req.body);
-
+    console.log(req.body);
     // save in the database
     await job.save();
 

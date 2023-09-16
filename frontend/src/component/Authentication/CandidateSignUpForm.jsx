@@ -34,7 +34,7 @@ const CandidateSignUpForm = () => {
     passwordConfirmation: "",
     role: "candidate",
   });
-console.log(user);
+  console.log(user);
   const navigate = useNavigate();
   const [registerUser, { isLoading }] = useRegisterUserMutation();
 
@@ -128,8 +128,8 @@ console.log(user);
             theme: "colored",
             className: " text-xl",
           });
-          storeToken(res.data.token);
           navigate("/");
+          storeToken(res.data.token);
         } else {
           toast.error(res.error.data.message, {
             position: "top-center",

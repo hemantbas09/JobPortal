@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { RiEditBoxLine } from "react-icons/ri";
 import { AiOutlineDelete } from "react-icons/ai";
 import CompanySidebar from "../../component/Sidebar/CompanySidebar";
+import CompanyNavbar from "../../component/Navbar/CompanyNavbar";
 
 const MyJob = () => {
   const [deleteJob, { isLoading }] = useDeleteJobMutation();
@@ -21,6 +22,7 @@ const MyJob = () => {
   const jobInfo = useGetJobByCompanyIdQuery();
 
   useEffect(() => {
+    jobInfo.refetch();
     if (jobInfo.data) {
       setJobs(jobInfo.data.jobs);
       setFilteredJobs(jobInfo.data.jobs);
@@ -41,17 +43,7 @@ const MyJob = () => {
       sortable: true,
       width: "30%",
     },
-    {
-      name: "Quiz",
-      cell: (row) => (
-        <Link
-          to={`/jobquiz/${row.quizId}`}
-          className="bg-blue-500 px-4 py-2 rounded-lg text-white text-bold   "
-        >
-          <div>Quiz</div>
-        </Link>
-      ),
-    },
+
     {
       name: "Expired Date",
       selector: "deadlineDate",
@@ -74,7 +66,17 @@ const MyJob = () => {
           <Link to={`/updatejob/${row._id}`}>
             <RiEditBoxLine size={30} />
           </Link>
-          <button onClick={() => deleteJob(row._id)}>
+          <button
+            onClick={async () => {
+              const shouldDelete = window.confirm(
+                "Are you sure you want to delete this job?"
+              );
+              if (shouldDelete) {
+                await deleteJob(row._id);
+                jobInfo.refetch();
+              }
+            }}
+          >
             <AiOutlineDelete size={30} />
           </button>
         </div>
@@ -138,6 +140,8 @@ const MyJob = () => {
     <>
       <div className="mt-28 space-x-16 md:space-x-72 min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
         <div className="">
+          <CompanyNavbar />
+
           <CompanySidebar />
         </div>
 

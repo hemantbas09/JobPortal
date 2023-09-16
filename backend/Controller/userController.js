@@ -1,10 +1,13 @@
 import userModel from "../Models/userModel.js";
+import CompanyProfile from "../Models/companyProfile.js";
+import userProfileModel from "../Models/userProfile.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import catchAsyncErrors from "../Middleware/catchAsyncErrors.js";
 import transporter from "../config/emailConfig.js";
 import generateVerificationToken from "../Middleware/helpers.js";
 import passport from "passport";
+import cloudinary from "../config/cloudinary.js";
 
 class userController {
   // Start the Regestration:
@@ -413,7 +416,13 @@ class userController {
   static resetPassword = catchAsyncErrors(async (req, res, next) => {
     const { password, passwordConfirmation, oldpassword } = req.body;
 
-    console.log("object", req.body);
+    if (password !== passwordConfirmation) {
+      res.status(400).json({
+        success: false,
+        message: "Password and confirm password must match.",
+      });
+    }
+
     // Validate request
     if (!password || !oldpassword) {
       res.status(400).json({
@@ -421,6 +430,7 @@ class userController {
         message: "Both old password and new password are required.",
       });
     }
+    // Validate request
 
     // Find the user based on user ID
 
@@ -452,7 +462,153 @@ class userController {
   });
 
   static userProfile = catchAsyncErrors(async (req, res, next) => {
-    console.log("userProfile");
+    const profileData = req.body;
+    const userId = req.user.id;
+    // Check if the user already has a profile
+    let existingProfile = await userProfileModel.findOne({ user: userId });
+    console.log("This is data", profileData);
+    // If a profile already exists, update the existing profile
+    if (existingProfile) {
+      // Update profile picture
+      if (profileData.profilePicture) {
+        const profilePictureUpload = await cloudinary.uploader.upload(
+          profileData.profilePicture,
+          {
+            allowed_formats: ["jpeg", "jpg", "png"],
+          }
+        );
+
+        profileData.profilePicture = {
+          public_id: profilePictureUpload.public_id,
+          url: profilePictureUpload.url,
+        };
+      }
+
+      // Update cover picture
+      if (profileData.coverPicture) {
+        const coverPictureUpload = await cloudinary.uploader.upload(
+          profileData.coverPicture,
+          {
+            allowed_formats: ["jpeg", "jpg", "png"],
+          }
+        );
+
+        profileData.coverPicture = {
+          public_id: coverPictureUpload.public_id,
+          url: coverPictureUpload.url,
+        };
+      }
+
+      // Update the existing profile with the new data
+      existingProfile.set(profileData);
+      await existingProfile.save();
+
+      res.status(200).json({
+        success: true,
+        message: "Company profile updated successfully",
+        company: existingProfile,
+      });
+    } else {
+      // Create a new profile if no existing profile is found
+      profileData.user = userId;
+
+      // Create a new instance of the CompanyProfile model with the incoming data
+      const newCompanyProfile = new userProfileModel(profileData);
+
+      // Save the company profile to the database
+      await newCompanyProfile.save();
+
+      res.status(201).json({
+        success: true,
+        message: "Company profile created successfully",
+        company: newCompanyProfile,
+      });
+    }
+  });
+
+  static companyProfile = catchAsyncErrors(async (req, res, next) => {
+    const profileData = req.body;
+    const userId = req.user.id;
+
+    // Check if the user already has a profile
+    let existingProfile = await CompanyProfile.findOne({ user: userId });
+
+    // If a profile already exists, update the existing profile
+    if (existingProfile) {
+      // Update profile picture
+      if (profileData.profilePicture) {
+        const profilePictureUpload = await cloudinary.uploader.upload(
+          profileData.profilePicture,
+          {
+            allowed_formats: ["jpeg", "jpg", "png"],
+          }
+        );
+
+        profileData.profilePicture = {
+          public_id: profilePictureUpload.public_id,
+          url: profilePictureUpload.url,
+        };
+      }
+
+      // Update cover picture
+      if (profileData.coverPicture) {
+        const coverPictureUpload = await cloudinary.uploader.upload(
+          profileData.coverPicture,
+          {
+            allowed_formats: ["jpeg", "jpg", "png"],
+          }
+        );
+
+        profileData.coverPicture = {
+          public_id: coverPictureUpload.public_id,
+          url: coverPictureUpload.url,
+        };
+      }
+
+      // Update the existing profile with the new data
+      existingProfile.set(profileData);
+      await existingProfile.save();
+
+      res.status(200).json({
+        success: true,
+        message: "Company profile updated successfully",
+        company: existingProfile,
+      });
+    } else {
+      // Create a new profile if no existing profile is found
+      profileData.user = userId;
+
+      // Create a new instance of the CompanyProfile model with the incoming data
+      const newCompanyProfile = new CompanyProfile(profileData);
+
+      // Save the company profile to the database
+      await newCompanyProfile.save();
+
+      res.status(201).json({
+        success: true,
+        message: "Company profile created successfully",
+        company: newCompanyProfile,
+      });
+    }
+  });
+  static getCompanyProfile = catchAsyncErrors(async (req, res, next) => {
+    const userId = req.params.userId;
+    const companyProfile = await CompanyProfile.find({ userId });
+    res.status(200).json({
+      success: true,
+      message: "successfully",
+      companyProfile: companyProfile,
+    });
+  });
+  static getUserProfile = catchAsyncErrors(async (req, res, next) => {
+    const userId = req.params.userId;
+    const userProfile = await userProfileModel.find({ userId });
+    console.log(userId);
+    res.status(200).json({
+      success: true,
+      message: "successfully",
+      userProfile: userProfile,
+    });
   });
 }
 

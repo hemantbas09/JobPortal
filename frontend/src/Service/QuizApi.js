@@ -9,14 +9,12 @@ export const quizApi = createApi({
     // Register the Quiz:
     addquizQuestion: builder.mutation({
       query: ({ quizForm, id }) => {
-        console.log("quizform ", quizForm);
-        console.log("quizid", id);
-
         return {
           url: `new/${id}`,
           method: "POST",
-          body: quizForm,
+          body: JSON.stringify(quizForm),
           headers: {
+            'Content-Type': 'application/json',
             authorization: `Bearer ${token}`,
           },
         };
@@ -47,8 +45,7 @@ export const quizApi = createApi({
 
     quizAttemtQuestion: builder.mutation({
       query: ({ formData, id }) => {
-        console.log("attempt question form ", formData);
-        console.log("attempt question id", id);
+
 
         return {
           url: `/quizattem/${id}`,

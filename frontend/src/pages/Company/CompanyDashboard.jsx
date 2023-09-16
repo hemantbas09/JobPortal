@@ -4,6 +4,7 @@ import { useGetAllJobQuery } from "../../Service/jobApi";
 import { useGetAppliedJobQuery } from "../../Service/jobApi";
 import CompanySidebar from "../../component/Sidebar/CompanySidebar";
 import Box from "../../component/Admin/Box";
+import CompanyNavbar from "../../component/Navbar/CompanyNavbar";
 
 const CompanyDashboard = () => {
   const token = localStorage.getItem("token");
@@ -30,6 +31,8 @@ const CompanyDashboard = () => {
     <>
       <div class="mt-28 space-x-16 md:space-x-72 min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
         <div className="">
+          <CompanyNavbar />
+
           <CompanySidebar />
         </div>
 

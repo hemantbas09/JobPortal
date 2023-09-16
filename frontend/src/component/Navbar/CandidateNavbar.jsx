@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 import { getToken } from "../../Service/localStorageService";
 
-const Navbar = () => {
+const CandidateNavbar = () => {
   const token = getToken("token");
   const role = getToken("role");
   const [dropdownOpen, setDropdownOpen] = useState({});
@@ -57,15 +57,11 @@ const Navbar = () => {
     }));
   };
 
-  if (role === "admin" || role === "company") {
-    return null; // Render nothing for admin or company role
-  }
-
   return (
     <div className="z-50 bg-white fixed top-0 w-full xl:max-w-[1750px]">
       <div className="flex justify-between items-center">
         <Link to="/">
-          <img className="w-52" src="https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1691677613/logo_m1v7zw.svg" alt="logo" />
+          <img className="w-52" src="image/logo.svg" alt="logo" />
         </Link>
 
         <div className="flex gap-72">
@@ -135,14 +131,19 @@ const Navbar = () => {
                   </button>
                 </Link>
               ) : (
-                <Link to="/user">
+                <Link to="/logout">
                   <button className="text-center font-bold text-xl mt-6 mb-5 px-8 py-3 text-xl tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50 hidden xl:flex">
                     Dashboard
                   </button>
                 </Link>
               )}
             </div>
-
+            {/* <button className=" w-6 md:w-8">
+              <img
+                src="https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1687549087/11859183171606260004_wma3em.svg"
+                alt="notification"
+              />
+            </button> */}
             <button className="w-8 xl:hidden" onClick={toggleMobileMenu}>
               <img
                 src="https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1687503134/hamburgerIcon_bxy35q.svg"
@@ -205,25 +206,10 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-          <div>
-            {!token ? (
-              <Link to="/login">
-                <button className="text-center font-bold text-xl mt-6 mb-5 px-8 py-3 text-xl tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50 ">
-                  Sign In
-                </button>
-              </Link>
-            ) : (
-              <Link to="/user">
-                <button className="text-center font-bold text-xl mt-6 mb-5 px-8 py-3 text-xl tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50 ">
-                  Dashboard
-                </button>
-              </Link>
-            )}
-          </div>
         </div>
       )}
     </div>
   );
 };
 
-export default Navbar;
+export default CandidateNavbar;

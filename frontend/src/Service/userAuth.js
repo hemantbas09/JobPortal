@@ -1,9 +1,11 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
+const token = localStorage.getItem("token");
+console.log(token);
+const role = localStorage.getItem("role");
 export const userAuthApi = createApi({
   reducerPath: "userAuthApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/user/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:4000/api/user/" }),
   endpoints: (builder) => ({
     // Register the User:
     registerUser: builder.mutation({
@@ -132,16 +134,46 @@ export const userAuthApi = createApi({
     }),
 
     userProfile: builder.mutation({
-      query: () => {
+      query: (formDataToSend) => {
         return {
           url: "user/profile",
           method: "POST",
-          // body: formData,
-          // headers: {
-          //     'Content-Type': 'multipart/form-data'
-          // },
+          body: formDataToSend,
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
         };
       },
+    }),
+    companyProfile: builder.mutation({
+      query: (formDataToSend) => {
+        return {
+          url: "/company/profile",
+          method: "POST",
+          body: formDataToSend,
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        };
+      },
+    }),
+    getUserProfile: builder.query({
+      query: () => ({
+        url: `/get/user/profile`,
+        method: "Get",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
+    getCompanyProfile: builder.query({
+      query: () => ({
+        url: `/get/company/profile`,
+        method: "Get",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
     }),
   }),
 });
@@ -157,5 +189,8 @@ export const {
   useVerifyUserMutation,
   useGoogleAuthQuery,
   usePasswordResetMutation,
-  useUserProfileMutation
+  useUserProfileMutation,
+  useCompanyProfileMutation,
+  useGetCompanyProfileQuery,
+  useGetUserProfileQuery,
 } = userAuthApi;

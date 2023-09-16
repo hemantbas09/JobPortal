@@ -48,8 +48,11 @@ import {
 import MyForm from "./component/Authentication/MyForm.jsx";
 import { Link } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
-
+import CompanyProfile from "./component/Comman/companyProfile";
+import AdminProfile from "./component/Comman/AdminProfile";
 import Profile from "./component/Comman/Profile";
+import ViewCompanyProfile from "./component/Comman/viewCompanyProfile";
+import ViewUserProfile from "./component/Comman/viewUserProfile";
 import ConfirmBox from "./component/ConfirmBox";
 const App = () => {
   const Menu = [];
@@ -63,12 +66,16 @@ const App = () => {
           <Route path="/signup" element={<CandidateSignUpForm />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/forgetpassword" element={<SendPasswordResetEmail />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/edit/profile" element={<Profile />} />
           <Route path="/newpassword/:id/:token" element={<ResetPassword />} />
           <Route path="/" element={<Home />} />
           <Route path="/verify" element={<Home />} />
           <Route path="/confirm" element={<ConfirmBox />} />
-
+          <Route path="/edit/company/profile" element={<CompanyProfile />} />
+          <Route path="/admin/profile" element={<AdminProfile />} />
+          <Route path="/company/profile" element={<ViewCompanyProfile />} />
+          <Route path="/user/profile/" element={<ViewUserProfile />} />
+          <Route path="/profile/:id" element={<ViewUserProfile />} />
           {/* <Route path="/login" element={<Login />} /> */}
           {/* <Route
             path="/admin"
@@ -153,15 +160,18 @@ const App = () => {
           <Route
             path="/updatejob/:id"
             element={
-              <ProtectedRoute component={EditJob} requiredRole="company" />
+              <ProtectedRoute Component={EditJob} requiredRole="company" />
             }
           />
           <Route
             path="/addquiz/:id"
             element={
-              <ProtectedRoute component={AddQuiz} requiredRole="company" />
+              <ProtectedRoute Component={AddQuiz} requiredRole="company" />
             }
           />
+
+          {/* <Route path="/addquiz/:id" element={<AddQuiz />} /> */}
+
           <Route
             path="/jobquiz/:id"
             element={

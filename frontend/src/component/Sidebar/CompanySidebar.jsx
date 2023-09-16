@@ -1,6 +1,14 @@
 import React from "react";
 import Sidebar from "../Sidebar/Sidebar";
 const CompanySidebar = () => {
+  // Inside your logout function
+  const handleLogout = () => {
+    // Clear the token from localStorage
+    localStorage.removeItem("token");
+
+    // Redirect the user to the login page
+    window.location.href = "/"; // Replace with your desired redirect URL
+  };
   const Menus = [
     {
       title: "Dashboard",
@@ -35,18 +43,14 @@ const CompanySidebar = () => {
     {
       title: "Profile",
       src: "https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1687886208/icon/user-3297_eupj2v.svg",
-      link: "/company/rejected",
+      link: "/company/profile",
     },
     {
       title: "Reset Password",
       src: "https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1687886209/icon/car-key-5803_h8bmh7.svg",
       link: "/reset/password",
     },
-    {
-      title: "Logout",
-      src: "https://res.cloudinary.com/finalyearprojectjobportal09/image/upload/v1687886209/icon/exit-2860_fxthud.svg",
-      link: "/company/rejected",
-    },
+ 
   ];
   return (
     <>

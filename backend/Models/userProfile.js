@@ -2,29 +2,49 @@ import mongoose from "mongoose";
 
 // Define the profile schema
 const profileSchema = new mongoose.Schema({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  email: { type: String, required: true },
-  phoneNumber: { type: String, required: true },
-  dateOfBirth: { type: Date, required: true },
+  firstName: { type: String },
+  lastName: { type: String },
+  email: { type: String },
+  phoneNumber: { type: String },
+  dateOfBirth: { type: Date },
   address: {
-    country: { type: String, required: true },
-    state: { type: String, required: true },
-    city: { type: String, required: true },
-    postalCode: { type: String, required: true },
+    country: { type: String },
+    state: { type: String },
+    city: { type: String },
+    postalCode: { type: String },
   },
-  workExperience: [
-    {
-      company: { type: String, required: true },
-      jobTitle: { type: String, required: true },
-      joinDate: { type: Date, required: true },
-      endDate: { type: Date, required: true },
-    },
-  ],
+  details: {
+    type: String,
+  },
+  role: {
+    type: String,
+  },
+
   skills: [{ type: String }],
   github: { type: String },
+  profilePicture: {
+    public_id: {
+      type: String,
+    },
+    url: {
+      type: String,
+    },
+  },
+  coverPicture: {
+    public_id: {
+      type: String,
+    },
+    url: {
+      type: String,
+    },
+  },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: "user",
+    required: true,
+  },
 });
 
 // Create and export the Profile model
-const userProfileModel= mongoose.model("Profile", profileSchema);
+const userProfileModel = mongoose.model("Profile", profileSchema);
 export default userProfileModel;

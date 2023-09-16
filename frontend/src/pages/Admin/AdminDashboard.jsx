@@ -3,7 +3,7 @@ import AdminSidebar from "../../component/Sidebar/AdminSidebar";
 import Box from "../../component/Admin/Box";
 import { useGetallUserQuery } from "../../Service/userAuth";
 import { useGetAllJobQuery } from "../../Service/jobApi";
-
+import AdminNavbar from "../../component/Navbar/AdminNavbar";
 const AdminDashboard = () => {
   const allUser = useGetallUserQuery({ enabled: false });
   const allJob = useGetAllJobQuery({ enabled: false });
@@ -32,12 +32,14 @@ const AdminDashboard = () => {
   return (
     <>
       <div className="mt-32">
+      <AdminNavbar />
+
         <AdminSidebar />
       </div>
       <div className="md:ml-64 ml-14">
         <div class="grid grid-cols-1 gap-10   md:grid-cols-3  ">
           <h1 className="text-2xl font-semibold md:col-start-1 md:col-end-7 text-first ">
-            Company Statistics
+           Statistics
           </h1>
           {/* total job post */}
           <Box title="Total Candidates" number={totalCandidates} />
