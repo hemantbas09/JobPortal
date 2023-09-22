@@ -464,6 +464,7 @@ class userController {
   static userProfile = catchAsyncErrors(async (req, res, next) => {
     const profileData = req.body;
     const userId = req.user.id;
+    console.log(profileData);
     // Check if the user already has a profile
     let existingProfile = await userProfileModel.findOne({ user: userId });
     console.log("This is data", profileData);
@@ -592,8 +593,17 @@ class userController {
     }
   });
   static getCompanyProfile = catchAsyncErrors(async (req, res, next) => {
-    const userId = req.params.userId;
-    const companyProfile = await CompanyProfile.find({ userId });
+    let userId = req.params.id; // Use 'let' instead of 'const' to allow reassignment
+    const authorizationHeader = req.headers["authorization"];
+    const token = authorizationHeader.split(" ")[1];
+
+    if (token && userId) {
+      const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+      userId = decodedToken.userID;
+    }
+
+    const companyProfile = await CompanyProfile.findOne({ user: userId });
+    console.log(companyProfile);
     res.status(200).json({
       success: true,
       message: "successfully",
@@ -601,13 +611,40 @@ class userController {
     });
   });
   static getUserProfile = catchAsyncErrors(async (req, res, next) => {
-    const userId = req.params.userId;
-    const userProfile = await userProfileModel.find({ userId });
+    let userId = req.params.id; // Use 'let' instead of 'const' to allow reassignment
+    const authorizationHeader = req.headers["authorization"];
+    const token = authorizationHeader.split(" ")[1];
+
+    if (token && userId) {
+      const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+      userId = decodedToken.userID;
+    }
     console.log(userId);
+    const userProfile = await userProfileModel.findOne({ user: userId });
+    console.log(userProfile);
+    res.status(200).json({
+      success: true,
+      message: "Successfully",
+      userProfile: userProfile,
+    });
+  });
+  static getUserProfileById = catchAsyncErrors(async (req, res, next) => {
+    let userId = req.params.id;
+    const userProfile = await userProfileModel.findOne({ user: userId });
+    console.log(userProfile);
+    res.status(200).json({
+      success: true,
+      message: "Successfully",
+      userProfile: userProfile,
+    });
+  });
+  static getCompanyProfileById = catchAsyncErrors(async (req, res, next) => {
+    let userId = req.params.id;
+    const companyProfile = await CompanyProfile.findOne({ user: userId });
     res.status(200).json({
       success: true,
       message: "successfully",
-      userProfile: userProfile,
+      companyProfile: companyProfile,
     });
   });
 }

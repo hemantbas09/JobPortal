@@ -10,6 +10,8 @@ import {
   SendPasswordResetEmail,
   CandidateSignUpForm,
   Reset,
+  UserProfileById,
+  CompanyProfileById,
 } from "./component/index.js";
 import {
   JobApply,
@@ -88,6 +90,7 @@ const App = () => {
             }
             
           /> */}
+
           <Route path="/admin" element={<AdminDashboard />} />
 
           {/* <Route
@@ -216,6 +219,9 @@ const App = () => {
           <Route path="/search" element={<Search />} />
           <Route path="/myappliedjob" element={<Appliedjob />} />
           <Route path="/admin/job/:id" element={<AllJob />} />
+
+          <Route path="/company/profile/:id" element={<CompanyProfileById />} />
+          <Route path="/user/profile/:id" element={<UserProfileById />} />
         </Routes>
       </BrowserRouter>
 

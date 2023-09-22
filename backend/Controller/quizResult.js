@@ -7,8 +7,8 @@ class quizAtemptController {
   // post a new Job
   static quizAttempt = catchAsyncErrors(async (req, res, next) => {
     const { quizId, attemptAnswer } = req.body;
-    console.log("This is job Id", req.params.id)
-    console.log('This is user id ', req.user)
+    console.log("This is job Id", req.params.id);
+    console.log("This is user id ", req.user);
     // Get the quiz questions from the database
     let id = "64473e623ba2132bdf5bd977";
     const questions = await quizQuestionModel.findById(quizId);
@@ -33,7 +33,7 @@ class quizAtemptController {
             answer: answer,
             isCorrect: isCorrect,
             correctAnswer: question.correctAnswer,
-            passMark: questions.passMark
+            passMark: questions.passMark,
           };
         } else {
           return {
@@ -56,8 +56,7 @@ class quizAtemptController {
               score: score,
               job: req.params.id,
               attemptAnswer: answers,
-              passMark: questions.passMark
-
+              passMark: questions.passMark,
             },
           },
           { new: true, upsert: true }
@@ -82,11 +81,14 @@ class quizAtemptController {
   static quizResultById = catchAsyncErrors(async (req, res, next) => {
     const jobId = req.params.id;
     const userId = req.user.id;
-    console.log(jobId)
+    console.log(jobId);
     // console.log()
 
-    const quizResultById = await quizResultModel.find({ job: jobId, user: userId });
-    console.log("FInd THe quiz",quizResultById)
+    const quizResultById = await quizResultModel.find({
+      job: jobId,
+      user: userId,
+    });
+    console.log("FInd THe quiz", quizResultById);
     if (quizResultById) {
       res.status(200).json({
         success: true,

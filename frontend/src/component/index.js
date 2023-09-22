@@ -9,6 +9,8 @@ import ResetPassword from "./Authentication/ResetPassword";
 import LoginForm from "./Authentication/LoginForm";
 import CandidateSignUpForm from "./Authentication/CandidateSignUpForm";
 import Reset from "./Comman/Reset";
+import UserProfileById from "./Comman/UserProfileById";
+import CompanyProfileById from "./Comman/CompanyProfileById";
 export {
   LoginForm,
   ResetPassword,
@@ -19,5 +21,7 @@ export {
   Category,
   Home,
   CandidateSignUpForm,
-  Reset
+  Reset,
+  UserProfileById,
+  CompanyProfileById,
 };

@@ -5,7 +5,7 @@ console.log(token);
 const role = localStorage.getItem("role");
 export const userAuthApi = createApi({
   reducerPath: "userAuthApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:4000/api/user/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/user/" }),
   endpoints: (builder) => ({
     // Register the User:
     registerUser: builder.mutation({
@@ -135,6 +135,7 @@ export const userAuthApi = createApi({
 
     userProfile: builder.mutation({
       query: (formDataToSend) => {
+        console.log("his is token", token);
         return {
           url: "user/profile",
           method: "POST",
@@ -158,17 +159,43 @@ export const userAuthApi = createApi({
       },
     }),
     getUserProfile: builder.query({
-      query: () => ({
-        url: `/get/user/profile`,
+      query: (id) => {
+        console.log("this is id and mad", id);
+
+        return {
+          url: `/get/user/profile/${id}`,
+          method: "GET",
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        };
+      },
+    }),
+
+    getCompanyProfile: builder.query({
+      query: (id) => ({
+        url: `/get/company/profile/${id}`,
         method: "Get",
         headers: {
           authorization: `Bearer ${token}`,
         },
       }),
     }),
-    getCompanyProfile: builder.query({
-      query: () => ({
-        url: `/get/company/profile`,
+    getUserProfileById: builder.query({
+      query: (id) => {
+        return {
+          url: `/user/profile/${id}`,
+          method: "GET",
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        };
+      },
+    }),
+
+    getCompanyProfileById: builder.query({
+      query: (id) => ({
+        url: `/company/profile/${id}`,
         method: "Get",
         headers: {
           authorization: `Bearer ${token}`,
@@ -193,4 +220,6 @@ export const {
   useCompanyProfileMutation,
   useGetCompanyProfileQuery,
   useGetUserProfileQuery,
+  useGetCompanyProfileByIdQuery,
+  useGetUserProfileByIdQuery,
 } = userAuthApi;

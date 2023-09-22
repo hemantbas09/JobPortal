@@ -4,31 +4,34 @@ import { useCompanyProfileMutation } from "../../Service/userAuth";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import { useGetCompanyProfileQuery } from "../../Service/userAuth";
-
 const CompanyProfile = () => {
-  const [companyProfile] = useCompanyProfileMutation();
-
   const { data, isLoading, isError } = useGetCompanyProfileQuery();
+
   let ProfileData;
   if (data) {
-    ProfileData = data.companyProfile[0];
+    ProfileData = data.companyProfile;
   }
+  console.log(ProfileData);
+  const [companyProfile] = useCompanyProfileMutation();
+
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    firstName: ProfileData.firstName || "",
-    email: ProfileData.email || "",
-    phoneNumber: ProfileData.phoneNumber || "",
+    firstName: ProfileData?.firstName || "",
+    email: ProfileData?.email || "",
+    phoneNumber: ProfileData?.phoneNumber || "",
     address: {
-      country: ProfileData.address.country || "",
-      state: ProfileData.address.state || "",
-      city: ProfileData.address.city || "",
-      postalCode: ProfileData.address.postalCode || "",
+      country: ProfileData?.address?.country || "",
+      state: ProfileData?.address?.state || "",
+      city: ProfileData?.address?.city || "",
+      postalCode: ProfileData?.address?.postalCode || "",
     },
-    github: ProfileData.github || "",
-    profilePicture: null,
-    coverPicture: null,
+    github: ProfileData?.github || "",
+    profilePicture: "",
+    coverPicture: "",
   });
+
+  console.log(formData);
   const handleAddressChange = (field, value) => {
     setFormData({
       ...formData,

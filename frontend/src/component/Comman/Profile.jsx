@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CompanySidebar from "../Sidebar/CompanySidebar";
 import { useUserProfileMutation } from "../../Service/userAuth";
 import { useGetUserProfileQuery } from "../../Service/userAuth";
@@ -11,9 +11,11 @@ const Profile = () => {
   const { data, isLoading, isError } = useGetUserProfileQuery();
   let ProfileData;
   if (data) {
-    ProfileData = data.userProfile[0];
+    ProfileData = data.userProfile;
   }
+
   const [userProfile] = useUserProfileMutation();
+
   const [skillFields, setSkillFields] = useState([""]);
   const addSkillField = () => {
     setSkillFields([...skillFields, ""]);
@@ -341,7 +343,7 @@ const Profile = () => {
                       })
                     }
                   >
-                    {formData.address.postalCode}
+                    {formData.details}
                   </textarea>
                 </div>
 

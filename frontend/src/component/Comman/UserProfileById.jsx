@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import CandidateNavbar from "../Navbar/CandidateNavbar";
 import CandidateSidebar from "../Sidebar/CandidateSidebar";
 import { Link } from "react-router-dom";
-import { useGetUserProfileQuery } from "../../Service/userAuth";
+import { useGetUserProfileByIdQuery } from "../../Service/userAuth";
 import { useParams } from "react-router-dom";
 
-const ViewUserProfile = () => {
+const UserProfileById = () => {
   const { id } = useParams();
-  const { data, isLoading, isError, refetch } = useGetUserProfileQuery(id);
+  const { data, isLoading, isError, refetch } = useGetUserProfileByIdQuery(id);
   let ProfileData;
   if (data) {
     ProfileData = data.userProfile;
@@ -15,6 +15,7 @@ const ViewUserProfile = () => {
   useEffect(() => {
     refetch();
   }, [refetch]);
+  console.log("this is data", data);
   return (
     <>
       <div className="mt-28 space-x-16 md:space-x-72 min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
@@ -130,12 +131,12 @@ const ViewUserProfile = () => {
                 </h2>
               </div>
             </div>
-            <Link
+            {/* <Link
               to={"/edit/profile"}
               className="text-center px-4 py-2 mt-4 bg-green-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600 ml-96"
             >
               Edit
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>
@@ -143,4 +144,4 @@ const ViewUserProfile = () => {
   );
 };
 
-export default ViewUserProfile;
+export default UserProfileById;

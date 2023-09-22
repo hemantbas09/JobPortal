@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import CompanySidebar from "../Sidebar/CompanySidebar";
 import { Link } from "react-router-dom";
 import CompanyNavbar from "../Navbar/CompanyNavbar";
-import { useGetCompanyProfileQuery } from "../../Service/userAuth";
+import { useGetCompanyProfileByIdQuery } from "../../Service/userAuth";
 import { useParams } from "react-router-dom";
 
-const ViewCompanyProfile = () => {
+const CompanyProfileById = () => {
   const { id } = useParams();
 
-  const { data, isLoading, isError, refetch } = useGetCompanyProfileQuery(id);
+  const { data, isLoading, isError, refetch } =
+    useGetCompanyProfileByIdQuery(id);
   console.log(data);
   let ProfileData;
   if (data) {
@@ -113,4 +114,6 @@ const ViewCompanyProfile = () => {
   );
 };
 
-export default ViewCompanyProfile;
+export default CompanyProfileById;
+CompanyProfileById;
+CompanyProfileById;

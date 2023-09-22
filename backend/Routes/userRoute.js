@@ -9,8 +9,8 @@ router.use("/changepassword", checkUserAuth);
 router.use("/loggedUser", checkUserAuth);
 router.use("/user/profile", checkUserAuth);
 router.use("/company/profile", checkUserAuth);
-router.use("/get/company/profile", checkUserAuth);
-router.use("/get/user/profile", checkUserAuth);
+router.get("/get/user/profile/:id", checkUserAuth);
+router.get("/get/company/profile/:id", checkUserAuth);
 
 router.use("/register", upload.none());
 router.use("/approvedReject", upload.none());
@@ -47,7 +47,9 @@ router.get("/auth/google", userController.googleAuth);
 // router.get("/logout", userController.logout);
 router.post("/user/profile", userController.userProfile);
 router.post("/company/profile", userController.companyProfile);
-router.get("/get/company/profile", userController.getCompanyProfile);
-router.get("/get/user/profile", userController.getUserProfile);
+router.get("/get/company/profile/:id", userController.getCompanyProfile);
+router.get("/get/user/profile/:id", userController.getUserProfile);
+router.get("/company/profile/:id", userController.getCompanyProfileById);
+router.get("/user/profile/:id", userController.getUserProfileById);
 
 export default router;

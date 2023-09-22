@@ -94,7 +94,7 @@ const CandidateInformation = () => {
       selector: "fullName",
       sortable: true,
       cell: (row) => (
-        <Link to={`http://localhost:5173/jobdetails/${row._id}`}>
+        <Link to={`http://localhost:5173/company/profile/${row._id}`}>
           <div className="truncate pr-96">{row.fullName}</div>
         </Link>
       ),
